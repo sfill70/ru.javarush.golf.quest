@@ -7,6 +7,7 @@ public class RepositoryEn extends AnswerRepository {
         super();
         this.negativeNameButton = "NO";
         this.positiveNameButton = "YES";
+        this.winMessage = win;
         this.positiveAnswer.put(0, new Entity(message0, false));
         this.positiveAnswer.put(1, new Entity(message1, false));
         this.positiveAnswer.put(2, new Entity(message2, false));
@@ -32,4 +33,5 @@ public class RepositoryEn extends AnswerRepository {
     String negativeMessage3 = "Answer3";
     String negativeMessage4 = "Answer4";
     String negativeMessage5 = "Answer5";
+    String win = "<h2 class="+"second"+">"+"Victory !!!"+"<h2>";
 }

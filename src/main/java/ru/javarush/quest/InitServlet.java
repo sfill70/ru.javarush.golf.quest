@@ -22,6 +22,7 @@ public class InitServlet extends HttpServlet {
     String language;
     String positiveButton;
     String negativeButton;
+    String winMessage;
     int gamesquanity;
     boolean isGameOver;
 
@@ -34,6 +35,7 @@ public class InitServlet extends HttpServlet {
 //        negativeAnswerRepository = new NegativeAnswerRepositoryRu();
         positiveButton = answerRepository.getPositiveNameButton();
         negativeButton = answerRepository.getNegativeNameButton();
+        winMessage = answerRepository.getWinMessage();
         countLevel = 0;
     }
 
@@ -62,6 +64,7 @@ public class InitServlet extends HttpServlet {
             username = req.getParameter("username");
             gamesquanity = PlayerRepository.getPlayerCount(username);
             language = req.getParameter("choiceLanguage");
+            winMessage = answerRepository.getWinMessage();
 
             downloadDataByLanguage();
 
@@ -71,6 +74,7 @@ public class InitServlet extends HttpServlet {
             currentSession.setAttribute("negativeButton", negativeButton);
             currentSession.setAttribute("positiveButton", positiveButton);
             currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
+            currentSession.setAttribute("winMessage", winMessage);
         }
 
         String radioButtonChoice = "";

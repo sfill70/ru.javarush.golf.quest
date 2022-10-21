@@ -14,7 +14,8 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<h2 class="one"> ${username} WIN!!!!</h2>
+<span>${winMessage}</span>
+<h2 class="one"> ${username}</h2>
 <br>
 <h2>Restart</h2>
 <form action="restart" method="post">

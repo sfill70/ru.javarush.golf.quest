@@ -10,6 +10,8 @@ public abstract class AnswerRepository {
     Map<Integer, Entity> negativeAnswer;
     String positiveNameButton;
     String negativeNameButton;
+    String winMessage;
+    String lossMessage;
 
     public AnswerRepository() {
         this.positiveAnswer = new HashMap<>();
@@ -40,5 +42,13 @@ public abstract class AnswerRepository {
 
     public String getNegativeNameButton() {
         return negativeNameButton;
+    }
+
+    public String getLossMessage() {
+        return lossMessage;
+    }
+
+    public String getWinMessage() {
+        return winMessage;
     }
 }

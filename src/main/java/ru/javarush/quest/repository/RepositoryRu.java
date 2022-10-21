@@ -17,6 +17,7 @@ public class RepositoryRu extends AnswerRepository {
         this.negativeAnswer.put(3, new Entity(negativeMessage3, true));
         this.negativeAnswer.put(4, new Entity(negativeMessage4, true));
         this.negativeAnswer.put(5, new Entity(negativeMessage5, true));
+        winMessage = win;
 
     }
 
@@ -32,4 +33,6 @@ public class RepositoryRu extends AnswerRepository {
     String negativeMessage3 = "Ответ3";
     String negativeMessage4 = "Ответ4";
     String negativeMessage5 = "Ответ5";
+
+    String win = "<h2 class="+"second"+">"+"Победил !!!"+"<h2>";
 }
