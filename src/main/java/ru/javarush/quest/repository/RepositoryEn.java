@@ -1,4 +1,4 @@
 package ru.javarush.quest.repository;
 
-public class RepositoryEn {
+public class RepositoryEn extends AnswerRepository{
 }
