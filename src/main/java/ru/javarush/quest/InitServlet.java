@@ -15,7 +15,7 @@ import java.net.Inet4Address;
 @WebServlet(name = "InitServlet", value = "/init-servlet")
 public class InitServlet extends HttpServlet {
 
-    AnswerRepository positiveAnswerRepository;
+    AnswerRepository answerRepository;
     AnswerRepository negativeAnswerRepository;
     int countLevel;
     String username;
@@ -30,10 +30,10 @@ public class InitServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        positiveAnswerRepository = new PositiveAnswerRepositoryRu();
-        negativeAnswerRepository = new NegativeAnswerRepositoryRu();
-        positiveButton = positiveAnswerRepository.getNameButton();
-        negativeButton = negativeAnswerRepository.getNameButton();
+        answerRepository = new RepositoryRu();
+//        negativeAnswerRepository = new NegativeAnswerRepositoryRu();
+        positiveButton = answerRepository.getPositiveNameButton();
+        negativeButton = answerRepository.getNegativeNameButton();
         countLevel = 0;
     }
 
@@ -79,18 +79,18 @@ public class InitServlet extends HttpServlet {
         }
         String answer = "";
         String message = "";
-        if (countLevel == positiveAnswerRepository.getSize()) {
+        if (countLevel == answerRepository.getSize()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
             return;
         }
         if (radioButtonChoice.isBlank() || radioButtonChoice.equals("positiveAnswer")) {
             answer = "YES!!!";
-            message = positiveAnswerRepository.getLevelMessage(countLevel);
-            isGameOver = positiveAnswerRepository.isGameOver(countLevel);
+            message = answerRepository.getLevelMessage(countLevel, true);
+            isGameOver = answerRepository.isGameOver(countLevel, true);
         } else {
             answer = "NO!!!!";
-            message = negativeAnswerRepository.getLevelMessage(countLevel);
-            isGameOver = negativeAnswerRepository.isGameOver(countLevel);
+            message = answerRepository.getLevelMessage(countLevel, false);
+            isGameOver = answerRepository.isGameOver(countLevel, false);
         }
 
         if (isGameOver) {
@@ -120,15 +120,13 @@ public class InitServlet extends HttpServlet {
 
     private void downloadDataByLanguage() {
         if (language.equals("RU")) {
-            positiveAnswerRepository = new PositiveAnswerRepositoryRu();
-            negativeAnswerRepository = new NegativeAnswerRepositoryRu();
-            positiveButton = positiveAnswerRepository.getNameButton();
-            negativeButton = negativeAnswerRepository.getNameButton();
+            answerRepository = new RepositoryRu();
+            positiveButton = answerRepository.getPositiveNameButton();
+            negativeButton = answerRepository.getNegativeNameButton();
         } else {
-            positiveAnswerRepository = new PositiveAnswerRepository();
-            negativeAnswerRepository = new NegativeAnswerRepository();
-            positiveButton = positiveAnswerRepository.getNameButton();
-            negativeButton = negativeAnswerRepository.getNameButton();
+            answerRepository = new RepositoryEn();
+            positiveButton = answerRepository.getPositiveNameButton();
+            negativeButton = answerRepository.getNegativeNameButton();
         }
     }
 
