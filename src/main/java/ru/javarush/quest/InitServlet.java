@@ -107,6 +107,7 @@ public class InitServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/mainPage.jsp").forward(req, resp);
     }
 
+
     private boolean usernameCheck(HttpServletRequest req, HttpServletResponse resp, HttpSession currentSession) throws ServletException, IOException {
         if (req.getParameter("username").isBlank() || req.getParameter("username").isEmpty()) {
             currentSession.setAttribute("blank", true);
