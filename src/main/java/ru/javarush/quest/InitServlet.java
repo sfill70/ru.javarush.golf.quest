@@ -1,6 +1,7 @@
 package ru.javarush.quest;
 
 import ru.javarush.quest.entity.Entity;
+import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.*;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import java.net.Inet4Address;
 public class InitServlet extends HttpServlet {
 
     AnswerRepository answerRepository;
-    AnswerRepository negativeAnswerRepository;
+    FactoryRepository factoryRepository;
     int countLevel;
     String username;
     String language;
@@ -26,13 +27,11 @@ public class InitServlet extends HttpServlet {
     int gamesquanity;
     boolean isGameOver;
 
-    Entity entity;
-
     @Override
     public void init() throws ServletException {
         super.init();
+        factoryRepository = new FactoryRepository();
         answerRepository = new RepositoryRu();
-//        negativeAnswerRepository = new NegativeAnswerRepositoryRu();
         positiveButton = answerRepository.getPositiveNameButton();
         negativeButton = answerRepository.getNegativeNameButton();
         winMessage = answerRepository.getWinMessage();
@@ -123,7 +122,10 @@ public class InitServlet extends HttpServlet {
     }
 
     private void downloadDataByLanguage() {
-        if (language.equals("RU")) {
+        answerRepository = factoryRepository.creatRepository(language);
+        positiveButton = answerRepository.getPositiveNameButton();
+        negativeButton = answerRepository.getNegativeNameButton();
+        /* if (language.equals("RU")) {
             answerRepository = new RepositoryRu();
             positiveButton = answerRepository.getPositiveNameButton();
             negativeButton = answerRepository.getNegativeNameButton();
@@ -131,7 +133,7 @@ public class InitServlet extends HttpServlet {
             answerRepository = new RepositoryEn();
             positiveButton = answerRepository.getPositiveNameButton();
             negativeButton = answerRepository.getNegativeNameButton();
-        }
+        }*/
     }
 
     @Override
