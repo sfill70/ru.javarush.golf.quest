@@ -50,18 +50,22 @@
     </div>
     <input type="submit" value="Ответить"/>
 </form>
-
 <br>
 <hr>
-<div class="statistic">
-    <div><b>Статистика:</b></div>
-    <div>Твой текущий IP address: <i><%= session.getAttribute("ip")%>
-    </i></div>
-    <div>Имя в игре: <i><%= session.getAttribute("username") %>
-    </i></div>
-    <div>Количество игр: <i><%= session.getAttribute("gamesquanity")%>
-    </i></div>
-</div>
+
+<c:if test="${blank_statistic}">
+    <div class="statistic">
+        <div class="statistic">
+            <div><b>${statistic[0]}</b></div>
+            <div>${statistic[1]} <i><%= session.getAttribute("ip")%>
+            </i></div>
+            <div>${statistic[2]} <i><%= session.getAttribute("username") %>
+            </i></div>
+            <div>${statistic[3]} <i><%= session.getAttribute("gamesquanity")%>
+            </i></div>
+        </div>
+    </div>
+</c:if>
 
 </body>
 </html>

@@ -18,6 +18,8 @@ public class RepositoryRu extends AnswerRepository {
         this.negativeAnswer.put(4, new Entity(negativeMessage4, true));
         this.negativeAnswer.put(5, new Entity(negativeMessage5, true));
         winMessage = win;
+        lossMessage = loss;
+        statistic = stat;
 
     }
 
@@ -34,5 +36,10 @@ public class RepositoryRu extends AnswerRepository {
     String negativeMessage4 = "Ответ4";
     String negativeMessage5 = "Ответ5";
 
-    String win = "<h2 class="+"second"+">"+"Победил !!!"+"<h2>";
+    String win = "<h2 > Победил !!! </h2>";
+
+    String loss = "<h2>" + "Хюстон, у нас проблема !!!" + "</h2>"
+            + "<span class=" + "second" + "> провалил задание игрок с ником: </span>";
+
+    String[] stat = {"Статистика:", "Твой текущий IP address:", "Имя в игре: ", "Количество игр:"};
 }

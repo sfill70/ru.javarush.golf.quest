@@ -1,17 +1,27 @@
 h1 {
     text-align: left;
     color: #fa8e47;
+    /*padding: 10px;*/
+    margin: 10px;
+}
+
+h2 {
+    color: red;
+    padding: 2px;
+    margin: 2px;
 }
 
 .one {
     color: #fa8e47;
+    font-size: 150%;
 }
 
-.second{
+.second {
     color: red;
+    font-size: 150%;
 }
 
-.statistic{
+.statistic {
     background-color: azure;
 }
 

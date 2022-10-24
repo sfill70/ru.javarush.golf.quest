@@ -5,9 +5,11 @@ import ru.javarush.quest.entity.Entity;
 public class RepositoryEn extends AnswerRepository {
     public RepositoryEn() {
         super();
-        this.negativeNameButton = "NO";
-        this.positiveNameButton = "YES";
+        this.negativeNameButton = "Disagree";
+        this.positiveNameButton = "I agree";
         this.winMessage = win;
+        lossMessage = loss;
+        statistic = stat;
         this.positiveAnswer.put(0, new Entity(message0, false));
         this.positiveAnswer.put(1, new Entity(message1, false));
         this.positiveAnswer.put(2, new Entity(message2, false));
@@ -33,5 +35,9 @@ public class RepositoryEn extends AnswerRepository {
     String negativeMessage3 = "Answer3";
     String negativeMessage4 = "Answer4";
     String negativeMessage5 = "Answer5";
-    String win = "<h2 class="+"second"+">"+"Victory !!!"+"<h2>";
+    String win = "<h2> Victory !!! </h2>";
+
+    String loss = "<h2>" + "Houston, we have a problem !!!" + "</h2>"
+            + "<span class=" + "second" + "> failed mission player named: </span>";
+    String[] stat = {"Statistic:", "Your current IP address:", "Name in the game: ", "Count game:"};
 }

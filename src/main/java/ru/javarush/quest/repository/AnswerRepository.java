@@ -12,6 +12,7 @@ public abstract class AnswerRepository {
     String negativeNameButton;
     String winMessage;
     String lossMessage;
+    String[] statistic;
 
     public AnswerRepository() {
         this.positiveAnswer = new HashMap<>();
@@ -19,16 +20,17 @@ public abstract class AnswerRepository {
     }
 
     public Entity getEntity(int level, boolean positive) {
-        if(positive){
-        return positiveAnswer.get(level);}
+        if (positive) {
+            return positiveAnswer.get(level);
+        }
         return negativeAnswer.get(level);
     }
 
     public String getLevelMessage(int level, boolean positive) {
-        return getEntity(level,positive).getMessage();
+        return getEntity(level, positive).getMessage();
     }
 
-    public boolean isGameOver(int level,  boolean positive) {
+    public boolean isGameOver(int level, boolean positive) {
         return getEntity(level, positive).isGameOver();
     }
 
@@ -50,5 +52,9 @@ public abstract class AnswerRepository {
 
     public String getWinMessage() {
         return winMessage;
+    }
+
+    public String[] getStatistic() {
+        return statistic;
     }
 }

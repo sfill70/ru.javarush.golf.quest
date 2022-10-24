@@ -1,6 +1,5 @@
 package ru.javarush.quest;
 
-import ru.javarush.quest.entity.Entity;
 import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.*;
 
@@ -24,21 +23,21 @@ public class InitServlet extends HttpServlet {
     String positiveButton;
     String negativeButton;
     String winMessage;
+    String lossMessage;
     int gamesquanity;
     boolean isGameOver;
+    String[] statistic;
 
     @Override
     public void init() throws ServletException {
         super.init();
         factoryRepository = new FactoryRepository();
-        answerRepository = new RepositoryRu();
-        positiveButton = answerRepository.getPositiveNameButton();
-        negativeButton = answerRepository.getNegativeNameButton();
-        winMessage = answerRepository.getWinMessage();
+        answerRepository = factoryRepository.creatRepository("RU");
         countLevel = 0;
     }
 
-    //    Не используется, пригодится для сохранения данных, если req.getSession().invalidate();
+    /*Не используется, пригодится для сохранения данных, если при restart
+    чистить сессию req.getSession().invalidate();*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession currentSession = req.getSession(true);
@@ -63,7 +62,6 @@ public class InitServlet extends HttpServlet {
             username = req.getParameter("username");
             gamesquanity = PlayerRepository.getPlayerCount(username);
             language = req.getParameter("choiceLanguage");
-            winMessage = answerRepository.getWinMessage();
 
             downloadDataByLanguage();
 
@@ -74,16 +72,20 @@ public class InitServlet extends HttpServlet {
             currentSession.setAttribute("positiveButton", positiveButton);
             currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
             currentSession.setAttribute("winMessage", winMessage);
+            currentSession.setAttribute("lossMessage", lossMessage);
+            currentSession.setAttribute("statistic", statistic);
+            currentSession.setAttribute("blank_statistic", true);
         }
 
         String radioButtonChoice = "";
         if (formName.equals("endgame")) {
             radioButtonChoice = req.getParameter("choice");
         }
-        String answer = "";
-        String message = "";
+        String answer;
+        String message;
         if (countLevel == answerRepository.getSize()) {
-            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
+//            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
+            getServletContext().getRequestDispatcher("/victory.jsp").forward(req, resp);
             return;
         }
         if (radioButtonChoice.isBlank() || radioButtonChoice.equals("positiveAnswer")) {
@@ -91,13 +93,14 @@ public class InitServlet extends HttpServlet {
             message = answerRepository.getLevelMessage(countLevel, true);
             isGameOver = answerRepository.isGameOver(countLevel, true);
         } else {
-            answer = "NO!!!!";
+            answer = "NO!!!";
             message = answerRepository.getLevelMessage(countLevel, false);
             isGameOver = answerRepository.isGameOver(countLevel, false);
         }
 
         if (isGameOver) {
             currentSession.setAttribute("message", message);
+//            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
             return;
         }
@@ -110,12 +113,16 @@ public class InitServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/mainPage.jsp").forward(req, resp);
     }
 
-
+    /*Здесь можно организовать валидацию "username"*/
     private boolean usernameCheck(HttpServletRequest req, HttpServletResponse resp, HttpSession currentSession) throws ServletException, IOException {
         if (req.getParameter("username").isBlank() || req.getParameter("username").isEmpty()) {
             currentSession.setAttribute("blank", true);
-            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
-            resp.sendRedirect(req.getContextPath() + "/restart");
+            resp.sendRedirect(req.getContextPath() + "/");
+            return true;
+        }
+        if (req.getParameter("username").contains("*")||req.getParameter("username").contains("\\")){
+            currentSession.setAttribute("blank", true);
+            resp.sendRedirect(req.getContextPath() + "/");
             return true;
         }
         return false;
@@ -125,15 +132,10 @@ public class InitServlet extends HttpServlet {
         answerRepository = factoryRepository.creatRepository(language);
         positiveButton = answerRepository.getPositiveNameButton();
         negativeButton = answerRepository.getNegativeNameButton();
-        /* if (language.equals("RU")) {
-            answerRepository = new RepositoryRu();
-            positiveButton = answerRepository.getPositiveNameButton();
-            negativeButton = answerRepository.getNegativeNameButton();
-        } else {
-            answerRepository = new RepositoryEn();
-            positiveButton = answerRepository.getPositiveNameButton();
-            negativeButton = answerRepository.getNegativeNameButton();
-        }*/
+        winMessage = answerRepository.getWinMessage();
+        lossMessage = answerRepository.getLossMessage();
+        statistic = answerRepository.getStatistic();
+
     }
 
     @Override

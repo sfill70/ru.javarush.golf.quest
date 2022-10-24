@@ -14,7 +14,8 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<h1> ${username} Loss!!</h1>
+${lossMessage}
+<span class="one"> ${username}</span>
 <br>
 <h4>${message}</h4>
 <br>
