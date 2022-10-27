@@ -3,4 +3,29 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <servlet>
+        <servlet-name>InitServlet</servlet-name>
+        <servlet-class>ru.javarush.quest.InitServlet</servlet-class>
+               <!--<init-param>
+            <param-name>jdbc-driver</param-name>
+            <param-value>sun.jdbc.odbc.JdbcOdbcDriver</param-value>
+        </init-param>-->
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>InitServlet</servlet-name>
+        <url-pattern>/init-servlet</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>XXSFilter</filter-name>
+        <filter-class>ru.javarush.quest.filter.XXSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XXSFilter</filter-name>
+        <url-pattern>/init-servlet</url-pattern>
+    </filter-mapping>
+
+
 </web-app>

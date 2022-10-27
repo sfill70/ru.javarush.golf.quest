@@ -2,7 +2,9 @@ package ru.javarush.quest;
 
 import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.*;
+import ru.javarush.quest.filter.*;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.util.Enumeration;
 
 @WebServlet(name = "InitServlet", value = "/init-servlet")
 public class InitServlet extends HttpServlet {
@@ -34,9 +37,19 @@ public class InitServlet extends HttpServlet {
         factoryRepository = new FactoryRepository();
         answerRepository = factoryRepository.creatRepository("RU");
         countLevel = 0;
+        /*
+        ServletConfig config = this.getServletConfig();
+        System.out.println(config.getInitParameterNames());
+
+        Enumeration<String> initParameterNames = config.getInitParameterNames();
+        while (initParameterNames.hasMoreElements()){
+            String key = initParameterNames.nextElement();
+            System.out.printf("%s: %s\n", key, config.getInitParameter(key));
+        }*/
     }
 
-    /*Не используется, пригодится для сохранения данных, если при restart
+    /*Истользуется при переходе по ссылке Restart
+    Не используется, пригодится для сохранения данных, если при restart
     чистить сессию req.getSession().invalidate();*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,10 +61,22 @@ public class InitServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Service!!!!!!!!!!!!!");
+        String httpMethod = req.getMethod();
+        String uri = req.getRequestURI();
+        if(httpMethod.equalsIgnoreCase("GET")){
+        doGet(req, resp);
+        return;}
+        doPost(req, resp);
+    }
+
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Post!!!!!!!!!!!!!");
         HttpSession currentSession = req.getSession(true);
         String formName = req.getParameter("formname");
-
         if (formName.equals("prologue")) {
             if (usernameCheck(req, resp, currentSession)) {
                 return;
@@ -64,7 +89,7 @@ public class InitServlet extends HttpServlet {
             language = req.getParameter("choiceLanguage");
 
             downloadDataByLanguage();
-
+            currentSession = req.getSession(true);
             currentSession.setAttribute("username", username);
             currentSession.setAttribute("gamesquanity", gamesquanity);
             currentSession.setAttribute("language", language);
@@ -120,22 +145,23 @@ public class InitServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/");
             return true;
         }
-        if (req.getParameter("username").contains("*")||req.getParameter("username").contains("\\")){
+        /*if (req.getParameter("username").contains("*") || req.getParameter("username").contains("\\")) {
             currentSession.setAttribute("blank", true);
             resp.sendRedirect(req.getContextPath() + "/");
             return true;
-        }
+        }*/
         return false;
     }
 
     private void downloadDataByLanguage() {
         answerRepository = factoryRepository.creatRepository(language);
+        //Убрать после тестов
+//        answerRepository = new RepositoryRu();
         positiveButton = answerRepository.getPositiveNameButton();
         negativeButton = answerRepository.getNegativeNameButton();
         winMessage = answerRepository.getWinMessage();
         lossMessage = answerRepository.getLossMessage();
         statistic = answerRepository.getStatistic();
-
     }
 
     @Override
