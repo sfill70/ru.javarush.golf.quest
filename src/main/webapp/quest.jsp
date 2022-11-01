@@ -9,7 +9,7 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<h1><%= "Level" %>
+<h1><%= "Level"%> ${countLevel}
 </h1>
 <br/>
 <a href="restart">Restart</a>
@@ -19,7 +19,7 @@
 <hr>
 <h4>${message}</h4>
 
-<form method="POST" action="init-servlet">
+<form method="POST" action="/init-servlet<%--/${countLevel}--%>">
     <div class="padding-inside">
         <input type="hidden" name="formname" value="endgame"/>
         <div>

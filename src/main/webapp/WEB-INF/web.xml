@@ -4,6 +4,10 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>InitServlet</servlet-name>
         <servlet-class>ru.javarush.quest.InitServlet</servlet-class>
@@ -16,15 +20,15 @@
     <servlet-mapping>
         <servlet-name>InitServlet</servlet-name>
         <url-pattern>/init-servlet</url-pattern>
+<!--        <url-pattern>/init-servlet/*</url-pattern>-->
     </servlet-mapping>
-
     <filter>
         <filter-name>XXSFilter</filter-name>
         <filter-class>ru.javarush.quest.filter.XXSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>XXSFilter</filter-name>
-        <url-pattern>/init-servlet</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
 

@@ -25,14 +25,14 @@
 </c:if>
 
 <h4>Введите имя</h4>
-<form method="post" action="init-servlet">
+<form method="post" action="/init-servlet">
     <input type="hidden" name="formname" value="prologue"/>
     <label>
         <c:if test="${username == null}">
             <input name="username" type="text" value="">
         </c:if>
         <c:if test="${username != null}">
-            <input name="username" type="text" value="${username}">
+            <input name="username" type="text" value="${username}"<%-- placeholder=${username}--%>>
         </c:if>
     </label>
     <br>
@@ -55,7 +55,7 @@
 
 <c:if test="${blank_statistic}">
     <div class="statistic">
-        <div class="statistic">
+        <div>
             <div><b>${statistic[0]}</b></div>
             <div>${statistic[1]} <i><%= session.getAttribute("ip")%>
             </i></div>

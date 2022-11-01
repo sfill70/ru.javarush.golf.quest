@@ -37,7 +37,7 @@ public class InitServletTest {
     FactoryRepository factoryRepository;
 
     private final String path = "/init-servlet";
-    private final String path2 = "/mainPage.jsp";
+    private final String path2 = "/questquest.jsp";
     private final String path3 = "/";
     String path4 = "/index.jsp";
 
@@ -65,18 +65,18 @@ public class InitServletTest {
             "formname, prologue",
             "init-servlet, prologue",
             "prologue, /init.jsp",
-            "prologue, /mainPage.jsp",
+            "prologue, /questquest.jsp",
             "prologue, /init-servlet",
             "prologue, init-servlet",
             "prologue, /",
             "choice, /init.jsp",
             "choiceLanguage, /init.jsp",
-            "choiceLanguage, /mainPage.jsp",
+            "choiceLanguage, /quest.jsp",
             "choiceLanguage, /init-servlet",
-            "endgame,  /mainPage.jsp",
+            "endgame,  /quest.jsp",
             "endgame,  /init-servlet",
             "endgame,  init-servlet",
-            "choice, /mainPage.jsp",
+            "choice, /quest.jsp",
             "choice, formname"
     })*/
     public void PostTest(/*String formName, String questionResponseBranch, String pathToJSP*/) throws ServletException, IOException {

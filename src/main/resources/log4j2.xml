@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!--<!DOCTYPE project [<!ENTITY directory "D:/IdeaProjects/ru.javarush.golf.quest">]/>-->
+<Configuration status="ERROR">
+    <!--    по умолчанию домашней директорией для записи файлов считается TomCat/bin-->
+<!--    Как вынести Path в переменную???-->
+    <Appenders>
+        <!--<properties>
+            <homedir>
+                D:/IdeaProjects/ru.javarush.golf.quest
+            </homedir>
+        </properties>
+        <property name="project_directory" value="D:/IdeaProjects/ru.javarush.golf.quest"/>-->
+        <RollingFile name="DebugLog" fileName="D:/IdeaProjects/ru.javarush.golf.quest/logs/debug.log"
+                     filePattern="D:/IdeaProjects/ru.javarush.golf.quest/logs/debug.%d{yyyy-MM-dd}.log"
+                     ignoreExceptions="false">
+            <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <PatternLayout pattern="%d %-5p %t: %m%n"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="D:/IdeaProjects/ru.javarush.golf.quest/logs" maxDepth="2">
+                    <IfFileName glob="debug.*.log"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="ErrorLog" fileName="D:/IdeaProjects/ru.javarush.golf.quest/logs/error.log"
+                     filePattern="D:/IdeaProjects/ru.javarush.golf.quest/logs/error.%d{yyyy-MM-dd}.log"
+                     ignoreExceptions="false">
+            <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <PatternLayout pattern="%d %-5p %t: %m%n"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="D:/IdeaProjects/ru.javarush.golf.quest/logs" maxDepth="2">
+                    <IfFileName glob="error.*.log"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="DebugLog" level="DEBUG"/>
+            <AppenderRef ref="ErrorLog" level="error"/>
+        </Root>
+    </Loggers>
+</Configuration>
+

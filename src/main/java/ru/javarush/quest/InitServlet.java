@@ -2,8 +2,8 @@ package ru.javarush.quest;
 
 import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.*;
-import ru.javarush.quest.filter.*;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,13 +11,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.net.Inet4Address;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.Enumeration;
 
-@WebServlet(name = "InitServlet", value = "/init-servlet")
-public class InitServlet extends HttpServlet {
 
+@WebServlet(name = "InitServlet"/*, value = "/init-servlet/*"*/)
+public class InitServlet extends HttpServlet {
+    HttpSession currentSession;
     AnswerRepository answerRepository;
     FactoryRepository factoryRepository;
     int countLevel;
@@ -30,10 +40,31 @@ public class InitServlet extends HttpServlet {
     int gamesquanity;
     boolean isGameOver;
     String[] statistic;
+    private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
+
 
     @Override
     public void init() throws ServletException {
         super.init();
+
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        String projectPathOut = loader.getResource("").getPath();
+        String[] arrayProjectPath = projectPathOut.split("/");
+        String projectPath = "";
+        for (String st : arrayProjectPath
+        ) {
+            if (!st.isEmpty() || !st.isBlank()) {
+                projectPath = projectPath + st + File.separator;
+            }
+            if (st.equals("ru.javarush.golf.quest")) {
+                break;
+            }
+        }
+        logger.debug(projectPath);
+        logger.debug(projectPathOut);
+        logger.debug(Arrays.toString(arrayProjectPath));
+        logger.debug(loader.getResource("").getPath());
+        logger.debug(System.getProperty("user.dir"));
         factoryRepository = new FactoryRepository();
         answerRepository = factoryRepository.creatRepository("RU");
         countLevel = 0;
@@ -48,34 +79,42 @@ public class InitServlet extends HttpServlet {
         }*/
     }
 
+    @Override
+
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.debug("Service!!!!!!!!!!!!!");
+        currentSession = req.getSession(true);
+        if (req.getDispatcherType() == DispatcherType.ERROR) {
+            resp.sendRedirect(req.getContextPath() + "/error.jsp");
+        }
+        String httpMethod = req.getMethod();
+        String uri = req.getRequestURI();
+        logger.debug(uri);
+        if (httpMethod.equalsIgnoreCase("GET")) {
+            doGet(req, resp);
+            return;
+        }
+        doPost(req, resp);
+    }
+
     /*Истользуется при переходе по ссылке Restart
     Не используется, пригодится для сохранения данных, если при restart
     чистить сессию req.getSession().invalidate();*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession currentSession = req.getSession(true);
+//        HttpSession currentSession = req.getSession(true);
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
         currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
         getServletContext().getRequestDispatcher("/").forward(req, resp);
     }
 
-    @Override
-
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Service!!!!!!!!!!!!!");
-        String httpMethod = req.getMethod();
-        String uri = req.getRequestURI();
-        if(httpMethod.equalsIgnoreCase("GET")){
-        doGet(req, resp);
-        return;}
-        doPost(req, resp);
-    }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Post!!!!!!!!!!!!!");
-        HttpSession currentSession = req.getSession(true);
+        logger.debug("Post!!!!!!!!!!!!!");
+//        currentSession = req.getSession(true);
+        logger.debug(String.valueOf(currentSession.hashCode()));
         String formName = req.getParameter("formname");
         if (formName.equals("prologue")) {
             if (usernameCheck(req, resp, currentSession)) {
@@ -89,32 +128,24 @@ public class InitServlet extends HttpServlet {
             language = req.getParameter("choiceLanguage");
 
             downloadDataByLanguage();
-            currentSession = req.getSession(true);
-            currentSession.setAttribute("username", username);
-            currentSession.setAttribute("gamesquanity", gamesquanity);
-            currentSession.setAttribute("language", language);
-            currentSession.setAttribute("negativeButton", negativeButton);
-            currentSession.setAttribute("positiveButton", positiveButton);
-            currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
-            currentSession.setAttribute("winMessage", winMessage);
-            currentSession.setAttribute("lossMessage", lossMessage);
-            currentSession.setAttribute("statistic", statistic);
-            currentSession.setAttribute("blank_statistic", true);
+//            dataTransferPerSession
+            dataTransferPerSession(req);
         }
 
         String radioButtonChoice = "";
-        if (formName.equals("endgame")) {
+        if (formName.equalsIgnoreCase("endgame")) {
             radioButtonChoice = req.getParameter("choice");
         }
         String answer;
         String message;
         if (countLevel == answerRepository.getSize()) {
-//            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
-            getServletContext().getRequestDispatcher("/victory.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
+//            getServletContext().getRequestDispatcher("/victory.jsp").forward(req, resp);
             return;
         }
         if (radioButtonChoice.isBlank() || radioButtonChoice.equals("positiveAnswer")) {
             answer = "YES!!!";
+
             message = answerRepository.getLevelMessage(countLevel, true);
             isGameOver = answerRepository.isGameOver(countLevel, true);
         } else {
@@ -125,17 +156,21 @@ public class InitServlet extends HttpServlet {
 
         if (isGameOver) {
             currentSession.setAttribute("message", message);
-//            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
-            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
+//            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
             return;
         }
 
         countLevel++;
+        currentSession.setAttribute("countLevel", countLevel);
         currentSession.setAttribute("answer", answer);
+        currentSession.setAttribute("countLevel", countLevel);
         currentSession.setAttribute("message", message);
         //Можно убрать
         currentSession.setAttribute("isGameOver", isGameOver);
-        getServletContext().getRequestDispatcher("/mainPage.jsp").forward(req, resp);
+
+//        getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/quest.jsp");
     }
 
     /*Здесь можно организовать валидацию "username"*/
@@ -145,11 +180,11 @@ public class InitServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/");
             return true;
         }
-        /*if (req.getParameter("username").contains("*") || req.getParameter("username").contains("\\")) {
+        if (req.getParameter("username").contains("*") || req.getParameter("username").contains("\\")) {
             currentSession.setAttribute("blank", true);
             resp.sendRedirect(req.getContextPath() + "/");
             return true;
-        }*/
+        }
         return false;
     }
 
@@ -162,6 +197,20 @@ public class InitServlet extends HttpServlet {
         winMessage = answerRepository.getWinMessage();
         lossMessage = answerRepository.getLossMessage();
         statistic = answerRepository.getStatistic();
+    }
+
+    private void dataTransferPerSession(HttpServletRequest req) throws UnknownHostException {
+        currentSession = req.getSession(true);
+        currentSession.setAttribute("username", username);
+        currentSession.setAttribute("gamesquanity", gamesquanity);
+        currentSession.setAttribute("language", language);
+        currentSession.setAttribute("negativeButton", negativeButton);
+        currentSession.setAttribute("positiveButton", positiveButton);
+        currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
+        currentSession.setAttribute("winMessage", winMessage);
+        currentSession.setAttribute("lossMessage", lossMessage);
+        currentSession.setAttribute("statistic", statistic);
+        currentSession.setAttribute("blank_statistic", true);
     }
 
     @Override
