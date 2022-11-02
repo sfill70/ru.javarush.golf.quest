@@ -25,7 +25,7 @@
 </c:if>
 
 <h4>Введите имя</h4>
-<form method="post" action="/init-servlet">
+<form method="post" action="/start"<%--"/init-servlet"--%>>
     <input type="hidden" name="formname" value="prologue"/>
     <label>
         <c:if test="${username == null}">
