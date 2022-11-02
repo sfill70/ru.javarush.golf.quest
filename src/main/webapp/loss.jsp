@@ -18,6 +18,7 @@ ${lossMessage}
 <span class="one"> ${username}</span>
 <br>
 <h4>${message}</h4>
+<h4>${countLevel}</h4>
 <br>
 <h2>Restart</h2>
 <br>

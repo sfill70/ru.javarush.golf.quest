@@ -20,6 +20,7 @@
     <servlet-mapping>
         <servlet-name>InitServlet</servlet-name>
         <url-pattern>/init-servlet</url-pattern>
+        <url-pattern>/start</url-pattern>
 <!--        <url-pattern>/init-servlet/*</url-pattern>-->
     </servlet-mapping>
     <filter>
