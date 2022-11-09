@@ -1,3 +1,9 @@
+#container {
+    text-align: left;
+    /*padding: 10px;*/
+    margin: 10px;
+}
+
 h1 {
     text-align: left;
     color: #fa8e47;
@@ -11,6 +17,19 @@ h2 {
     margin: 2px;
 }
 
+.form-group {
+    background: #f5f5dc;
+    margin: 1px;
+    border: 4mm ridge rgba(211, 220, 50, .6);
+    width: 70%;
+    /*padding: 5px;*/
+}
+
+#alert {
+    width: 70%;
+}
+
+
 .one {
     color: #fa8e47;
     font-size: 150%;
@@ -23,8 +42,10 @@ h2 {
 
 .statistic {
     background-color: azure;
+    width: 70%;
 }
 
+/*
 td {
     border: 3px solid black;
     padding: 10px;
@@ -35,4 +56,4 @@ td {
     font-size: 50px;
     text-align: center;
     empty-cells: show;
-}
+}*/
