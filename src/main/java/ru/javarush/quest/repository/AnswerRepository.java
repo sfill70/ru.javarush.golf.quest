@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AnswerRepository {
+    /**
+     * these repositories contain messages that will be displayed if the game is continued or the game is over.
+     * positiveAnswer - game message to continue the game, negativeAnswer - final message if the game is lost.*/
     Map<Integer, Entity> positiveAnswer;
     Map<Integer, Entity> negativeAnswer;
     String positiveNameButton;

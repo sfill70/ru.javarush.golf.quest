@@ -18,13 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
 
 @WebServlet(name = "InitServlet"/*, value = "/init-servlet/*"*/)
 public class InitServlet extends HttpServlet {
     HttpSession currentSession;
-    AnswerRepository answerRepository;
+    public AnswerRepository answerRepository;
     FactoryRepository factoryRepository;
     int countLevel;
     String username;
@@ -42,10 +41,13 @@ public class InitServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
 
 
+
     @Override
     public void init() throws ServletException {
         super.init();
         countLevel = 0;
+        this.factoryRepository = new FactoryRepository();
+//        answerRepository = factoryRepository.creatRepository("RU");
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
         String[] arrayProjectPath = projectPathOut.split("/");
@@ -59,11 +61,11 @@ public class InitServlet extends HttpServlet {
                 break;
             }
         }
+
+
         logger.debug(projectPath);
         logger.debug(System.getProperty("user.dir"));
-        factoryRepository = new FactoryRepository();
-        answerRepository = factoryRepository.creatRepository("RU");
-        countLevel = 0;
+
         /*
         ServletConfig config = this.getServletConfig();
         System.out.println(config.getInitParameterNames());
@@ -78,7 +80,7 @@ public class InitServlet extends HttpServlet {
     @Override
 
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug("Service!!!!!!!!!!!!!");
+        logger.debug("Service");
         currentSession = req.getSession(true);
         if (req.getDispatcherType() == DispatcherType.ERROR) {
             resp.sendRedirect(req.getContextPath() + "/error.jsp");
@@ -87,6 +89,10 @@ public class InitServlet extends HttpServlet {
         String uri = req.getRequestURI();
         logger.debug(uri);
 
+        if (httpMethod.equalsIgnoreCase("GET")) {
+            doGet(req, resp);
+            return;
+        }
         if (uri.equals("/start")) {
             if (startQuest(req, resp)) {
                 return;
@@ -96,10 +102,7 @@ public class InitServlet extends HttpServlet {
                 return;
             }
         }
-        if (httpMethod.equalsIgnoreCase("GET")) {
-            doGet(req, resp);
-            return;
-        }
+
         doPost(req, resp);
     }
 
@@ -110,6 +113,8 @@ public class InitServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        HttpSession currentSession = req.getSession(true);
+        currentSession.setAttribute("statistic", statistic);
+        currentSession.setAttribute("blank_statistic", true);
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
         currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
@@ -119,7 +124,7 @@ public class InitServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug("Post!!!!!!!!!!!!!");
+        logger.debug("Post");
         logger.debug(String.valueOf(currentSession.hashCode()));
 
         if (isGameOver) {
@@ -137,7 +142,8 @@ public class InitServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/quest.jsp");
     }
 
-    private boolean startQuest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public boolean startQuest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.debug(req.getContextPath());
         if (usernameCheck(req, resp, currentSession)) {
             return true;
         }
@@ -148,7 +154,7 @@ public class InitServlet extends HttpServlet {
         gamesquanity = PlayerRepository.getPlayerCount(username);
         language = req.getParameter("choiceLanguage");
 
-        downloadDataByLanguage();
+        downloadDataByLanguage(language);
         dataTransferPerSession(req);
         getDataFromRepository(true);
         return false;
@@ -170,7 +176,7 @@ public class InitServlet extends HttpServlet {
         return false;
     }
 
-    private void downloadDataByLanguage() {
+    private void downloadDataByLanguage(String language) {
         answerRepository = factoryRepository.creatRepository(language);
         //Убрать после тестов
 //        answerRepository = new RepositoryRu();
@@ -197,8 +203,8 @@ public class InitServlet extends HttpServlet {
 
     private void getDataFromRepository(boolean positiveAnswer) {
         answer = String.valueOf(positiveAnswer);
-        message = new RepositoryRu().getLevelMessage(countLevel, positiveAnswer);
-        isGameOver = new RepositoryRu().isGameOver(countLevel, positiveAnswer);
+        message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
+        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {

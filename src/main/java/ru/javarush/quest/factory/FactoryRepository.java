@@ -20,7 +20,7 @@ public class FactoryRepository {
     public static void main(String[] args) {
         FactoryRepository factoryRepository = new FactoryRepository();
 
-        System.out.println(factoryRepository.creatRepository("RU").getNegativeNameButton());
+        System.out.println(factoryRepository.creatRepository("EN").getNegativeNameButton());
 
     }
 }
