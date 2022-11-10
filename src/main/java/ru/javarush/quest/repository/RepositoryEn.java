@@ -3,28 +3,8 @@ package ru.javarush.quest.repository;
 import ru.javarush.quest.entity.Entity;
 
 public class RepositoryEn extends AnswerRepository {
-/*    public RepositoryEn() {
+    public RepositoryEn() {
         super();
-        this.negativeNameButton = "Disagree";
-        this.positiveNameButton = "I agree";
-        this.winMessage = win;
-        lossMessage = loss;
-        statistic = stat;
-        this.positiveAnswer.put(0, new Entity(message0, false));
-        this.positiveAnswer.put(1, new Entity(message1, false));
-        this.positiveAnswer.put(2, new Entity(message2, false));
-        this.positiveAnswer.put(3, new Entity(message3, false));
-        this.positiveAnswer.put(4, new Entity(message4, false));
-        this.negativeAnswer.put(1, new Entity(negativeMessage1, true));
-        this.negativeAnswer.put(2, new Entity(negativeMessage2, true));
-        this.negativeAnswer.put(3, new Entity(negativeMessage3, true));
-        this.negativeAnswer.put(4, new Entity(negativeMessage4, true));
-        this.negativeAnswer.put(5, new Entity(negativeMessage5, true));
-
-    }*/
-
-    public RepositoryEn(String st) {
-        super(st);
         this.negativeNameButton = "Disagree";
         this.positiveNameButton = "I agree";
         this.winMessage = win;

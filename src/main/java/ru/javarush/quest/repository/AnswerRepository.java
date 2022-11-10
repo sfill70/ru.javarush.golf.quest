@@ -9,59 +9,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AnswerRepository {
-    /**
-     * these repositories contain messages that will be displayed if the game is continued or the game is over.
-     * positiveAnswer - game message to continue the game, negativeAnswer - final message if the game is lost.
-     */
-    Map<Integer, Entity> positiveAnswer;
-    Map<Integer, Entity> negativeAnswer;
-
     Map<Integer, Entity> answer;
     String positiveNameButton;
     String negativeNameButton;
     String winMessage;
     String lossMessage;
     String[] statistic;
-    private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
 
-    /*public AnswerRepository() {
-        this.positiveAnswer = new HashMap<>();
-        this.negativeAnswer = new HashMap<>();
-    }*/
+    private static final Logger logger = LoggerFactory.getLogger(AnswerRepository.class);
 
-    public AnswerRepository(String st) {
+    public AnswerRepository() {
         this.answer = new HashMap<>();
     }
-
-    /*public Entity getEntity(int level, boolean positive) {
-        if (positive) {
-            return positiveAnswer.get(level);
-        }
-        return negativeAnswer.get(level);
-    }*/
 
     public Entity getEntity(int level) {
         return answer.get(level);
     }
-    /*public String getLevelMessage(int level, boolean positive) {
 
-        return getEntity(level, positive).getMessage();
-    }*/
-
-    public String getLevelMessage(int level, boolean positive, String s) {
+    public String getLevelMessage(int level, boolean positive) {
         if (positive) {
             return getEntity(level).getMessage();
         }
         return getEntity(level).getMessageEndGame();
     }
 
-    /*public boolean isGameOver(int level, boolean positive) {
-        return getEntity(level, positive).isGameOver();
-    }*/
-
-    public boolean isGameOver(int level, boolean positive, String s) {
-        logger.error(String.valueOf(positive && getEntity(level).isGameOver()) + " isG = "
-                + getEntity(level).isGameOver() + "/ " + positive);
+    public boolean isGameOver(int level, boolean positive) {
         return positive == getEntity(level).isGameOver();
     }
 

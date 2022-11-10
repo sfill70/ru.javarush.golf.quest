@@ -10,14 +10,14 @@ import ru.javarush.quest.repository.RepositoryRu;
 public class FactoryRepository {
     private static final Logger logger = LoggerFactory.getLogger(FactoryRepository.class);
     public AnswerRepository creatRepository(String language) {
-        logger.debug("Fabrica");
+        logger.debug(" FactoryRepository");
         switch (language) {
             case "RU":
-                return new RepositoryRu("");
+                return new RepositoryRu();
             case "EN":
-                return new RepositoryEn("");
+                return new RepositoryEn();
             default:
-                return new RepositoryRu("");
+                return new RepositoryRu();
         }
     }
 
@@ -25,7 +25,6 @@ public class FactoryRepository {
         FactoryRepository factoryRepository = new FactoryRepository();
 
         System.out.println(factoryRepository.creatRepository("EN").getNegativeNameButton());
-        System.out.println((!true&&true));
 
     }
 }

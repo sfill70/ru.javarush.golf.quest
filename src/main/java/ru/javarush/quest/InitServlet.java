@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-
-@WebServlet(name = "InitServlet"/*, value = "/init-servlet/*"*/)
+/*все настройки в web.xml*/
+@WebServlet(name = "InitServlet")
 public class InitServlet extends HttpServlet {
     HttpSession currentSession;
     public AnswerRepository answerRepository;
@@ -47,17 +47,8 @@ public class InitServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         countLevel = 0;
-        try {
-            logger.debug(URLDecoder.decode(InitServlet.class
-                    .getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .getPath(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-        this.factoryRepository = new FactoryRepository();
-//        answerRepository = factoryRepository.creatRepository("RU");
+        factoryRepository = new FactoryRepository();
+        /*Нахождение директории проекта*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
         String[] arrayProjectPath = projectPathOut.split("/");
@@ -71,8 +62,6 @@ public class InitServlet extends HttpServlet {
                 break;
             }
         }
-
-
         logger.debug(projectPath);
         logger.debug(System.getProperty("user.dir"));
     }
@@ -102,12 +91,11 @@ public class InitServlet extends HttpServlet {
                 return;
             }
         }
-
         doPost(req, resp);
     }
 
 
-    /*Истользуется при переходе по ссылке Restart для сохранения данных, если при restart
+    /*Истользуется при переходе по ссылке Restart для сохраняет данные, если при restart
     чистить сессию req.getSession().invalidate();*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -135,7 +123,6 @@ public class InitServlet extends HttpServlet {
         currentSession.setAttribute("countLevel", countLevel);
         currentSession.setAttribute("answer", answer);
         currentSession.setAttribute("message", message);
-
 //        getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
         resp.sendRedirect(req.getContextPath() + "/quest.jsp");
     }
@@ -201,12 +188,11 @@ public class InitServlet extends HttpServlet {
     private void getDataFromRepository(boolean positiveAnswer) {
         answer = String.valueOf(positiveAnswer);
         logger.error(answer);
-        message = answerRepository.getLevelMessage(countLevel, positiveAnswer, "");
-        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer, "");
+        message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
+        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
         if (isGameOver) {
-            message = answerRepository.getLevelMessage(countLevel - 1, positiveAnswer, "");
+            message = answerRepository.getLevelMessage(countLevel - 1, positiveAnswer);
         }
-        logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
