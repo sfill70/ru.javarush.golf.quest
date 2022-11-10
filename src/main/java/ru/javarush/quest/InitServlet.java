@@ -46,7 +46,6 @@ public class InitServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        countLevel = 0;
         factoryRepository = new FactoryRepository();
         /*Нахождение директории проекта*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -133,7 +132,7 @@ public class InitServlet extends HttpServlet {
         }
         currentSession.setAttribute("blank", false);
         countLevel = 0;
-        isGameOver = false;
+//        isGameOver = false;
         username = req.getParameter("username");
         gamesquanity = PlayerRepository.getPlayerCount(username);
         language = req.getParameter("choiceLanguage");
@@ -190,9 +189,6 @@ public class InitServlet extends HttpServlet {
         logger.error(answer);
         message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
         isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
-        if (isGameOver) {
-            message = answerRepository.getLevelMessage(countLevel - 1, positiveAnswer);
-        }
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
