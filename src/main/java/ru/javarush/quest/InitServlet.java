@@ -43,7 +43,6 @@ public class InitServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
 
 
-
     @Override
     public void init() throws ServletException {
         super.init();
@@ -108,8 +107,7 @@ public class InitServlet extends HttpServlet {
     }
 
 
-    /*Истользуется при переходе по ссылке Restart
-    Не используется, пригодится для сохранения данных, если при restart
+    /*Истользуется при переходе по ссылке Restart для сохранения данных, если при restart
     чистить сессию req.getSession().invalidate();*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -136,7 +134,6 @@ public class InitServlet extends HttpServlet {
         countLevel++;
         currentSession.setAttribute("countLevel", countLevel);
         currentSession.setAttribute("answer", answer);
-        currentSession.setAttribute("countLevel", countLevel);
         currentSession.setAttribute("message", message);
 
 //        getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
@@ -144,7 +141,6 @@ public class InitServlet extends HttpServlet {
     }
 
     public boolean startQuest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug(req.getContextPath());
         if (usernameCheck(req, resp, currentSession)) {
             return true;
         }
@@ -158,6 +154,7 @@ public class InitServlet extends HttpServlet {
         downloadDataByLanguage(language);
         dataTransferPerSession(req);
         getDataFromRepository(true);
+
         return false;
     }
 
@@ -179,13 +176,12 @@ public class InitServlet extends HttpServlet {
 
     private void downloadDataByLanguage(String language) {
         answerRepository = factoryRepository.creatRepository(language);
-        //Убрать после тестов
-//        answerRepository = new RepositoryRu();
         positiveButton = answerRepository.getPositiveNameButton();
         negativeButton = answerRepository.getNegativeNameButton();
         winMessage = answerRepository.getWinMessage();
         lossMessage = answerRepository.getLossMessage();
         statistic = answerRepository.getStatistic();
+        logger.debug(String.valueOf(answerRepository.getClass()) + " downloadDataByLanguage");
     }
 
     private void dataTransferPerSession(HttpServletRequest req) throws UnknownHostException {
@@ -204,8 +200,13 @@ public class InitServlet extends HttpServlet {
 
     private void getDataFromRepository(boolean positiveAnswer) {
         answer = String.valueOf(positiveAnswer);
-        message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
-        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
+        logger.error(answer);
+        message = answerRepository.getLevelMessage(countLevel, positiveAnswer, "");
+        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer, "");
+        if (isGameOver) {
+            message = answerRepository.getLevelMessage(countLevel - 1, positiveAnswer, "");
+        }
+        logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -214,7 +215,7 @@ public class InitServlet extends HttpServlet {
             return true;
         }
         String radioButtonChoice = req.getParameter("choice");
-        if (radioButtonChoice.equals("positiveAnswer")) {
+        if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
             getDataFromRepository(true);
         } else {
             getDataFromRepository(false);

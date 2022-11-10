@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class InitServletTest {
 
-    public InitServlet initServlet;
+  /*  public InitServlet initServlet;
     public HttpServletRequest request;
     public HttpServletResponse response;
     public ServletContext servletContext;
@@ -100,10 +100,10 @@ public class InitServletTest {
 
 
     @Test
- /*   @ParameterizedTest
+ *//*   @ParameterizedTest
     @CsvSource({
             "/start?formname=prologue&username=svsv&choiceLanguage=RU, RepositoryRu.class",
-    })*/
+    })*//*
 
     public boolean startQuestTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         when(request.getSession(true)).thenReturn(currentSession);
@@ -123,9 +123,9 @@ public class InitServletTest {
     }
 
     @Test
-/*    @ParameterizedTest
-       })*/
-    public void PostTest(/*String formName, String questionResponseBranch, String pathToJSP*/) throws ServletException, IOException {
+*//*    @ParameterizedTest
+       })*//*
+    public void PostTest(*//*String formName, String questionResponseBranch, String pathToJSP*//*) throws ServletException, IOException {
         initServlet = new InitServlet();
         initServlet.init();
         request = mock(HttpServletRequest.class);
@@ -135,24 +135,24 @@ public class InitServletTest {
         currentSession = mock(HttpSession.class);
         when(request.getSession(true)).thenReturn(currentSession);
 
-        /* when(request.getParameter("formname")).thenReturn(String.valueOf("prologue"));*/
+        *//* when(request.getParameter("formname")).thenReturn(String.valueOf("prologue"));*//*
         System.out.println(servletContext.getRequestDispatcher("/init-servlet"));
         System.out.println(servletContext.getRequestDispatcher("/mainPage"));
-      /*  initServlet = new InitServlet();
+      *//*  initServlet = new InitServlet();
         request = mock(HttpServletRequest.class);
         servletContext = mock(ServletContext.class);
         currentSession = mock(HttpSession.class);
-        response = mock(HttpServletResponse.class);*/
+        response = mock(HttpServletResponse.class);*//*
 //        currentSession.setAttribute("formname", "prologue");
         System.out.println(currentSession.getAttribute("formname") + "!!!!!!!!!!!!!!!");
 
-/*
+*//*
         System.out.println(request.getParameter("formname"));
         System.out.println(request.getContextPath());
         System.out.println(request.getParameter("username"));
         System.out.println(servletContext.getContext("formname"));
         System.out.println(request.getParameter("choiceLanguage"));
-        System.out.println(request);*/
+        System.out.println(request);*//*
     }
 
     @Test
@@ -182,5 +182,5 @@ public class InitServletTest {
         System.out.println(request.getRequestURI());
         System.out.println(request.getParameter("formname"));
 
-    }
+    }*/
 }

@@ -3,7 +3,7 @@ package ru.javarush.quest.repository;
 import ru.javarush.quest.entity.Entity;
 
 public class RepositoryEn extends AnswerRepository {
-    public RepositoryEn() {
+/*    public RepositoryEn() {
         super();
         this.negativeNameButton = "Disagree";
         this.positiveNameButton = "I agree";
@@ -21,6 +21,20 @@ public class RepositoryEn extends AnswerRepository {
         this.negativeAnswer.put(4, new Entity(negativeMessage4, true));
         this.negativeAnswer.put(5, new Entity(negativeMessage5, true));
 
+    }*/
+
+    public RepositoryEn(String st) {
+        super(st);
+        this.negativeNameButton = "Disagree";
+        this.positiveNameButton = "I agree";
+        this.winMessage = win;
+        lossMessage = loss;
+        statistic = stat;
+        this.answer.put(0, new Entity(message0, negativeMessage0, false));
+        this.answer.put(1, new Entity(message1, negativeMessage1, false));
+        this.answer.put(2, new Entity(message2, negativeMessage2, false));
+        this.answer.put(3, new Entity(message3, negativeMessage3, false));
+        this.answer.put(4, new Entity(message4, negativeMessage4, false));
     }
 
     String message0 = "Question0";
@@ -34,7 +48,7 @@ public class RepositoryEn extends AnswerRepository {
     String negativeMessage2 = "Answer2";
     String negativeMessage3 = "Answer3";
     String negativeMessage4 = "Answer4";
-    String negativeMessage5 = "Answer5";
+    String negativeMessage0 = "Answer0";
     String win = "<h2> Victory !!! </h2>";
 
     String loss = "<h2>" + "Houston, we have a problem !!!" + "</h2>"
