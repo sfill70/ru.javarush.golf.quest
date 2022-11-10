@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
 
@@ -46,6 +48,15 @@ public class InitServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         countLevel = 0;
+        try {
+            logger.debug(URLDecoder.decode(InitServlet.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .getPath(), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         this.factoryRepository = new FactoryRepository();
 //        answerRepository = factoryRepository.creatRepository("RU");
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -65,16 +76,6 @@ public class InitServlet extends HttpServlet {
 
         logger.debug(projectPath);
         logger.debug(System.getProperty("user.dir"));
-
-        /*
-        ServletConfig config = this.getServletConfig();
-        System.out.println(config.getInitParameterNames());
-
-        Enumeration<String> initParameterNames = config.getInitParameterNames();
-        while (initParameterNames.hasMoreElements()){
-            String key = initParameterNames.nextElement();
-            System.out.printf("%s: %s\n", key, config.getInitParameter(key));
-        }*/
     }
 
     @Override

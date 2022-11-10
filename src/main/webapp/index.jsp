@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
-    <%--При подключении bootstrap, на всякий случай, эту строку сделать поседней, что бы свой css то-же работал  --%>
+    <%--При подключении bootstrap, на всякий случай, эту строку сделать последней, что бы свой css то-же работал  --%>
     <link href="static/main.css" rel="stylesheet">
 </head>
 <body>
@@ -30,7 +30,6 @@
         <c:set var="blank" scope="session" value="false"/>
     </c:if>
     <hr>
-
     <c:if test="${blank}">
     <h4 class="one">Введите имя!/Enter name!</h4>
         <%-- bootstrap alert--%>
@@ -41,7 +40,6 @@
         </button>
     </div>
     </c:if>
-
     <%--    bootstrap form--%>
     <form method="post" action="/start">
         <div class="form-group row">
@@ -84,34 +82,6 @@
             </div>
         </div>
     </form>
-
-    <%--    <h4>Введите имя</h4>
-        <form method="post" action="/start"&lt;%&ndash;"/init-servlet"&ndash;%&gt;>
-            <input type="hidden" name="formname" value="prologue"/>
-            <label>
-                <c:if test="${username == null}">
-                    <input name="username" type="text" value="">
-                </c:if>
-                <c:if test="${username != null}">
-                    <input name="username" type="text" value="${username}"&lt;%&ndash; placeholder=${username}&ndash;%&gt;>
-                </c:if>
-            </label>
-            <br>
-            <br>
-            <span>Выбор языка / Language selection</span>
-            <br>
-            <br>
-            <div>
-                <input type="radio" id="choice_RU" name="choiceLanguage" value="RU" checked>
-                <label for="choice_RU">RU</label>
-            </div>
-            <div>
-                <input type="radio" id="choice_EN" name="choiceLanguage" value="EN">
-                <label for="choice_EN">EN</label>
-            </div>
-            <input type="submit" value="Start"/>
-        </form>--%>
-    <br>
     <hr>
     <c:if test="${blank_statistic}">
     <div class="statistic">
@@ -125,5 +95,6 @@
             </i></div>
         </div>
     </div>
-</c:if></body>
+    </c:if>
+</body>
 </html>
