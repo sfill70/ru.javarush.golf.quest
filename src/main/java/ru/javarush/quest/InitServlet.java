@@ -57,7 +57,6 @@ public class InitServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         this.factoryRepository = new FactoryRepository();
-//        answerRepository = factoryRepository.creatRepository("RU");
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
         String[] arrayProjectPath = projectPathOut.split("/");
@@ -71,8 +70,6 @@ public class InitServlet extends HttpServlet {
                 break;
             }
         }
-
-
         logger.debug(projectPath);
         logger.debug(System.getProperty("user.dir"));
     }
@@ -201,10 +198,10 @@ public class InitServlet extends HttpServlet {
     private void getDataFromRepository(boolean positiveAnswer) {
         answer = String.valueOf(positiveAnswer);
         logger.error(answer);
-        message = answerRepository.getLevelMessage(countLevel, positiveAnswer, "");
-        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer, "");
+        message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
+        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
         if (isGameOver) {
-            message = answerRepository.getLevelMessage(countLevel - 1, positiveAnswer, "");
+            message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
         }
         logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }

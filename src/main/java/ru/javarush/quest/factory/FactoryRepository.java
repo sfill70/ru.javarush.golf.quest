@@ -13,11 +13,11 @@ public class FactoryRepository {
         logger.debug("Fabrica");
         switch (language) {
             case "RU":
-                return new RepositoryRu("");
+                return new RepositoryRu();
             case "EN":
-                return new RepositoryEn("");
+                return new RepositoryEn();
             default:
-                return new RepositoryRu("");
+                return new RepositoryRu();
         }
     }
 
