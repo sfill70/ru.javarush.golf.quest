@@ -91,13 +91,18 @@ public class InitServlet extends HttpServlet {
             return;
         }
         if (uri.equals("/start")) {
-            if (startQuest(req, resp)) {
+            if (usernameCheck(req, resp, currentSession)) {
                 return;
             }
+            startQuest(req, resp);
+            /*if (startQuest(req, resp)) {
+                return;
+            }*/
         } else if (uri.equals("/init-servlet")) {
-            if (logicQuest(req, resp)) {
+            logicQuest(req, resp);
+            /*if (logicQuest(req, resp)) {
                 return;
-            }
+            }*/
         }
 
         doPost(req, resp);
@@ -133,14 +138,14 @@ public class InitServlet extends HttpServlet {
         currentSession.setAttribute("answer", answer);
         currentSession.setAttribute("message", message);
 
-//        getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
-        resp.sendRedirect(req.getContextPath() + "/quest.jsp");
+        getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
+//        resp.sendRedirect(req.getContextPath() + "/quest.jsp");
     }
 
-    public boolean startQuest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (usernameCheck(req, resp, currentSession)) {
+    public /*boolean*/ void startQuest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       /* if (usernameCheck(req, resp, currentSession)) {
             return true;
-        }
+        }*/
         currentSession.setAttribute("blank", false);
         countLevel = 0;
         isGameOver = false;
@@ -150,9 +155,9 @@ public class InitServlet extends HttpServlet {
 
         downloadDataByLanguage(language);
         dataTransferPerSession(req);
-        getDataFromRepository(true);
+        getStartDataFromRepository(true);
 
-        return false;
+//        return false;
     }
 
 
@@ -195,21 +200,27 @@ public class InitServlet extends HttpServlet {
         currentSession.setAttribute("blank_statistic", true);
     }
 
+    private void getStartDataFromRepository(boolean positiveAnswer) {
+        answer = String.valueOf(positiveAnswer);
+        logger.error(answer);
+        message = answerRepository.getStartMessage();
+        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
+        logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
+    }
+
     private void getDataFromRepository(boolean positiveAnswer) {
         answer = String.valueOf(positiveAnswer);
         logger.error(answer);
         message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
         isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
-        if (isGameOver) {
-            message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
-        }
         logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }
 
-    private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void /*boolean*/ logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (countLevel == answerRepository.getSize()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
-            return true;
+            return;
+//            return true;
         }
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
@@ -217,7 +228,7 @@ public class InitServlet extends HttpServlet {
         } else {
             getDataFromRepository(false);
         }
-        return false;
+//        return false;
     }
 
     @Override

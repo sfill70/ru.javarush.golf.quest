@@ -18,7 +18,7 @@ public abstract class AnswerRepository {
     String winMessage;
     String lossMessage;
     String[] statistic;
-    private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnswerRepository.class);
 
     public AnswerRepository() {
         this.positiveAnswer = new HashMap<>();
