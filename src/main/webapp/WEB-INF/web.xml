@@ -18,14 +18,14 @@
         <url-pattern>/init-servlet</url-pattern>
         <url-pattern>/start</url-pattern>
     </servlet-mapping>
-   <!-- <filter>
-        <filter-name>XXSFilter</filter-name>
-        <filter-class>ru.javarush.quest.filter.XXSFilter</filter-class>
+    <filter>
+        <filter-name>UserFilter</filter-name>
+        <filter-class>ru.javarush.quest.filter.UserFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>XXSFilter</filter-name>
+        <filter-name>UserFilter</filter-name>
         <url-pattern>/start</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
 
 
 </web-app>
