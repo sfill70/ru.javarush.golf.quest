@@ -8,7 +8,7 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!--<servlet>
+    <servlet>
         <servlet-name>QuestServlet</servlet-name>
         <servlet-class>ru.javarush.quest.QuestServlet</servlet-class>
     </servlet>
@@ -17,7 +17,7 @@
         <servlet-name>QuestServlet</servlet-name>
         <url-pattern>/quest-servlet</url-pattern>
         <url-pattern>/start</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
     <filter>
         <filter-name>UserFilter</filter-name>
         <filter-class>ru.javarush.quest.filter.UserFilter</filter-class>
@@ -26,5 +26,32 @@
         <filter-name>UserFilter</filter-name>
         <url-pattern>/start</url-pattern>
     </filter-mapping>
+    <!-- error-code related error pages -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+
+    <!-- exception-type related error pages -->
+    <error-page>
+        <exception-type>
+            javax.servlet.ServletException
+        </exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.io.IOException</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
 
 </web-app>

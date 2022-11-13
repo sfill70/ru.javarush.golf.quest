@@ -23,7 +23,7 @@ import ru.javarush.quest.repository.PlayerRepository;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start"})
+@WebServlet/*(name = "QuestServlet", value = {"/quest-servlet","/start"})*/
 public class QuestServlet extends HttpServlet{
     HttpSession currentSession;
     public AnswerRepository answerRepository;
@@ -66,29 +66,28 @@ public class QuestServlet extends HttpServlet{
     @Override
 
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug("Service");
+        logger.error("Service");
         currentSession = req.getSession(true);
-        if (req.getDispatcherType() == DispatcherType.ERROR) {
-            resp.sendRedirect(req.getContextPath() + "/error.jsp");
-        }
-        String httpMethod = req.getMethod();
-        String uri = req.getRequestURI();
-        logger.debug(uri);
 
+        String httpMethod = req.getMethod();
+        if (httpMethod.equalsIgnoreCase("GET")) {
+            doGet(req, resp);
+            return;
+        }
+
+       /* String uri = req.getRequestURI();
+        logger.debug(uri);
         if (httpMethod.equalsIgnoreCase("GET")) {
             doGet(req, resp);
             return;
         }
         if (uri.equals("/start")) {
-            /*if (usernameCheck(req, resp, currentSession)) {
-                return;
-            }*/
             startQuest(req);
         } else if (uri.equals("/quest-servlet")) {
             if (logicQuest(req, resp)) {
                 return;
             }
-        }
+        }*/
 
         doPost(req, resp);
     }
@@ -104,12 +103,21 @@ public class QuestServlet extends HttpServlet{
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Post");
         logger.error(message);
-        logger.debug(String.valueOf(currentSession.hashCode()));
+        logger.error(String.valueOf(currentSession.hashCode()));
+        String uri = req.getRequestURI();
+        logger.debug(uri);
+        if (uri.equals("/start")) {
+            startQuest(req);
+        } else if (uri.equals("/quest-servlet")) {
+            if (logicQuest(req, resp)) {
+                return;
+            }
+        }
         if (isGameOver) {
             logger.error(message + "  isGameOver");
-            req.setAttribute("message", message);
-            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
-            /*resp.sendRedirect(req.getContextPath() + "/loss.jsp");*/
+            currentSession.setAttribute("message", message);
+//            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             return;
         }
         logger.error(message + "  NotGameOver");
@@ -118,7 +126,6 @@ public class QuestServlet extends HttpServlet{
         req.setAttribute("answer", answer);
         req.setAttribute("message", message);
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
-//        resp.sendRedirect(req.getContextPath() + "/quest.jsp");
     }
 
     public void startQuest(HttpServletRequest req) throws IOException {

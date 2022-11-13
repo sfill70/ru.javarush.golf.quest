@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="static/main.css" rel="stylesheet">
     <title>Error</title>
 </head>
 <body>
-<h2>Хрень какая-то</h2>
+<img src="static/img/dont_worry_too_much.jpg" alt="We are working on this problem">
+<h1>We are working on this problem</h1>
 </body>
 </html>
