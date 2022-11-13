@@ -129,7 +129,6 @@ public class InitServlet extends HttpServlet {
         String language = req.getParameter("choiceLanguage");
         answerRepository = getAnswerRepository(language);
         dataTransferPerSession(username, gamesquanity, language);
-//        getStartDataFromRepository();
         getDataFromRepository(true);
 
 //        return false;
