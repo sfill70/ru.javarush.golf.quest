@@ -2,7 +2,6 @@ package ru.javarush.quest.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.javarush.quest.InitServlet;
 import ru.javarush.quest.repository.AnswerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
