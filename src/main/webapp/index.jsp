@@ -1,4 +1,4 @@
-<%@ page import="ru.javarush.quest.entity.Entity" %>
+<%@ page import="ru.javarush.quest.entity.EntityQuest" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -83,7 +83,8 @@
         </div>
     </form>
     <hr>
-    <c:if test="${blank_statistic}">
+<%--    <c:if test="${blank_statistic}">--%>
+    <c:if test="${username != null}">
     <div class="statistic">
         <div>
             <div><b>${statistic[0]}</b></div>

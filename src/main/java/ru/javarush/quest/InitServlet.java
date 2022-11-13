@@ -1,5 +1,6 @@
 package ru.javarush.quest;
 
+import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.*;
 
@@ -38,6 +39,7 @@ public class InitServlet extends HttpServlet {
     boolean isGameOver;
     String message;
     String answer;
+    EntityInterface entityInterface;
 
     String[] statistic;
     private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
@@ -91,18 +93,18 @@ public class InitServlet extends HttpServlet {
             return;
         }
         if (uri.equals("/start")) {
-            if (usernameCheck(req, resp, currentSession)) {
+            /*if (usernameCheck(req, resp, currentSession)) {
                 return;
-            }
+            }*/
             startQuest(req, resp);
             /*if (startQuest(req, resp)) {
                 return;
             }*/
         } else if (uri.equals("/init-servlet")) {
-            logicQuest(req, resp);
-            /*if (logicQuest(req, resp)) {
+//            logicQuest(req, resp);
+            if (logicQuest(req, resp)) {
                 return;
-            }*/
+            }
         }
 
         doPost(req, resp);
@@ -178,6 +180,8 @@ public class InitServlet extends HttpServlet {
 
     private void downloadDataByLanguage(String language) {
         answerRepository = factoryRepository.creatRepository(language);
+        entityInterface = answerRepository.getEntityInterface();
+        logger.error(entityInterface.getLossMessage()+"!!!!!!!!!!!!!!!!!!!!!!!");
         positiveButton = answerRepository.getPositiveNameButton();
         negativeButton = answerRepository.getNegativeNameButton();
         winMessage = answerRepository.getWinMessage();
@@ -197,6 +201,9 @@ public class InitServlet extends HttpServlet {
         currentSession.setAttribute("winMessage", winMessage);
         currentSession.setAttribute("lossMessage", lossMessage);
         currentSession.setAttribute("statistic", statistic);
+        currentSession.setAttribute("entityInterface", entityInterface);
+        req.setAttribute("entityInterface", entityInterface);
+        req.setAttribute("loss", lossMessage);
         currentSession.setAttribute("blank_statistic", true);
     }
 
@@ -216,11 +223,11 @@ public class InitServlet extends HttpServlet {
         logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }
 
-    private void /*boolean*/ logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (countLevel == answerRepository.getSize()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
-            return;
-//            return true;
+
+            return true;
         }
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
@@ -228,7 +235,7 @@ public class InitServlet extends HttpServlet {
         } else {
             getDataFromRepository(false);
         }
-//        return false;
+        return false;
     }
 
     @Override

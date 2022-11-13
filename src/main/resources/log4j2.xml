@@ -12,27 +12,28 @@
             </homedir>
         </properties>
         <property name="project_directory" value="D:/IdeaProjects/ru.javarush.golf.quest"/>-->
-        <RollingFile name="DebugLog" fileName="D:/IdeaProjects/ru.javarush.golf.quest/logs/debug.log"
-                     filePattern="D:/IdeaProjects/ru.javarush.golf.quest/logs/debug.%d{yyyy-MM-dd}.log"
+        <!--"D:/Quest"-->
+        <RollingFile name="DebugLog" fileName="D:/Quest/logs/debug.log"
+                     filePattern="/D:/Quest/logs/debug.%d{yyyy-MM-dd}.log"
                      ignoreExceptions="false">
             <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
             <PatternLayout pattern="%d %-5p %t: %m%n"/>
             <TimeBasedTriggeringPolicy/>
             <DefaultRolloverStrategy>
-                <Delete basePath="D:/IdeaProjects/ru.javarush.golf.quest/logs" maxDepth="2">
+                <Delete basePath="/D:/Quest/logs" maxDepth="2">
                     <IfFileName glob="debug.*.log"/>
                     <IfLastModified age="7d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
-        <RollingFile name="ErrorLog" fileName="D:/IdeaProjects/ru.javarush.golf.quest/logs/error.log"
-                     filePattern="D:/IdeaProjects/ru.javarush.golf.quest/logs/error.%d{yyyy-MM-dd}.log"
+        <RollingFile name="ErrorLog" fileName="D:/Quest/logs/error.log"
+                     filePattern="D:/Quest/logs/error.%d{yyyy-MM-dd}.log"
                      ignoreExceptions="false">
             <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
             <PatternLayout pattern="%d %-5p %t: %m%n"/>
             <TimeBasedTriggeringPolicy/>
             <DefaultRolloverStrategy>
-                <Delete basePath="D:/IdeaProjects/ru.javarush.golf.quest/logs" maxDepth="2">
+                <Delete basePath="D:/Quest/logs" maxDepth="2">
                     <IfFileName glob="error.*.log"/>
                     <IfLastModified age="7d"/>
                 </Delete>

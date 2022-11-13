@@ -2,16 +2,17 @@ package ru.javarush.quest.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.javarush.quest.InitServlet;
-import ru.javarush.quest.entity.Entity;
+import ru.javarush.quest.entity.EntityInterface;
+import ru.javarush.quest.entity.EntityQuest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AnswerRepository {
 
-    Map<Integer, Entity> positiveAnswer;
-    Map<Integer, Entity> negativeAnswer;
+    Map<Integer, EntityQuest> positiveAnswer;
+    Map<Integer, EntityQuest> negativeAnswer;
+    EntityInterface entityInterface;
     String startMessage;
     String positiveNameButton;
     String negativeNameButton;
@@ -26,7 +27,7 @@ public abstract class AnswerRepository {
     }
 
 
-    public Entity getEntity(int level, boolean positive) {
+    public EntityQuest getEntity(int level, boolean positive) {
         if (positive) {
             return positiveAnswer.get(level);
         }
@@ -68,5 +69,8 @@ public abstract class AnswerRepository {
 
     public String[] getStatistic() {
         return statistic;
+    }
+    public EntityInterface getEntityInterface() {
+        return entityInterface;
     }
 }

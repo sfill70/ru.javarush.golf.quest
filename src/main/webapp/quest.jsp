@@ -1,4 +1,6 @@
-<%@ page import="ru.javarush.quest.entity.Entity" %>
+<%@ page import="ru.javarush.quest.entity.EntityQuest" %>
+<%@ page import="ru.javarush.quest.entity.EntityInterface" %>
+<%@ page import="java.io.PrintWriter" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -9,15 +11,32 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<h1><%= "Level"%> ${countLevel}
-</h1>
+<h1><%= "Level"%> ${countLevel} </h1>
 <br/>
 <a href="restart">Restart</a>
 
 <hr>
 <span>current language: ${language}</span>
+<h4><% EntityInterface entityInterface2 = (EntityInterface) request.getAttribute("entityInterface");
+    EntityInterface entityInterface = (EntityInterface)session.getAttribute("entityInterface");
+//    PrintWriter out1 = response.getWriter();
+
+    if (entityInterface != null ) {
+        out.println("<h4>"+entityInterface.getNegativeNameButton()+"</h4>");
+    }
+    if (entityInterface2 != null ) {
+        out.println("<h4>"+entityInterface2.getNegativeNameButton()+"</h4>");
+    }
+%></h4>
+<h4><%=entityInterface.getStatistic()[1]%></h4>
+<p><%       out.print(entityInterface.getLossMessage());%></p>
+<h4>${entityInterface.winMessage}</h4>
 <hr>
 <h4>${message}</h4>
+<h4>${loss}</h4>
+<h4><%=request.getAttribute("loss")%></h4>
+<%--<h4><%= EntityQuest %></h4>--%>
+<%--<h4><%= EntityQuest %></h4>--%>
 
 <form method="POST" action="/init-servlet<%--/${countLevel}--%>">
     <div class="padding-inside">
