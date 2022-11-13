@@ -1,4 +1,5 @@
 <%@ page import="ru.javarush.quest.entity.EntityQuest" %>
+<%@ page import="ru.javarush.quest.entity.EntityInterface" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -22,6 +23,10 @@
     <link href="static/main.css" rel="stylesheet">
 </head>
 <body>
+<%
+    EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
+    EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+%>
 <div id="container">
     <h1>Start GAME!!!</h1>
     <br/>
@@ -83,16 +88,16 @@
         </div>
     </form>
     <hr>
-<%--    <c:if test="${blank_statistic}">--%>
     <c:if test="${username != null}">
     <div class="statistic">
-        <div>
-            <div><b>${statistic[0]}</b></div>
-            <div>${statistic[1]} <i><%= session.getAttribute("ip")%>
+        <div class="statistic">
+            <div><b><%=entityInterfaceSession.getStatistic()[0]%>
+            </b></div>
+            <div><%=entityInterfaceSession.getStatistic()[1]%><i><%= session.getAttribute("ip")%>
             </i></div>
-            <div>${statistic[2]} <i><%= session.getAttribute("username") %>
+            <div><%=entityInterfaceSession.getStatistic()[2]%><i><%= session.getAttribute("username") %>
             </i></div>
-            <div>${statistic[3]} <i><%= session.getAttribute("gamesquanity")%>
+            <div><%=entityInterfaceSession.getStatistic()[3]%><i><%= session.getAttribute("gamesquanity")%>
             </i></div>
         </div>
     </div>

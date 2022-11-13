@@ -24,7 +24,7 @@ public class FactoryRepository {
     public static void main(String[] args) {
         FactoryRepository factoryRepository = new FactoryRepository();
 
-        System.out.println(factoryRepository.creatRepository("EN").getNegativeNameButton());
+        System.out.println(factoryRepository.creatRepository("EN").getEntityInterface().getNegativeNameButton());
 
     }
 }

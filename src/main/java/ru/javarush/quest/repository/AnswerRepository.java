@@ -34,6 +34,30 @@ public abstract class AnswerRepository {
         return negativeAnswer.get(level);
     }
 
+    public EntityQuest getEntityPositiveAnswer(int level){
+        return positiveAnswer.get(level);
+    }
+
+    public EntityQuest getEntityNegativeAnswer(int level){
+        return negativeAnswer.get(level);
+    }
+
+    public String getLevelPositiveMessage(int level){
+        return getEntityPositiveAnswer(level).getMessage();
+    }
+
+    public String getLevelNegativeMessage(int level){
+        return getEntityNegativeAnswer(level).getMessage();
+    }
+
+    public boolean getLevelPositiveIsGameOver(int level){
+        return getEntityPositiveAnswer(level).isGameOver();
+    }
+
+    public boolean getLevelNegativeIsGameOver(int level){
+        return getEntityNegativeAnswer(level).isGameOver();
+    }
+
     public String getLevelMessage(int level, boolean positive) {
 
         return getEntity(level, positive).getMessage();

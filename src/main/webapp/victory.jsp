@@ -5,6 +5,8 @@
   Time: 16:30
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="ru.javarush.quest.entity.EntityQuest" %>
+<%@ page import="ru.javarush.quest.entity.EntityInterface" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,7 +16,11 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<span>${winMessage}</span>
+<%
+    EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
+    EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+%>
+<span><%=entityInterfaceSession.getWinMessage()%></span>
 <h2 class="one"> ${username}</h2>
 <br>
 <h2>Restart</h2>

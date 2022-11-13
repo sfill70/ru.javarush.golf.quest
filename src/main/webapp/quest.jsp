@@ -11,43 +11,29 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
+<%
+    EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
+    EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+%>
 <h1><%= "Level"%> ${countLevel} </h1>
 <br/>
 <a href="restart">Restart</a>
 
 <hr>
 <span>current language: ${language}</span>
-<h4><% EntityInterface entityInterface2 = (EntityInterface) request.getAttribute("entityInterface");
-    EntityInterface entityInterface = (EntityInterface)session.getAttribute("entityInterface");
-//    PrintWriter out1 = response.getWriter();
-
-    if (entityInterface != null ) {
-        out.println("<h4>"+entityInterface.getNegativeNameButton()+"</h4>");
-    }
-    if (entityInterface2 != null ) {
-        out.println("<h4>"+entityInterface2.getNegativeNameButton()+"</h4>");
-    }
-%></h4>
-<h4><%=entityInterface.getStatistic()[1]%></h4>
-<p><%       out.print(entityInterface.getLossMessage());%></p>
-<h4>${entityInterface.winMessage}</h4>
 <hr>
 <h4>${message}</h4>
-<h4>${loss}</h4>
-<h4><%=request.getAttribute("loss")%></h4>
-<%--<h4><%= EntityQuest %></h4>--%>
-<%--<h4><%= EntityQuest %></h4>--%>
 
-<form method="POST" action="/init-servlet<%--/${countLevel}--%>">
+<form method="POST" action="/init-servlet">
     <div class="padding-inside">
         <input type="hidden" name="formname" value="endgame"/>
         <div>
             <input type="radio" id="choice1" name="choice" value="positiveAnswer" checked>
-            <label for="choice1">${positiveButton}</label>
+            <label for="choice1"><%=entityInterfaceSession.getPositiveNameButton()%></label>
         </div>
         <div>
             <input type="radio" id="choice2" name="choice" value="negativeAnswer">
-            <label for="choice2">${negativeButton}</label>
+            <label for="choice2"><%=entityInterfaceSession.getNegativeNameButton()%></label>
         </div>
         <div>
             <input type="submit" value="Ответить"/>
@@ -57,14 +43,24 @@
 <br>
 <hr>
 <div class="statistic">
-    <div><b>${statistic[0]}</b></div>
+    <div><b><%=entityInterfaceSession.getStatistic()[0]%>
+    </b></div>
+    <div><%=entityInterfaceSession.getStatistic()[1]%><i><%= session.getAttribute("ip")%>
+    </i></div>
+    <div><%=entityInterfaceSession.getStatistic()[2]%><i><%= session.getAttribute("username") %>
+    </i></div>
+    <div><%=entityInterfaceSession.getStatistic()[3]%><i><%= session.getAttribute("gamesquanity")%>
+    </i></div>
+</div>
+<%--<div class="statistic">
+    <div><b><%=entityInterfaceSession.getStatistic()[0]%></b></div>
     <div>${statistic[1]} <i><%= session.getAttribute("ip")%>
     </i></div>
     <div>${statistic[2]} <i><%= session.getAttribute("username") %>
     </i></div>
     <div>${statistic[3]} <i><%= session.getAttribute("gamesquanity")%>
     </i></div>
-</div>
+</div>--%>
 
 </body>
 </html>

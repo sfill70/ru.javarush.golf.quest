@@ -1,6 +1,5 @@
 package ru.javarush.quest;
 
-import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.*;
 
@@ -29,29 +28,17 @@ public class InitServlet extends HttpServlet {
     public AnswerRepository answerRepository;
     FactoryRepository factoryRepository;
     int countLevel;
-    String username;
-    String language;
-    String positiveButton;
-    String negativeButton;
-    String winMessage;
-    String lossMessage;
-    int gamesquanity;
     boolean isGameOver;
     String message;
     String answer;
-    EntityInterface entityInterface;
-
-    String[] statistic;
     private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
 
 
     @Override
     public void init() throws ServletException {
         super.init();
-        countLevel = 0;
         try {
-            logger.debug(URLDecoder.decode(InitServlet.class
-                    .getProtectionDomain()
+            logger.debug(URLDecoder.decode(InitServlet.class.getProtectionDomain()
                     .getCodeSource()
                     .getLocation()
                     .getPath(), "UTF-8"));
@@ -63,8 +50,7 @@ public class InitServlet extends HttpServlet {
         String projectPathOut = loader.getResource("").getPath();
         String[] arrayProjectPath = projectPathOut.split("/");
         String projectPath = "";
-        for (String st : arrayProjectPath
-        ) {
+        for (String st : arrayProjectPath) {
             if (!st.isEmpty() || !st.isBlank()) {
                 projectPath = projectPath + st + File.separator;
             }
@@ -96,10 +82,7 @@ public class InitServlet extends HttpServlet {
             /*if (usernameCheck(req, resp, currentSession)) {
                 return;
             }*/
-            startQuest(req, resp);
-            /*if (startQuest(req, resp)) {
-                return;
-            }*/
+            startQuest(req);
         } else if (uri.equals("/init-servlet")) {
 //            logicQuest(req, resp);
             if (logicQuest(req, resp)) {
@@ -111,122 +94,91 @@ public class InitServlet extends HttpServlet {
     }
 
 
-    /*Истользуется при переходе по ссылке Restart для сохранения данных, если при restart
-    чистить сессию req.getSession().invalidate();*/
+    /*не используется*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        HttpSession currentSession = req.getSession(true);
-        currentSession.setAttribute("statistic", statistic);
-        currentSession.setAttribute("blank_statistic", true);
-        currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
-        currentSession.setAttribute("username", username);
-        currentSession.setAttribute("gamesquanity", gamesquanity);
-        getServletContext().getRequestDispatcher("/").forward(req, resp);
     }
 
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Post");
+        logger.error(message);
         logger.debug(String.valueOf(currentSession.hashCode()));
-
         if (isGameOver) {
-            currentSession.setAttribute("message", message);
-            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
+            logger.error(message + "  isGameOver");
+            req.setAttribute("message", message);
+            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
+//            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             return;
         }
+        logger.error(message + "  NotGameOver");
         countLevel++;
-        currentSession.setAttribute("countLevel", countLevel);
-        currentSession.setAttribute("answer", answer);
-        currentSession.setAttribute("message", message);
-
+        req.setAttribute("countLevel", countLevel);
+        req.setAttribute("answer", answer);
+        req.setAttribute("message", message);
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
 //        resp.sendRedirect(req.getContextPath() + "/quest.jsp");
     }
 
-    public /*boolean*/ void startQuest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       /* if (usernameCheck(req, resp, currentSession)) {
-            return true;
-        }*/
-        currentSession.setAttribute("blank", false);
+    public void startQuest(HttpServletRequest req) throws IOException {
         countLevel = 0;
         isGameOver = false;
-        username = req.getParameter("username");
-        gamesquanity = PlayerRepository.getPlayerCount(username);
-        language = req.getParameter("choiceLanguage");
-
-        downloadDataByLanguage(language);
-        dataTransferPerSession(req);
-        getStartDataFromRepository(true);
+        String username = req.getParameter("username");
+        int gamesquanity = PlayerRepository.getPlayerCount(username);
+        String language = req.getParameter("choiceLanguage");
+        answerRepository = getAnswerRepository(language);
+        dataTransferPerSession(username, gamesquanity, language);
+//        getStartDataFromRepository();
+        getDataFromRepository(true);
 
 //        return false;
     }
 
 
-    /*Здесь можно организовать валидацию "username"*/
-    private boolean usernameCheck(HttpServletRequest req, HttpServletResponse resp, HttpSession currentSession) throws ServletException, IOException {
-        if (req.getParameter("username").isBlank() || req.getParameter("username").isEmpty()) {
-            currentSession.setAttribute("blank", true);
-            resp.sendRedirect(req.getContextPath() + "/");
-            return true;
-        }
-        if (req.getParameter("username").contains("*") || req.getParameter("username").contains("\\")) {
-            currentSession.setAttribute("blank", true);
-            resp.sendRedirect(req.getContextPath() + "/");
-            return true;
-        }
-        return false;
+    private AnswerRepository getAnswerRepository(String language) {
+        AnswerRepository repository = factoryRepository.creatRepository(language);
+        logger.debug(repository.getClass() + " downloadDataByLanguage");
+        return repository;
     }
 
-    private void downloadDataByLanguage(String language) {
-        answerRepository = factoryRepository.creatRepository(language);
-        entityInterface = answerRepository.getEntityInterface();
-        logger.error(entityInterface.getLossMessage()+"!!!!!!!!!!!!!!!!!!!!!!!");
-        positiveButton = answerRepository.getPositiveNameButton();
-        negativeButton = answerRepository.getNegativeNameButton();
-        winMessage = answerRepository.getWinMessage();
-        lossMessage = answerRepository.getLossMessage();
-        statistic = answerRepository.getStatistic();
-        logger.debug(String.valueOf(answerRepository.getClass()) + " downloadDataByLanguage");
-    }
-
-    private void dataTransferPerSession(HttpServletRequest req) throws UnknownHostException {
+    private void dataTransferPerSession(String username, int gamesquanity, String language) throws UnknownHostException {
 //        currentSession = req.getSession(true);
         currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
         currentSession.setAttribute("language", language);
-        currentSession.setAttribute("negativeButton", negativeButton);
-        currentSession.setAttribute("positiveButton", positiveButton);
+//        currentSession.setAttribute("negativeButton", negativeButton);
+//        currentSession.setAttribute("positiveButton", positiveButton);
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
-        currentSession.setAttribute("winMessage", winMessage);
-        currentSession.setAttribute("lossMessage", lossMessage);
-        currentSession.setAttribute("statistic", statistic);
-        currentSession.setAttribute("entityInterface", entityInterface);
-        req.setAttribute("entityInterface", entityInterface);
-        req.setAttribute("loss", lossMessage);
-        currentSession.setAttribute("blank_statistic", true);
+//        currentSession.setAttribute("winMessage", winMessage);
+//        currentSession.setAttribute("lossMessage", lossMessage);
+//        currentSession.setAttribute("statistic", statistic);
+        currentSession.setAttribute("entityInterface", answerRepository.getEntityInterface());
+//        req.setAttribute("entityInterface", entityInterface);
+//        req.setAttribute("loss", lossMessage);
+//        currentSession.setAttribute("blank_statistic", true);
     }
 
-    private void getStartDataFromRepository(boolean positiveAnswer) {
-        answer = String.valueOf(positiveAnswer);
-        logger.error(answer);
+    private void getStartDataFromRepository() {
         message = answerRepository.getStartMessage();
-        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
+        isGameOver = false;
         logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }
 
     private void getDataFromRepository(boolean positiveAnswer) {
         answer = String.valueOf(positiveAnswer);
-        logger.error(answer);
-        message = answerRepository.getLevelMessage(countLevel, positiveAnswer);
-        isGameOver = answerRepository.isGameOver(countLevel, positiveAnswer);
-        logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
+        if (positiveAnswer) {
+            isGameOver = answerRepository.getLevelPositiveIsGameOver(countLevel);
+            message = answerRepository.getLevelPositiveMessage(countLevel);
+        } else {
+            isGameOver = answerRepository.getLevelNegativeIsGameOver(countLevel);
+            message = answerRepository.getLevelNegativeMessage(countLevel);
+        }
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (countLevel == answerRepository.getSize()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
-
             return true;
         }
         String radioButtonChoice = req.getParameter("choice");
