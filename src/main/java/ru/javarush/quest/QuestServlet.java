@@ -23,7 +23,7 @@ import ru.javarush.quest.repository.PlayerRepository;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-@WebServlet(name = "QuestServlet"/*, value = "/quest-servlet"*/)
+@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start"})
 public class QuestServlet extends HttpServlet{
     HttpSession currentSession;
     public AnswerRepository answerRepository;
@@ -85,7 +85,6 @@ public class QuestServlet extends HttpServlet{
             }*/
             startQuest(req);
         } else if (uri.equals("/quest-servlet")) {
-//            logicQuest(req, resp);
             if (logicQuest(req, resp)) {
                 return;
             }
@@ -111,7 +110,6 @@ public class QuestServlet extends HttpServlet{
             req.setAttribute("message", message);
             getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
             /*resp.sendRedirect(req.getContextPath() + "/loss.jsp");*/
-//            resp.sendRedirect(req.getRequestDispatcher("/loss.jsp"));
             return;
         }
         logger.error(message + "  NotGameOver");
@@ -131,7 +129,6 @@ public class QuestServlet extends HttpServlet{
         String language = req.getParameter("choiceLanguage");
         answerRepository = getAnswerRepository(language);
         dataTransferPerSession(username, gamesquanity, language);
-//        getStartDataFromRepository();
         getDataFromRepository(true);
 
 //        return false;
@@ -145,26 +142,16 @@ public class QuestServlet extends HttpServlet{
     }
 
     private void dataTransferPerSession(String username, int gamesquanity, String language) throws UnknownHostException {
-//        currentSession = req.getSession(true);
         currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
         currentSession.setAttribute("language", language);
-//        currentSession.setAttribute("negativeButton", negativeButton);
-//        currentSession.setAttribute("positiveButton", positiveButton);
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
-//        currentSession.setAttribute("winMessage", winMessage);
-//        currentSession.setAttribute("lossMessage", lossMessage);
-//        currentSession.setAttribute("statistic", statistic);
         currentSession.setAttribute("entityInterface", answerRepository.getEntityInterface());
-//        req.setAttribute("entityInterface", entityInterface);
-//        req.setAttribute("loss", lossMessage);
-//        currentSession.setAttribute("blank_statistic", true);
     }
 
     private void getStartDataFromRepository() {
         message = answerRepository.getStartMessage();
         isGameOver = false;
-        logger.error(String.valueOf(isGameOver) + " / " + message + " / " + countLevel);
     }
 
     private void getDataFromRepository(boolean positiveAnswer) {
