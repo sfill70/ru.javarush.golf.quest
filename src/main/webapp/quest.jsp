@@ -24,7 +24,7 @@
 <hr>
 <h4>${message}</h4>
 
-<form method="POST" action="/init-servlet">
+<form method="POST" action="/quest-servlet">
     <div class="padding-inside">
         <input type="hidden" name="formname" value="endgame"/>
         <div>

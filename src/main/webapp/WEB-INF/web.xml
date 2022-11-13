@@ -9,13 +9,13 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>InitServlet</servlet-name>
-        <servlet-class>ru.javarush.quest.InitServlet</servlet-class>
+        <servlet-name>QuestServlet</servlet-name>
+        <servlet-class>ru.javarush.quest.QuestServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>InitServlet</servlet-name>
-        <url-pattern>/init-servlet</url-pattern>
+        <servlet-name>QuestServlet</servlet-name>
+        <url-pattern>/quest-servlet</url-pattern>
         <url-pattern>/start</url-pattern>
     </servlet-mapping>
     <filter>
@@ -26,6 +26,5 @@
         <filter-name>UserFilter</filter-name>
         <url-pattern>/start</url-pattern>
     </filter-mapping>
-
 
 </web-app>

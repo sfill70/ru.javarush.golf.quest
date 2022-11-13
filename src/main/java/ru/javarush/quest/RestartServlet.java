@@ -16,7 +16,7 @@ import java.net.Inet4Address;
 
 @WebServlet(name = "RestartServlet", value = "/restart")
 public class RestartServlet extends HttpServlet {
-    private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestartServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
