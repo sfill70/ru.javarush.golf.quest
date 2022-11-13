@@ -32,14 +32,14 @@ public class QuestServlet extends HttpServlet{
     boolean isGameOver;
     String message;
     String answer;
-    private static final Logger logger = LoggerFactory.getLogger(InitServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuestServlet.class);
 
 
     @Override
     public void init() throws ServletException {
         super.init();
         try {
-            logger.debug(URLDecoder.decode(InitServlet.class.getProtectionDomain()
+            logger.debug(URLDecoder.decode(QuestServlet.class.getProtectionDomain()
                     .getCodeSource()
                     .getLocation()
                     .getPath(), "UTF-8"));

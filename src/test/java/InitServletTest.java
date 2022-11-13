@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import ru.javarush.quest.InitServlet;
+import ru.javarush.quest.QuestServlet;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
