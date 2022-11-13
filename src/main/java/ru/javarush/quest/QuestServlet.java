@@ -1,7 +1,7 @@
 package ru.javarush.quest;
 
 import ru.javarush.quest.factory.FactoryRepository;
-import ru.javarush.quest.repository.*;
+import ru.javarush.quest.repository.AnswerRepository;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletException;
@@ -18,13 +18,13 @@ import java.net.Inet4Address;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.javarush.quest.repository.PlayerRepository;
 
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-
-@WebServlet(name = "InitServlet"/*, value = "/init-servlet/*"*/)
-public class InitServlet extends HttpServlet {
+@WebServlet(name = "QuestServlet"/*, value = "/init-servlet/*"*/)
+public class QuestServlet extends HttpServlet{
     HttpSession currentSession;
     public AnswerRepository answerRepository;
     FactoryRepository factoryRepository;
@@ -194,5 +194,4 @@ public class InitServlet extends HttpServlet {
     @Override
     public void destroy() {
     }
-
 }

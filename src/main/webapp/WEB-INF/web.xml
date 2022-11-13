@@ -9,27 +9,22 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>InitServlet</servlet-name>
-        <servlet-class>ru.javarush.quest.InitServlet</servlet-class>
-               <!--<init-param>
-            <param-name>jdbc-driver</param-name>
-            <param-value>sun.jdbc.odbc.JdbcOdbcDriver</param-value>
-        </init-param>-->
+        <servlet-name>QuestServlet</servlet-name>
+        <servlet-class>ru.javarush.quest.QuestServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>InitServlet</servlet-name>
+        <servlet-name>QuestServlet</servlet-name>
         <url-pattern>/init-servlet</url-pattern>
         <url-pattern>/start</url-pattern>
-<!--        <url-pattern>/init-servlet/*</url-pattern>-->
     </servlet-mapping>
     <filter>
-        <filter-name>XXSFilter</filter-name>
-        <filter-class>ru.javarush.quest.filter.XXSFilter</filter-class>
+        <filter-name>UserFilter</filter-name>
+        <filter-class>ru.javarush.quest.filter.UserFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>XXSFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>/start</url-pattern>
     </filter-mapping>
 
 

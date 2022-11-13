@@ -1,17 +1,19 @@
 package ru.javarush.quest.entity;
 
-public class Entity {
+public class EntityQuest {
     public String message;
 
     public String messageEndGame;
     public boolean isGameOver;
 
-    public Entity(String message, boolean isGameOver) {
+    public EntityQuest(){}
+
+    public EntityQuest(String message, boolean isGameOver) {
         this.message = message;
         this.isGameOver = isGameOver;
     }
 
-    public Entity(String message, String messageEndGame, boolean isGameOver) {
+    public EntityQuest(String message, String messageEndGame, boolean isGameOver) {
         this.message = message;
         this.messageEndGame = messageEndGame;
         this.isGameOver = isGameOver;

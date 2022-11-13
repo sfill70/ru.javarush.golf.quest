@@ -1,20 +1,30 @@
 package ru.javarush.quest.repository;
 
-import ru.javarush.quest.entity.Entity;
+import ru.javarush.quest.entity.EntityInterface;
+import ru.javarush.quest.entity.EntityQuest;
 
 public class RepositoryRu extends AnswerRepository {
     public RepositoryRu() {
         super();
+        this.entityInterface = anInterface;
         this.negativeNameButton = "Отказаться";
         this.positiveNameButton = "Согласиться";
+        this.positiveAnswer.put(0, new EntityQuest(message0, false));
+        this.positiveAnswer.put(1, new EntityQuest(message1, false));
+        this.positiveAnswer.put(2, new EntityQuest(message2, false));
+        this.positiveAnswer.put(3, new EntityQuest(message3, false));
+        this.positiveAnswer.put(4, new EntityQuest(message4, false));
+        this.positiveAnswer.put(5, new EntityQuest(message5, false));
+        this.negativeAnswer.put(1, new EntityQuest(negativeMessage1, true));
+        this.negativeAnswer.put(2, new EntityQuest(negativeMessage2, true));
+        this.negativeAnswer.put(3, new EntityQuest(negativeMessage3, true));
+        this.negativeAnswer.put(4, new EntityQuest(negativeMessage4, true));
+        this.negativeAnswer.put(5, new EntityQuest(negativeMessage5, true));
+        startMessage = start;
         winMessage = win;
         lossMessage = loss;
         statistic = stat;
-        this.answer.put(0, new Entity(message0, negativeMessage0, false));
-        this.answer.put(1, new Entity(message1, negativeMessage1, false));
-        this.answer.put(2, new Entity(message2, negativeMessage2, true));
-        this.answer.put(3, new Entity(message3, negativeMessage3, false));
-        this.answer.put(4, new Entity(message4, negativeMessage4, true));
+
     }
 
     String message0 = "Вопрос0";
@@ -29,11 +39,14 @@ public class RepositoryRu extends AnswerRepository {
     String negativeMessage3 = "Ответ3";
     String negativeMessage4 = "Ответ4";
     String negativeMessage0 = "Ответ0";
+    String negativeMessage5 = "Ответ5";
 
+    String start = "Стартовое сообщение";
     String win = "<h2 > Победил !!! </h2>";
 
     String loss = "<h2>" + "Хюстон, у нас проблема !!!" + "</h2>"
             + "<span class=" + "second" + "> провалил задание игрок с ником: </span>";
 
     String[] stat = {"Статистика:", "Твой текущий IP address:", "Имя в игре: ", "Количество игр:"};
+    EntityInterface anInterface = new EntityInterface(start, "Согласиться","Отказаться",win, loss, stat);
 }
