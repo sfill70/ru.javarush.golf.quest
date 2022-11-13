@@ -23,7 +23,7 @@ import ru.javarush.quest.repository.PlayerRepository;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-@WebServlet(name = "QuestServlet"/*, value = "/init-servlet/*"*/)
+@WebServlet(name = "QuestServlet"/*, value = "/quest-servlet"*/)
 public class QuestServlet extends HttpServlet{
     HttpSession currentSession;
     public AnswerRepository answerRepository;
@@ -84,7 +84,7 @@ public class QuestServlet extends HttpServlet{
                 return;
             }*/
             startQuest(req);
-        } else if (uri.equals("/init-servlet")) {
+        } else if (uri.equals("/quest-servlet")) {
 //            logicQuest(req, resp);
             if (logicQuest(req, resp)) {
                 return;
@@ -110,7 +110,8 @@ public class QuestServlet extends HttpServlet{
             logger.error(message + "  isGameOver");
             req.setAttribute("message", message);
             getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
-//            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
+            /*resp.sendRedirect(req.getContextPath() + "/loss.jsp");*/
+//            resp.sendRedirect(req.getRequestDispatcher("/loss.jsp"));
             return;
         }
         logger.error(message + "  NotGameOver");

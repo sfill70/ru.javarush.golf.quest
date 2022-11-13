@@ -15,7 +15,7 @@
 
     <servlet-mapping>
         <servlet-name>QuestServlet</servlet-name>
-        <url-pattern>/init-servlet</url-pattern>
+        <url-pattern>/quest-servlet</url-pattern>
         <url-pattern>/start</url-pattern>
     </servlet-mapping>
     <filter>
@@ -26,6 +26,5 @@
         <filter-name>UserFilter</filter-name>
         <url-pattern>/start</url-pattern>
     </filter-mapping>
-
 
 </web-app>
