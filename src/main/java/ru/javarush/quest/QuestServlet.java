@@ -3,7 +3,6 @@ package ru.javarush.quest;
 import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.AnswerRepository;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
