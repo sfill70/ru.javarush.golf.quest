@@ -14,13 +14,13 @@
         <property name="project_directory" value="D:/IdeaProjects/ru.javarush.golf.quest"/>-->
         <!--"D:/Quest"-->
         <RollingFile name="DebugLog" fileName="D:/Quest/logs/debug.log"
-                     filePattern="/D:/Quest/logs/debug.%d{yyyy-MM-dd}.log"
+                     filePattern="D:/Quest/logs/debug.%d{yyyy-MM-dd}.log"
                      ignoreExceptions="false">
             <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
             <PatternLayout pattern="%d %-5p %t: %m%n"/>
             <TimeBasedTriggeringPolicy/>
             <DefaultRolloverStrategy>
-                <Delete basePath="/D:/Quest/logs" maxDepth="2">
+                <Delete basePath="D:/Quest/logs" maxDepth="2">
                     <IfFileName glob="debug.*.log"/>
                     <IfLastModified age="7d"/>
                 </Delete>
