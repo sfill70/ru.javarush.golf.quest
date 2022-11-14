@@ -24,11 +24,10 @@ import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
 @WebServlet/*(name = "QuestServlet", value = {"/quest-servlet","/start"})*/
-public class QuestServlet extends HttpServlet{
+public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
     private AnswerRepository answerRepository;
     private FactoryRepository factoryRepository;
-    int countLevel;
     boolean isGameOver;
     String message;
     String answer;
@@ -116,29 +115,33 @@ public class QuestServlet extends HttpServlet{
         if (isGameOver) {
             logger.error(message + "  isGameOver");
             currentSession.setAttribute("message", message);
-//            req.setAttribute("message", message);
-//            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
-//            req.getRequestDispatcher("/loss.jsp").forward(req, resp);
             resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             return;
         }
-        logger.error(message + "  NotGameOver");
-        countLevel++;
-        req.setAttribute("countLevel", countLevel);
-        req.setAttribute("answer", answer);
-        req.setAttribute("message", message);
+//        transferringDataToRequest(req);
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
     }
+/*
+
+    private void transferringDataToRequest(HttpServletRequest req, int countLevel) {
+        countLevel++;
+        logger.error(String.valueOf(countLevel) + " transferringDataToRequest");
+        currentSession.setAttribute("countLevel", countLevel);
+        req.setAttribute("answer", answer);
+        req.setAttribute("message", message);
+    }
+*/
 
     public void startQuest(HttpServletRequest req) throws IOException {
-        countLevel = 0;
+        int countLevel = 0;
         isGameOver = false;
         String username = req.getParameter("username");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
         String language = req.getParameter("choiceLanguage");
         answerRepository = getAnswerRepository(language);
         dataTransferPerSession(username, gamesquanity, language);
-        getDataFromRepository(true);
+        getDataFromRepository(true, countLevel);
+        transferringDataToRequest(req, countLevel);
 
 //        return false;
     }
@@ -163,7 +166,7 @@ public class QuestServlet extends HttpServlet{
         isGameOver = false;
     }
 
-    private void getDataFromRepository(boolean positiveAnswer) {
+    private void getDataFromRepository(boolean positiveAnswer, int countLevel) {
         answer = String.valueOf(positiveAnswer);
         if (positiveAnswer) {
             isGameOver = answerRepository.getLevelPositiveIsGameOver(countLevel);
@@ -175,18 +178,32 @@ public class QuestServlet extends HttpServlet{
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        logger.error(currentSession.getAttribute("countLevel") + "    logicQuest");
+//        int countLevel = (int) currentSession.getAttribute("count");
+        int countLevel = (int) currentSession.getAttribute("countLevel");
         if (countLevel == answerRepository.getSize()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
             return true;
         }
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
-            getDataFromRepository(true);
+            getDataFromRepository(true, countLevel);
         } else {
-            getDataFromRepository(false);
+            getDataFromRepository(false, countLevel);
         }
+        transferringDataToRequest(req, countLevel);
         return false;
     }
+
+
+    private void transferringDataToRequest(HttpServletRequest req, int countLevel) {
+        countLevel++;
+        logger.error(String.valueOf(countLevel) + " transferringDataToRequest");
+        currentSession.setAttribute("countLevel", countLevel);
+        req.setAttribute("answer", answer);
+        req.setAttribute("message", message);
+    }
+
 
     @Override
     public void destroy() {

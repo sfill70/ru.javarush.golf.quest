@@ -39,7 +39,7 @@
     <h4 class="one">Введите имя!/Enter name!</h4>
         <%-- bootstrap alert--%>
     <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong> Enter Name !!!</strong> The name cannot contain characters * /
+        <strong> Enter Name !!!</strong> The name cannot contain characters * / \
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

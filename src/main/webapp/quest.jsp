@@ -14,8 +14,13 @@
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+    int count = (int) session.getAttribute("countLevel");
+//    session.setAttribute("count", count);
+//    request.setAttribute("count", count);
 %>
 <h1><%= "Level"%> ${countLevel} </h1>
+<h1><%= "Level"%> <%= count%>
+</h1>
 <br/>
 <a href="restart">Restart</a>
 
@@ -29,11 +34,13 @@
         <input type="hidden" name="formname" value="endgame"/>
         <div>
             <input type="radio" id="choice1" name="choice" value="positiveAnswer" checked>
-            <label for="choice1"><%=entityInterfaceSession.getPositiveNameButton()%></label>
+            <label for="choice1"><%=entityInterfaceSession.getPositiveNameButton()%>
+            </label>
         </div>
         <div>
             <input type="radio" id="choice2" name="choice" value="negativeAnswer">
-            <label for="choice2"><%=entityInterfaceSession.getNegativeNameButton()%></label>
+            <label for="choice2"><%=entityInterfaceSession.getNegativeNameButton()%>
+            </label>
         </div>
         <div>
             <input type="submit" value="Ответить"/>
