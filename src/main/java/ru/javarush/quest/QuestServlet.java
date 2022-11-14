@@ -23,7 +23,7 @@ import ru.javarush.quest.repository.PlayerRepository;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start"})
+@WebServlet/*(name = "QuestServlet", value = {"/quest-servlet","/start"})*/
 public class QuestServlet extends HttpServlet{
     private HttpSession currentSession;
     private AnswerRepository answerRepository;
