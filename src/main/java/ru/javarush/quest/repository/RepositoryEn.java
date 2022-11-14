@@ -7,12 +7,6 @@ public class RepositoryEn extends AnswerRepository {
     public RepositoryEn() {
         super();
         this.entityInterface = anInterface;
-        this.negativeNameButton = "Disagree";
-        this.positiveNameButton = "I agree";
-        this.winMessage = win;
-        lossMessage = loss;
-        statistic = stat;
-        startMessage = start;
         this.positiveAnswer.put(0, new EntityQuest(message0, false));
         this.positiveAnswer.put(1, new EntityQuest(message1, false));
         this.positiveAnswer.put(2, new EntityQuest(message2, false));

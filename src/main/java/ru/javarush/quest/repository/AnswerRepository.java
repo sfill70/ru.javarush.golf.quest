@@ -10,15 +10,13 @@ import java.util.Map;
 
 public abstract class AnswerRepository {
 
+    /*positive response repository*/
     Map<Integer, EntityQuest> positiveAnswer;
+    /*negative response repository*/
     Map<Integer, EntityQuest> negativeAnswer;
+    /*Repository for the third branch of the quest*/
+    Map<Integer, EntityQuest> someAnswer;
     EntityInterface entityInterface;
-    String startMessage;
-    String positiveNameButton;
-    String negativeNameButton;
-    String winMessage;
-    String lossMessage;
-    String[] statistic;
     private static final Logger logger = LoggerFactory.getLogger(AnswerRepository.class);
 
     public AnswerRepository() {
@@ -26,74 +24,34 @@ public abstract class AnswerRepository {
         this.negativeAnswer = new HashMap<>();
     }
 
-
-    public EntityQuest getEntity(int level, boolean positive) {
-        if (positive) {
-            return positiveAnswer.get(level);
-        }
-        return negativeAnswer.get(level);
-    }
-
-    public EntityQuest getEntityPositiveAnswer(int level){
+    public EntityQuest getEntityPositiveAnswer(int level) {
         return positiveAnswer.get(level);
     }
 
-    public EntityQuest getEntityNegativeAnswer(int level){
+    public EntityQuest getEntityNegativeAnswer(int level) {
         return negativeAnswer.get(level);
     }
 
-    public String getLevelPositiveMessage(int level){
+    public String getLevelPositiveMessage(int level) {
         return getEntityPositiveAnswer(level).getMessage();
     }
 
-    public String getLevelNegativeMessage(int level){
+    public String getLevelNegativeMessage(int level) {
         return getEntityNegativeAnswer(level).getMessage();
     }
 
-    public boolean getLevelPositiveIsGameOver(int level){
+    public boolean getLevelPositiveIsGameOver(int level) {
         return getEntityPositiveAnswer(level).isGameOver();
     }
 
-    public boolean getLevelNegativeIsGameOver(int level){
+    public boolean getLevelNegativeIsGameOver(int level) {
         return getEntityNegativeAnswer(level).isGameOver();
-    }
-
-    public String getLevelMessage(int level, boolean positive) {
-
-        return getEntity(level, positive).getMessage();
-    }
-
-    public boolean isGameOver(int level, boolean positive) {
-        return getEntity(level, positive).isGameOver();
-    }
-
-    public String getStartMessage() {
-        return startMessage;
     }
 
     public int getSize() {
         return positiveAnswer.size();
     }
 
-    public String getPositiveNameButton() {
-        return positiveNameButton;
-    }
-
-    public String getNegativeNameButton() {
-        return negativeNameButton;
-    }
-
-    public String getLossMessage() {
-        return lossMessage;
-    }
-
-    public String getWinMessage() {
-        return winMessage;
-    }
-
-    public String[] getStatistic() {
-        return statistic;
-    }
     public EntityInterface getEntityInterface() {
         return entityInterface;
     }

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 
 
@@ -19,32 +18,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.javarush.quest.repository.PlayerRepository;
 
-import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
-@WebServlet/*(name = "QuestServlet", value = {"/quest-servlet","/start"})*/
+@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start"})
 public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
     private AnswerRepository answerRepository;
     private FactoryRepository factoryRepository;
     boolean isGameOver;
     String message;
-    String answer;
     private static final Logger logger = LoggerFactory.getLogger(QuestServlet.class);
 
 
     @Override
     public void init() throws ServletException {
         super.init();
-        try {
-            logger.debug(URLDecoder.decode(QuestServlet.class.getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .getPath(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
         this.factoryRepository = new FactoryRepository();
+        /*Нахождение директории проекта если понадобитьс*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
         String[] arrayProjectPath = projectPathOut.split("/");
@@ -72,21 +62,6 @@ public class QuestServlet extends HttpServlet {
             doGet(req, resp);
             return;
         }
-
-       /* String uri = req.getRequestURI();
-        logger.debug(uri);
-        if (httpMethod.equalsIgnoreCase("GET")) {
-            doGet(req, resp);
-            return;
-        }
-        if (uri.equals("/start")) {
-            startQuest(req);
-        } else if (uri.equals("/quest-servlet")) {
-            if (logicQuest(req, resp)) {
-                return;
-            }
-        }*/
-
         doPost(req, resp);
     }
 
@@ -117,19 +92,8 @@ public class QuestServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             return;
         }
-//        transferringDataToRequest(req);
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
     }
-/*
-
-    private void transferringDataToRequest(HttpServletRequest req, int countLevel) {
-        countLevel++;
-        logger.error(String.valueOf(countLevel) + " transferringDataToRequest");
-        currentSession.setAttribute("countLevel", countLevel);
-        req.setAttribute("answer", answer);
-        req.setAttribute("message", message);
-    }
-*/
 
     public void startQuest(HttpServletRequest req) throws IOException {
         int countLevel = 0;
@@ -141,8 +105,6 @@ public class QuestServlet extends HttpServlet {
         dataTransferPerSession(username, gamesquanity, language);
         getDataFromRepository(true, countLevel);
         transferringDataToRequest(req, countLevel);
-
-//        return false;
     }
 
 
@@ -160,13 +122,7 @@ public class QuestServlet extends HttpServlet {
         currentSession.setAttribute("entityInterface", answerRepository.getEntityInterface());
     }
 
-    private void getStartDataFromRepository() {
-        message = answerRepository.getStartMessage();
-        isGameOver = false;
-    }
-
     private void getDataFromRepository(boolean positiveAnswer, int countLevel) {
-        answer = String.valueOf(positiveAnswer);
         if (positiveAnswer) {
             isGameOver = answerRepository.getLevelPositiveIsGameOver(countLevel);
             message = answerRepository.getLevelPositiveMessage(countLevel);
@@ -178,7 +134,6 @@ public class QuestServlet extends HttpServlet {
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         logger.error(currentSession.getAttribute("countLevel") + "    logicQuest");
-//        int countLevel = (int) currentSession.getAttribute("count");
         int countLevel = (int) currentSession.getAttribute("countLevel");
         if (countLevel == answerRepository.getSize()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
@@ -199,7 +154,6 @@ public class QuestServlet extends HttpServlet {
         countLevel++;
         logger.error(String.valueOf(countLevel) + " transferringDataToRequest");
         currentSession.setAttribute("countLevel", countLevel);
-        req.setAttribute("answer", answer);
         req.setAttribute("message", message);
     }
 

@@ -7,8 +7,6 @@ public class RepositoryRu extends AnswerRepository {
     public RepositoryRu() {
         super();
         this.entityInterface = anInterface;
-        this.negativeNameButton = "Отказаться";
-        this.positiveNameButton = "Согласиться";
         this.positiveAnswer.put(0, new EntityQuest(message0, false));
         this.positiveAnswer.put(1, new EntityQuest(message1, false));
         this.positiveAnswer.put(2, new EntityQuest(message2, false));
@@ -20,11 +18,6 @@ public class RepositoryRu extends AnswerRepository {
         this.negativeAnswer.put(3, new EntityQuest(negativeMessage3, true));
         this.negativeAnswer.put(4, new EntityQuest(negativeMessage4, true));
         this.negativeAnswer.put(5, new EntityQuest(negativeMessage5, true));
-        startMessage = start;
-        winMessage = win;
-        lossMessage = loss;
-        statistic = stat;
-
     }
 
     String message0 = "Вопрос0";

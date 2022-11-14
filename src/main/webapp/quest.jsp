@@ -14,12 +14,8 @@
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
-    int count = (int) session.getAttribute("countLevel");
-//    session.setAttribute("count", count);
-//    request.setAttribute("count", count);
 %>
 <h1><%= "Level"%> ${countLevel} </h1>
-<h1><%= "Level"%> <%= count%>
 </h1>
 <br/>
 <a href="restart">Restart</a>
@@ -59,15 +55,7 @@
     <div><%=entityInterfaceSession.getStatistic()[3]%><i><%= session.getAttribute("gamesquanity")%>
     </i></div>
 </div>
-<%--<div class="statistic">
-    <div><b><%=entityInterfaceSession.getStatistic()[0]%></b></div>
-    <div>${statistic[1]} <i><%= session.getAttribute("ip")%>
-    </i></div>
-    <div>${statistic[2]} <i><%= session.getAttribute("username") %>
-    </i></div>
-    <div>${statistic[3]} <i><%= session.getAttribute("gamesquanity")%>
-    </i></div>
-</div>--%>
+
 
 </body>
 </html>
