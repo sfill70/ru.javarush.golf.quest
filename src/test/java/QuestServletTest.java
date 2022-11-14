@@ -1,35 +1,8 @@
-import org.junit.jupiter.api.Test;
-import ru.javarush.quest.QuestServlet;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.javarush.quest.factory.FactoryRepository;
-import ru.javarush.quest.repository.AnswerRepository;
-import ru.javarush.quest.repository.RepositoryEn;
-import ru.javarush.quest.repository.RepositoryRu;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.UnknownHostException;
-import java.net.http.HttpRequest;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class InitServletTest {
+public class QuestServletTest {
 
   /*  public InitServlet initServlet;
     public HttpServletRequest request;
