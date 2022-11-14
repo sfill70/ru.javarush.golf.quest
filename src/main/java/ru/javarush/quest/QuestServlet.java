@@ -116,7 +116,9 @@ public class QuestServlet extends HttpServlet{
         if (isGameOver) {
             logger.error(message + "  isGameOver");
             currentSession.setAttribute("message", message);
+//            req.setAttribute("message", message);
 //            getServletContext().getRequestDispatcher("/loss.jsp").forward(req, resp);
+//            req.getRequestDispatcher("/loss.jsp").forward(req, resp);
             resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             return;
         }
