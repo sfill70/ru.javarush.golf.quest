@@ -6,6 +6,9 @@ import ru.javarush.quest.repository.AnswerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 public class FactoryRepository {
     private static final Logger logger = LoggerFactory.getLogger(FactoryRepository.class);
     public AnswerRepository creatRepository(String language) {
@@ -20,10 +23,22 @@ public class FactoryRepository {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
         FactoryRepository factoryRepository = new FactoryRepository();
 
         System.out.println(factoryRepository.creatRepository("EN").getEntityInterface().getNegativeNameButton());
+
+            String ANSI = " РЈСЃС‚Р°РЅРѕРІРєР° РІРµР± РїСЂРёР»РѕР¶РµРЅРёСЏ РІ РїР°РїРєСѓ";
+            String ANSI3 = "Ð°Ð±Ð²Ð³";
+            String myUTF8 = new String(ANSI.getBytes("ISO-8859-1"),"UTF-8");
+            System.out.println(myUTF8);
+            char c = 'Р';
+            char u = 'Ð';
+            System.out.println((int) c);
+            System.out.println((int) u);
+
+//        String myUTF8 = new String(my8859.getBytes("ISO-8859-1"),"UTF-8")
+
 
     }
 }

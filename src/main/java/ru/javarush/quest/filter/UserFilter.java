@@ -3,6 +3,7 @@ package ru.javarush.quest.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +46,10 @@ public class UserFilter implements Filter {
             req.setAttribute("blank", true);
             RequestDispatcher dispatcher = ctx.getRequestDispatcher("/");
             dispatcher.forward(req, resp);
+            /*String myUTF8 = new String(my8859.getBytes("ISO-8859-1"),"UTF-8")*/
             return true;
         }
         return false;
     }
-}
+
+   }

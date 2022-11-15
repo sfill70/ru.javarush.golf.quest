@@ -40,5 +40,5 @@ public class RepositoryEn extends AnswerRepository {
     String loss = "<h2>" + "Houston, we have a problem !!!" + "</h2>"
             + "<span class=" + "second" + "> failed mission player named: </span>";
     String[] stat = {"Statistic:", "Your current IP address:", "Name in the game: ", "Count game:"};
-    EntityInterface anInterface = new EntityInterface(start, "I agree","Disagree",win, loss, stat);
+    EntityInterface anInterface = new EntityInterface(start, "I agree","Disagree","Reply",win, loss, stat);
 }

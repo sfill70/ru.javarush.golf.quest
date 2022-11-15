@@ -1,6 +1,7 @@
 <%@ page import="ru.javarush.quest.entity.EntityQuest" %>
 <%@ page import="ru.javarush.quest.entity.EntityInterface" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,5 +103,6 @@
         </div>
     </div>
     </c:if>
+</div>
 </body>
 </html>

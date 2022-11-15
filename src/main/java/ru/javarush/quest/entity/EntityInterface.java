@@ -4,16 +4,18 @@ public class EntityInterface {
     String startMessage;
     String positiveNameButton;
     String negativeNameButton;
+    String answerButton;
     String winMessage;
     String lossMessage;
     String[] statistic;
 
     public EntityInterface(String startMessage, String positiveNameButton,
-                           String negativeNameButton, String winMessage,
+                           String negativeNameButton, String answerButton, String winMessage,
                            String lossMessage, String[] statistic) {
         this.startMessage = startMessage;
         this.positiveNameButton = positiveNameButton;
         this.negativeNameButton = negativeNameButton;
+        this.answerButton = answerButton;
         this.winMessage = winMessage;
         this.lossMessage = lossMessage;
         this.statistic = statistic;
@@ -29,6 +31,10 @@ public class EntityInterface {
 
     public String getNegativeNameButton() {
         return negativeNameButton;
+    }
+
+    public String getAnswerButton() {
+        return answerButton;
     }
 
     public String getWinMessage() {
