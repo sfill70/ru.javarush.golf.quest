@@ -1,6 +1,6 @@
 package ru.javarush.quest;
 
-import ru.javarush.quest.factory.FactoryRepository;
+import ru.javarush.quest.logics.FactoryRepository;
 import ru.javarush.quest.repository.AnswerRepository;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import ru.javarush.quest.repository.PlayerRepository;
 
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start","/game"})
 public class QuestServlet extends HttpServlet {

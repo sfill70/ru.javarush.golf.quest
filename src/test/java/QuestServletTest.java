@@ -1,12 +1,11 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.QuestServlet;
-import ru.javarush.quest.factory.FactoryRepository;
+import ru.javarush.quest.logics.FactoryRepository;
 import ru.javarush.quest.repository.AnswerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;

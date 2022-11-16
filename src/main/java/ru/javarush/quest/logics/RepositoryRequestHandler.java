@@ -2,7 +2,6 @@ package ru.javarush.quest.logics;
 
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.entity.EntityQuest;
-import ru.javarush.quest.factory.FactoryRepository;
 import ru.javarush.quest.repository.AnswerRepository;
 
 public class RepositoryRequestHandler {
