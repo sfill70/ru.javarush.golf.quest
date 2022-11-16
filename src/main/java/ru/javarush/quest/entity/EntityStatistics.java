@@ -16,6 +16,8 @@ public class EntityStatistics {
         this.language = language;
     }
 
+
+
     public String getIp() {
         return ip;
     }

@@ -1,5 +1,6 @@
 package ru.javarush.quest;
 
+
 import ru.javarush.quest.logics.RepositoryRequestHandler;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ import ru.javarush.quest.repository.PlayerRepository;
 
 import java.net.UnknownHostException;
 
-@WebServlet(name = "QuestServlet", value = {"/quest-servlet", "/start", "/game"})
+@WebServlet(name = "QuestServlet", value = {"/quest-servlet", "/start"})
 public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
     RepositoryRequestHandler repositoryRequestHandler;
@@ -75,11 +76,6 @@ public class QuestServlet extends HttpServlet {
                 return;
             }
         }
-        if (repositoryRequestHandler.IsGameOver()) {
-            currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
-            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
-            return;
-        }
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
     }
 
@@ -111,20 +107,24 @@ public class QuestServlet extends HttpServlet {
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
             repositoryRequestHandler.EntityQuestSelection(true);
+        } else {
+            repositoryRequestHandler.EntityQuestSelection(false);
         }
-        repositoryRequestHandler.EntityQuestSelection(false);
         transferringDataToRequest(req);
         if (repositoryRequestHandler.IsVictory()) {
-            currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
+            return true;
+        }
+        if (repositoryRequestHandler.IsGameOver()) {
+            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
             return true;
         }
         return false;
     }
 
     private void transferringDataToRequest(HttpServletRequest req) {
-        currentSession.setAttribute("countLevel", repositoryRequestHandler.getCountLevel());
-        req.setAttribute("message", repositoryRequestHandler.getMessage());
+        req.setAttribute("countLevel", repositoryRequestHandler.getCountLevel());
+        currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
     }
 
     @Override
