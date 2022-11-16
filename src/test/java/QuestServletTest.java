@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.QuestServlet;
-import ru.javarush.quest.logics.FactoryRepository;
+import ru.javarush.quest.logics.RepositorySelection;
 import ru.javarush.quest.repository.AnswerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
@@ -34,7 +34,7 @@ public class QuestServletTest {
     public RequestDispatcher requestDispatcher;
     public HttpSession currentSession;
     AnswerRepository answerRepository;
-    FactoryRepository factoryRepository;
+    RepositorySelection repositorySelection;
     int countLevel;
     String username;
     String language;

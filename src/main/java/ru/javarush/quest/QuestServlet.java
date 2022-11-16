@@ -1,6 +1,6 @@
 package ru.javarush.quest;
 
-import ru.javarush.quest.logics.FactoryRepository;
+import ru.javarush.quest.logics.RepositorySelection;
 import ru.javarush.quest.repository.AnswerRepository;
 
 import javax.servlet.ServletException;
@@ -24,7 +24,7 @@ import java.net.UnknownHostException;
 public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
     private AnswerRepository answerRepository;
-    private FactoryRepository factoryRepository;
+    private RepositorySelection repositorySelection;
     boolean isGameOver;
     String message;
     private static final Logger logger = LoggerFactory.getLogger(QuestServlet.class);
@@ -33,7 +33,7 @@ public class QuestServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        this.factoryRepository = new FactoryRepository();
+        this.repositorySelection = new RepositorySelection();
         /*Нахождение директории проекта если понадобитьс*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
@@ -56,9 +56,6 @@ public class QuestServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.error("Service");
         currentSession = req.getSession(true);
-       /* req.setCharacterEncoding("utf-8");
-        resp.setCharacterEncoding("utf-8");*/
-
         String httpMethod = req.getMethod();
         if (httpMethod.equalsIgnoreCase("GET")) {
             doGet(req, resp);
@@ -111,7 +108,7 @@ public class QuestServlet extends HttpServlet {
 
 
     private AnswerRepository getAnswerRepository(String language) {
-        AnswerRepository repository = factoryRepository.creatRepository(language);
+        AnswerRepository repository = repositorySelection.creatRepository(language);
         logger.debug(repository.getClass() + " downloadDataByLanguage");
         return repository;
     }

@@ -6,41 +6,64 @@ import ru.javarush.quest.repository.AnswerRepository;
 
 public class RepositoryRequestHandler {
     AnswerRepository answerRepository;
-    FactoryRepository factoryRepository;
+    RepositorySelection repositorySelection;
 
+    EntityQuest entityQuest;
     int countLevel;
 
     public RepositoryRequestHandler(String language) {
-        factoryRepository = new FactoryRepository();
-        this.answerRepository = factoryRepository.creatRepository(language);
+        repositorySelection = new RepositorySelection();
+        this.answerRepository = repositorySelection.creatRepository(language);
         this.countLevel = 0;
     }
 
-    public void lastLevel(){
+    public void lastLevel() {
         countLevel++;
     }
 
-    public EntityInterface getEntityInterface(){
+
+    public EntityInterface getEntityInterface() {
         return answerRepository.getEntityInterface();
     }
 
-    public EntityQuest getPositiveEntityQuest(){
+    public EntityQuest getPositiveEntityQuest() {
         return answerRepository.getEntityPositiveAnswer(countLevel);
     }
 
-    public EntityQuest getNegativeEntityQuest(){
+    public EntityQuest getNegativeEntityQuest() {
         return answerRepository.getEntityNegativeAnswer(countLevel);
     }
 
-    public String getPositiveMessage(){
+    public void EntityQuestSelection(boolean positiveAnswer) {
+        if (positiveAnswer) {
+            this.entityQuest = getPositiveEntityQuest();
+            return;
+        }
+        this.entityQuest = getNegativeEntityQuest();
+    }
+
+    public String getMessage() {
+        return entityQuest.getMessage();
+    }
+
+    public boolean IsGameOver() {
+        return entityQuest.isGameOver();
+    }
+
+    public boolean IsVictory() {
+        return !IsGameOver() && countLevel == answerRepository.getSize();
+    }
+
+    public int getCountLevel(){
+        return countLevel;
+    }
+
+    public String getPositiveMessage() {
         return getPositiveEntityQuest().getMessage();
     }
 
-    public String getNegativeMessage(){
+    public String getNegativeMessage() {
         return getPositiveEntityQuest().getMessage();
     }
 
-    public boolean IsGameOver(){
-        return true;
-    }
 }

@@ -9,8 +9,8 @@ import ru.javarush.quest.repository.RepositoryRu;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-public class FactoryRepository {
-    private static final Logger logger = LoggerFactory.getLogger(FactoryRepository.class);
+public class RepositorySelection {
+    private static final Logger logger = LoggerFactory.getLogger(RepositorySelection.class);
     public AnswerRepository creatRepository(String language) {
         logger.debug("Fabrica");
         switch (language) {
@@ -24,9 +24,9 @@ public class FactoryRepository {
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        FactoryRepository factoryRepository = new FactoryRepository();
+        RepositorySelection repositorySelection = new RepositorySelection();
 
-        System.out.println(factoryRepository.creatRepository("EN").getEntityInterface().getNegativeNameButton());
+        System.out.println(repositorySelection.creatRepository("EN").getEntityInterface().getNegativeNameButton());
 
             String ANSI = " РЈСЃС‚Р°РЅРѕРІРєР° РІРµР± РїСЂРёР»РѕР¶РµРЅРёСЏ РІ РїР°РїРєСѓ";
             String ANSI3 = "Ð°Ð±Ð²Ð³";
