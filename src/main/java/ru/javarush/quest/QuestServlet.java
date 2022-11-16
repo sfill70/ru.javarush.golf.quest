@@ -1,8 +1,6 @@
 package ru.javarush.quest;
 
 import ru.javarush.quest.logics.RepositoryRequestHandler;
-import ru.javarush.quest.logics.RepositorySelection;
-import ru.javarush.quest.repository.AnswerRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,12 +19,11 @@ import ru.javarush.quest.repository.PlayerRepository;
 
 import java.net.UnknownHostException;
 
-@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start","/game"})
+@WebServlet(name = "QuestServlet", value = {"/quest-servlet", "/start", "/game"})
 public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
     RepositoryRequestHandler repositoryRequestHandler;
     private static final Logger logger = LoggerFactory.getLogger(QuestServlet.class);
-
 
     @Override
     public void init() throws ServletException {
@@ -51,7 +48,6 @@ public class QuestServlet extends HttpServlet {
     @Override
 
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.error("Service");
         currentSession = req.getSession(true);
         String httpMethod = req.getMethod();
         if (httpMethod.equalsIgnoreCase("GET")) {
@@ -61,13 +57,11 @@ public class QuestServlet extends HttpServlet {
         doPost(req, resp);
     }
 
-
     /*не используется*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
-
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,11 +75,11 @@ public class QuestServlet extends HttpServlet {
                 return;
             }
         }
-       if(repositoryRequestHandler.IsGameOver()){
-           currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
-           resp.sendRedirect(req.getContextPath() + "/loss.jsp");
-           return;
-       }
+        if (repositoryRequestHandler.IsGameOver()) {
+            currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
+            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
+            return;
+        }
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
     }
 
@@ -99,7 +93,7 @@ public class QuestServlet extends HttpServlet {
         transferringDataToRequest(req);
     }
 
-    private RepositoryRequestHandler getRepositoryRequestHandler(String language){
+    private RepositoryRequestHandler getRepositoryRequestHandler(String language) {
         return new RepositoryRequestHandler(language);
     }
 
@@ -113,17 +107,18 @@ public class QuestServlet extends HttpServlet {
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         repositoryRequestHandler.lastLevel();
-        if (repositoryRequestHandler.IsVictory()) {
-            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
-            return true;
-        }
+        logger.debug(repositoryRequestHandler.getCountLevel() + " logic");
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
             repositoryRequestHandler.EntityQuestSelection(true);
-        } else {
-            repositoryRequestHandler.EntityQuestSelection(false);
         }
+        repositoryRequestHandler.EntityQuestSelection(false);
         transferringDataToRequest(req);
+        if (repositoryRequestHandler.IsVictory()) {
+            currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
+            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
+            return true;
+        }
         return false;
     }
 

@@ -51,19 +51,12 @@ public class RepositoryRequestHandler {
     }
 
     public boolean IsVictory() {
-        return !IsGameOver() && countLevel == answerRepository.getSize();
+        return !IsGameOver() && countLevel == answerRepository.getSize()-1;
     }
 
     public int getCountLevel(){
         return countLevel;
     }
 
-    public String getPositiveMessage() {
-        return getPositiveEntityQuest().getMessage();
-    }
-
-    public String getNegativeMessage() {
-        return getPositiveEntityQuest().getMessage();
-    }
 
 }

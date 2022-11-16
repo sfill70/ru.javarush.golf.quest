@@ -51,7 +51,6 @@ public class UserFilter implements Filter {
             dispatcher.forward(req, resp);
             return true;
         }
-        logger.error(req.getParameter("username"));
         return false;
     }
 
