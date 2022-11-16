@@ -24,11 +24,6 @@ import java.net.UnknownHostException;
 @WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start","/game"})
 public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
-    private AnswerRepository answerRepository;
-    private RepositorySelection repositorySelection;
-    boolean isGameOver;
-    String message;
-
     RepositoryRequestHandler repositoryRequestHandler;
     private static final Logger logger = LoggerFactory.getLogger(QuestServlet.class);
 
@@ -36,7 +31,6 @@ public class QuestServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        this.repositorySelection = new RepositorySelection();
         /*Нахождение директории проекта если понадобитьс*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
@@ -92,12 +86,6 @@ public class QuestServlet extends HttpServlet {
            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
            return;
        }
-        /* if (isGameOver) {
-            logger.error(message + "  isGameOver");
-            currentSession.setAttribute("message", message);
-            resp.sendRedirect(req.getContextPath() + "/loss.jsp");
-            return;
-        }*/
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
     }
 
@@ -105,26 +93,10 @@ public class QuestServlet extends HttpServlet {
         String username = req.getParameter("username");
         String language = req.getParameter("choiceLanguage");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
-
         repositoryRequestHandler = getRepositoryRequestHandler(language);
-
-
-        int countLevel = 0;
-        isGameOver = false;
-        /*String username = req.getParameter("username");
-        int gamesquanity = PlayerRepository.getPlayerCount(username);
-        String language = req.getParameter("choiceLanguage");*/
-        answerRepository = getAnswerRepository(language);
         dataTransferPerSession(username, gamesquanity, language);
-        getDataFromRepository(true, countLevel);
-        transferringDataToRequest(req, countLevel);
-    }
-
-
-    private AnswerRepository getAnswerRepository(String language) {
-        AnswerRepository repository = repositorySelection.creatRepository(language);
-        logger.debug(repository.getClass() + " downloadDataByLanguage");
-        return repository;
+        repositoryRequestHandler.EntityQuestSelection(true);
+        transferringDataToRequest(req);
     }
 
     private RepositoryRequestHandler getRepositoryRequestHandler(String language){
@@ -136,54 +108,29 @@ public class QuestServlet extends HttpServlet {
         currentSession.setAttribute("gamesquanity", gamesquanity);
         currentSession.setAttribute("language", language);
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
-//        currentSession.setAttribute("entityInterface", answerRepository.getEntityInterface());
         currentSession.setAttribute("entityInterface", repositoryRequestHandler.getEntityInterface());
     }
 
-    private void getDataFromRepository(boolean positiveAnswer, int countLevel) {
-        if (positiveAnswer) {
-            repositoryRequestHandler.EntityQuestSelection(true);
-            /*isGameOver = answerRepository.getLevelPositiveIsGameOver(countLevel);
-            message = answerRepository.getLevelPositiveMessage(countLevel);*/
-        } else {
-            repositoryRequestHandler.EntityQuestSelection(false);
-            /*isGameOver = answerRepository.getLevelNegativeIsGameOver(countLevel);
-            message = answerRepository.getLevelNegativeMessage(countLevel);*/
-        }
-    }
-
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        logger.error(currentSession.getAttribute("countLevel") + "    logicQuest");
         repositoryRequestHandler.lastLevel();
-        int countLevel = (int) currentSession.getAttribute("countLevel");
         if (repositoryRequestHandler.IsVictory()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
             return true;
         }
-        /*if (countLevel == answerRepository.getSize()) {
-            resp.sendRedirect(req.getContextPath() + "/victory.jsp");
-            return true;
-        }*/
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
-            getDataFromRepository(true, countLevel);
+            repositoryRequestHandler.EntityQuestSelection(true);
         } else {
-            getDataFromRepository(false, countLevel);
+            repositoryRequestHandler.EntityQuestSelection(false);
         }
-        transferringDataToRequest(req, countLevel);
+        transferringDataToRequest(req);
         return false;
     }
 
-
-    private void transferringDataToRequest(HttpServletRequest req, int countLevel) {
-        countLevel++;
-        logger.error(String.valueOf(countLevel) + " transferringDataToRequest");
+    private void transferringDataToRequest(HttpServletRequest req) {
         currentSession.setAttribute("countLevel", repositoryRequestHandler.getCountLevel());
         req.setAttribute("message", repositoryRequestHandler.getMessage());
-        /*currentSession.setAttribute("countLevel", countLevel);
-        req.setAttribute("message", message);*/
     }
-
 
     @Override
     public void destroy() {
