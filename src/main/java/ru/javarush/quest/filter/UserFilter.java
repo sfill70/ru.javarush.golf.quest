@@ -3,6 +3,7 @@ package ru.javarush.quest.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,13 @@ public class UserFilter implements Filter {
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
         filterConfig = fConfig;
+
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
         logger.error("Filter!");
         if (usernameCheck(req, resp)) {
             return;
@@ -47,6 +51,8 @@ public class UserFilter implements Filter {
             dispatcher.forward(req, resp);
             return true;
         }
+        logger.error(req.getParameter("username"));
         return false;
     }
-}
+
+   }

@@ -41,5 +41,5 @@ public class RepositoryRu extends AnswerRepository {
             + "<span class=" + "second" + "> провалил задание игрок с ником: </span>";
 
     String[] stat = {"Статистика:", "Твой текущий IP address:", "Имя в игре: ", "Количество игр:"};
-    EntityInterface anInterface = new EntityInterface(start, "Согласиться","Отказаться",win, loss, stat);
+    EntityInterface anInterface = new EntityInterface(start, "Согласиться","Отказаться","Ответить",win, loss, stat);
 }

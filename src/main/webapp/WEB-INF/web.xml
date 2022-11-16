@@ -26,6 +26,7 @@
         <filter-name>UserFilter</filter-name>
         <url-pattern>/start</url-pattern>
     </filter-mapping>
+
     <!-- error-code related error pages -->
     <error-page>
         <error-code>404</error-code>

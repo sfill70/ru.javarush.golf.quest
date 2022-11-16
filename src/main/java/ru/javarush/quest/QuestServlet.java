@@ -19,8 +19,9 @@ import org.slf4j.LoggerFactory;
 import ru.javarush.quest.repository.PlayerRepository;
 
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
-@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start"})
+@WebServlet(name = "QuestServlet", value = {"/quest-servlet","/start","/game"})
 public class QuestServlet extends HttpServlet {
     private HttpSession currentSession;
     private AnswerRepository answerRepository;
@@ -56,6 +57,8 @@ public class QuestServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.error("Service");
         currentSession = req.getSession(true);
+       /* req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");*/
 
         String httpMethod = req.getMethod();
         if (httpMethod.equalsIgnoreCase("GET")) {
@@ -69,14 +72,13 @@ public class QuestServlet extends HttpServlet {
     /*не используется*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     }
 
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Post");
-        logger.error(message);
-        logger.error(String.valueOf(currentSession.hashCode()));
         String uri = req.getRequestURI();
         logger.debug(uri);
         if (uri.equals("/start")) {
@@ -99,6 +101,7 @@ public class QuestServlet extends HttpServlet {
         int countLevel = 0;
         isGameOver = false;
         String username = req.getParameter("username");
+        logger.error(username);
         int gamesquanity = PlayerRepository.getPlayerCount(username);
         String language = req.getParameter("choiceLanguage");
         answerRepository = getAnswerRepository(language);
