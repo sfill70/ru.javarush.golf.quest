@@ -100,11 +100,11 @@ public class QuestServletTest {
         }
     }
 
-   /* @ParameterizedTest
-    @CsvSource({
-            "name, 5, RU" ,
-            "user, 2, EN",
-    })*/
+    /* @ParameterizedTest
+     @CsvSource({
+             "name, 5, RU" ,
+             "user, 2, EN",
+     })*/
     @Test
     void dataTransferPerSessionTest(/*String username, int gamesquanity, String language*/) throws UnknownHostException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 //        HttpSession currentSession = mock(HttpSession.class);
@@ -167,7 +167,6 @@ public class QuestServletTest {
         answerRepository = new RepositoryRu();
         currentSession = mock(HttpSession.class);
         when(request.getSession(true)).thenReturn(currentSession);
-
          when(request.getParameter("formname")).thenReturn(String.valueOf("prologue"));
         System.out.println(servletContext.getRequestDispatcher("/init-servlet"));
         System.out.println(servletContext.getRequestDispatcher("/mainPage"));
@@ -178,8 +177,6 @@ public class QuestServletTest {
         response = mock(HttpServletResponse.class);
 //        currentSession.setAttribute("formname", "prologue");
         System.out.println(currentSession.getAttribute("formname") + "!!!!!!!!!!!!!!!");
-
-
         System.out.println(request.getParameter("formname"));
         System.out.println(request.getContextPath());
         System.out.println(request.getParameter("username"));
@@ -207,13 +204,11 @@ public class QuestServletTest {
 //        currentSession.setAttribute("username", request.getParameter("username"));
         System.out.println(request.getParameter("formname") + "!!!!!!!!!!!!!!!");
         System.out.println(request.getParameter("username") + "!!!!!!!!!!!!!!!");
-
 //        lenient().when(request.getServletContext()).thenReturn(servletContext);
         //        lenient().when(request.getSession(true)).thenReturn(currentSession);
 //        lenient().wh
 //        initServlet.doPost(request , response);
         System.out.println(request.getRequestURI());
         System.out.println(request.getParameter("formname"));
-
     }*/
 }

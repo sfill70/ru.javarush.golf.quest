@@ -94,5 +94,4 @@ public class RepositoryRequestHandlerTest {
                 getEntityNegativeAnswer(repositoryRequestHandlerEn.getCountLevel()).getMessage());
     }
 
-
 }

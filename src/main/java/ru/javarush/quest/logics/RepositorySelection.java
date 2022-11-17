@@ -28,14 +28,14 @@ public class RepositorySelection {
 
         System.out.println(repositorySelection.creatRepository("EN").getEntityInterface().getNegativeNameButton());
 
-            String ANSI = " РЈСЃС‚Р°РЅРѕРІРєР° РІРµР± РїСЂРёР»РѕР¶РµРЅРёСЏ РІ РїР°РїРєСѓ";
-            String ANSI3 = "Ð°Ð±Ð²Ð³";
-            String myUTF8 = new String(ANSI.getBytes(StandardCharsets.ISO_8859_1),"UTF-8");
-            System.out.println(myUTF8);
-            char c = 'Р';
-            char u = 'Ð';
-            System.out.println((int) c);
-            System.out.println((int) u);
+        String ANSI = " РЈСЃС‚Р°РЅРѕРІРєР° РІРµР± РїСЂРёР»РѕР¶РµРЅРёСЏ РІ РїР°РїРєСѓ";
+        String ANSI3 = "Ð°Ð±Ð²Ð³";
+        String myUTF8 = new String(ANSI.getBytes(StandardCharsets.ISO_8859_1),"UTF-8");
+        System.out.println(myUTF8);
+        char c = 'Р';
+        char u = 'Ð';
+        System.out.println((int) c);
+        System.out.println((int) u);
 
 //        String myUTF8 = new String(my8859.getBytes("ISO-8859-1"),"UTF-8")
 
