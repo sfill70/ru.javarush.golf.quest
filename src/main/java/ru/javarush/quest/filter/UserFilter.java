@@ -21,10 +21,13 @@ public class UserFilter implements Filter {
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
         filterConfig = fConfig;
+
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
         logger.error("Filter!");
         if (usernameCheck(req, resp)) {
             return;
@@ -46,10 +49,9 @@ public class UserFilter implements Filter {
             req.setAttribute("blank", true);
             RequestDispatcher dispatcher = ctx.getRequestDispatcher("/");
             dispatcher.forward(req, resp);
-            /*String myUTF8 = new String(my8859.getBytes("ISO-8859-1"),"UTF-8")*/
             return true;
         }
         return false;
     }
 
-   }
+}

@@ -22,6 +22,7 @@
 %>
 <span><%=entityInterfaceSession.getWinMessage()%></span>
 <h2 class="one"> ${username}</h2>
+<h4>${message}</h4>
 <br>
 <h2>Restart</h2>
 <form action="restart" method="post">

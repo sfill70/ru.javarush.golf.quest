@@ -1,5 +1,6 @@
 <%@ page import="ru.javarush.quest.entity.EntityQuest" %>
 <%@ page import="ru.javarush.quest.entity.EntityInterface" %>
+<%@ page import="ru.javarush.quest.entity.EntityStatistics" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <!DOCTYPE html>
@@ -46,6 +47,7 @@
         </button>
     </div>
     </c:if>
+
     <%--    bootstrap form--%>
     <form method="post" action="/start">
         <div class="form-group row">
