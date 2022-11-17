@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Sfill_PC
-  Date: 17.10.2022
-  Time: 16:32
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page import="ru.javarush.quest.entity.EntityQuest" %>
 <%@ page import="ru.javarush.quest.entity.EntityInterface" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
