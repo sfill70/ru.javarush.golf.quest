@@ -37,8 +37,6 @@ public class QuestServletTest {
     public ServletContext servletContext;
     public RequestDispatcher requestDispatcher;
     public HttpSession currentSession;
-    AnswerRepository answerRepository;
-    RepositorySelection repositorySelection;
     RepositoryRequestHandler repositoryRequestHandler;
 
 
@@ -65,22 +63,6 @@ public class QuestServletTest {
 //        lenient().when(servletContext.getRequestDispatcher("/init-servlet")).thenReturn(requestDispatcher);
     }
 
-   /* @ParameterizedTest
-    @CsvSource({
-            "RU, RepositoryRu.class",
-            "EN, RepositoryEn.class",
-    })
-    public void getAnswerRepositoryTest(String language) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Class clazz = questServlet.getClass();
-        Method downloadData = clazz.getDeclaredMethod("getAnswerRepository", String.class);
-        downloadData.setAccessible(true);
-        AnswerRepository repository = (AnswerRepository) downloadData.invoke(questServlet, language);
-        if (language.equalsIgnoreCase("RU")) {
-            Assertions.assertEquals(repository.getClass(), RepositoryRu.class);
-        } else {
-            Assertions.assertEquals(repository.getClass(), RepositoryEn.class);
-        }
-    }*/
 
     @ParameterizedTest
     @CsvSource({
@@ -105,6 +87,7 @@ public class QuestServletTest {
              "name, 5, RU" ,
              "user, 2, EN",
      })*/
+    /*Как добавить сессию в тест????*/
     @Test
     void dataTransferPerSessionTest(/*String username, int gamesquanity, String language*/) throws UnknownHostException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 //        HttpSession currentSession = mock(HttpSession.class);
@@ -131,84 +114,4 @@ public class QuestServletTest {
         Assertions.assertEquals((String) currentSession.getAttribute("language"), "language");
     }
 
-
-   /* @Test
-    @ParameterizedTest
-    @CsvSource({
-            "/start?formname=prologue&username=svsv&choiceLanguage=RU, RepositoryRu.class",
-    })*/
-/*
-    public boolean startQuestTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        when(request.getSession(true)).thenReturn(currentSession);
-//        when(request.getRequestURI()).thenReturn("/start");
-        System.out.println("!!!!!!!!!!!!!!!!!!!!");
-        lenient().when(servletContext.getRequestDispatcher("/start")).thenReturn(requestDispatcher);
-        when(request.getParameter("username")).thenReturn("user");
-        System.out.println(request.getParameter("username") + "!!!!!!!!!!!!!!!");
-        when(request.getParameter("choiceLanguage")).thenReturn("RU");
-        questServlet.startQuest(request, response);
-//        initServlet.downloadDataByLanguage(language);
-//        Assertions.assertEquals(answerRepository.getClass(), );
-        Assertions.assertEquals(questServlet.answerRepository.getClass(), RepositoryRu.class);
-        System.out.println(language);
-//        System.out.println(answerRepository.getWinMessage());
-        return false;
-    }*/
-
-/*    @Test
-    @ParameterizedTest
-       })
-    public void PostTest(String formName, String questionResponseBranch, String pathToJSP) throws ServletException, IOException {
-        initServlet = new InitServlet();
-        initServlet.init();
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        servletContext = mock(ServletContext.class);
-        answerRepository = new RepositoryRu();
-        currentSession = mock(HttpSession.class);
-        when(request.getSession(true)).thenReturn(currentSession);
-         when(request.getParameter("formname")).thenReturn(String.valueOf("prologue"));
-        System.out.println(servletContext.getRequestDispatcher("/init-servlet"));
-        System.out.println(servletContext.getRequestDispatcher("/mainPage"));
-        initServlet = new InitServlet();
-        request = mock(HttpServletRequest.class);
-        servletContext = mock(ServletContext.class);
-        currentSession = mock(HttpSession.class);
-        response = mock(HttpServletResponse.class);
-//        currentSession.setAttribute("formname", "prologue");
-        System.out.println(currentSession.getAttribute("formname") + "!!!!!!!!!!!!!!!");
-        System.out.println(request.getParameter("formname"));
-        System.out.println(request.getContextPath());
-        System.out.println(request.getParameter("username"));
-        System.out.println(servletContext.getContext("formname"));
-        System.out.println(request.getParameter("choiceLanguage"));
-        System.out.println(request);
-    }*/
-
-/*    @Test
-    public void doPostTest() throws ServletException, IOException, URISyntaxException {
-        initServlet = new InitServlet();
-        initServlet.init();
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        servletContext = mock(ServletContext.class);
-        answerRepository = new RepositoryRu();
-        currentSession = mock(HttpSession.class);
-//        when(request.getSession(true)).thenReturn(currentSession);
-//        when(request.getParameter("formname")).thenReturn(String.valueOf(true));
-        when(request.getParameter("formname")).thenReturn(String.valueOf("prologue"));
-//        when(request.getParameter("blank")).thenReturn(String.valueOf(false));
-        when(request.getParameter("username")).thenReturn("user");
-//        when(request.getParameter("choiceLanguage")).thenReturn(String.valueOf("RU"));
-//        String username = request.getParameter("formname");
-//        currentSession.setAttribute("username", request.getParameter("username"));
-        System.out.println(request.getParameter("formname") + "!!!!!!!!!!!!!!!");
-        System.out.println(request.getParameter("username") + "!!!!!!!!!!!!!!!");
-//        lenient().when(request.getServletContext()).thenReturn(servletContext);
-        //        lenient().when(request.getSession(true)).thenReturn(currentSession);
-//        lenient().wh
-//        initServlet.doPost(request , response);
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getParameter("formname"));
-    }*/
 }
