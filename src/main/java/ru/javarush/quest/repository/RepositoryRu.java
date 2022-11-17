@@ -68,6 +68,8 @@ public class RepositoryRu extends AnswerRepository {
             "Том в раздумье, бросить пить таблетки или впустить женщину \n" +
             "Бросить пить таблетки ?";
 
+    String questNegative4 ="";
+
 
     String negativeMessage1 = "Ответ1";
     String negativeMessage2 = "Ответ2";
