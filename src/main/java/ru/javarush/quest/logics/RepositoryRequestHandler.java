@@ -21,6 +21,9 @@ public class RepositoryRequestHandler {
         countLevel++;
     }
 
+    public AnswerRepository getAnswerRepository() {
+        return answerRepository;
+    }
 
     public EntityInterface getEntityInterface() {
         return answerRepository.getEntityInterface();

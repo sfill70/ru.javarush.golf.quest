@@ -43,7 +43,6 @@ public class QuestServlet extends HttpServlet {
             }
         }
         logger.debug(projectPath);
-        logger.debug(System.getProperty("user.dir"));
     }
 
     @Override
@@ -84,7 +83,7 @@ public class QuestServlet extends HttpServlet {
         String language = req.getParameter("choiceLanguage");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
         repositoryRequestHandler = getRepositoryRequestHandler(language);
-        dataTransferPerSession(username, gamesquanity, language);
+        dataTransferPerSession(username, gamesquanity, language, repositoryRequestHandler, currentSession);
         repositoryRequestHandler.EntityQuestSelection(true);
         transferringDataToRequest(req);
     }
@@ -93,7 +92,11 @@ public class QuestServlet extends HttpServlet {
         return new RepositoryRequestHandler(language);
     }
 
-    private void dataTransferPerSession(String username, int gamesquanity, String language) throws UnknownHostException {
+    private void dataTransferPerSession(String username, int gamesquanity, String language,
+                                        RepositoryRequestHandler repositoryRequestHandler,
+                                        HttpSession currentSession) throws UnknownHostException {
+        System.out.println(username);
+        System.out.println(currentSession.getId());
         currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
         currentSession.setAttribute("language", language);
@@ -103,7 +106,7 @@ public class QuestServlet extends HttpServlet {
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         repositoryRequestHandler.lastLevel();
-        logger.debug(repositoryRequestHandler.getCountLevel() + " logic");
+        logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
             repositoryRequestHandler.EntityQuestSelection(true);
