@@ -7,7 +7,6 @@ import ru.javarush.quest.repository.AnswerRepository;
 public class RepositoryRequestHandler {
     AnswerRepository answerRepository;
     RepositorySelection repositorySelection;
-
     EntityQuest entityQuest;
     int countLevel;
 

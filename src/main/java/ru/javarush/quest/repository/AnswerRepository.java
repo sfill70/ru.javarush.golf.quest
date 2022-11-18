@@ -11,12 +11,12 @@ import java.util.Map;
 public abstract class AnswerRepository {
 
     /*positive response repository*/
-    Map<Integer, EntityQuest> positiveAnswer;
+    protected Map<Integer, EntityQuest> positiveAnswer;
     /*negative response repository*/
-    Map<Integer, EntityQuest> negativeAnswer;
+    protected Map<Integer, EntityQuest> negativeAnswer;
     /*Repository for the third branch of the quest*/
     Map<Integer, EntityQuest> someAnswer;
-    EntityInterface entityInterface;
+    protected EntityInterface entityInterface;
     private static final Logger logger = LoggerFactory.getLogger(AnswerRepository.class);
 
     public AnswerRepository() {
