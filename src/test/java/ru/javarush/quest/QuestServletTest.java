@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.javarush.quest.entity.EntityStatistics;
 import ru.javarush.quest.logics.RepositoryRequestHandler;
 import ru.javarush.quest.logics.RepositorySelection;
 import ru.javarush.quest.repository.AnswerRepository;
+import ru.javarush.quest.repository.PlayerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
 
@@ -20,30 +23,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.UnknownHostException;
 
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@WebServlet
 public class QuestServletTest {
 
     public QuestServlet questServlet;
-    public HttpServletRequest request;
-    public HttpServletResponse response;
-    public ServletContext servletContext;
-    public RequestDispatcher requestDispatcher;
-    public HttpSession currentSession;
     RepositoryRequestHandler repositoryRequestHandler;
-
-
-    private final String path = "/init-servlet";
-    private final String path2 = "/quest.jsp";
-    private final String path3 = "/";
-    String path4 = "/index.jsp";
 
     @BeforeEach
     public void init() throws ServletException {
@@ -53,11 +44,11 @@ public class QuestServletTest {
 //        initServlet.init();
 //        answerRepository = new RepositoryRu();
 //        this.factoryRepository = new FactoryRepository();
-        request = mock(HttpServletRequest.class);
+        /*request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         servletContext = mock(ServletContext.class);
 //        lenient().when(request.getServletContext()).thenReturn(servletContext);
-        requestDispatcher = mock(RequestDispatcher.class);
+        requestDispatcher = mock(RequestDispatcher.class);*/
 //        currentSession = mock(HttpSession.class);
 //        lenient().when(request.getSession(true)).thenReturn(currentSession);
 //        lenient().when(servletContext.getRequestDispatcher("/init-servlet")).thenReturn(requestDispatcher);
@@ -82,13 +73,64 @@ public class QuestServletTest {
         }
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "name, RU",
+            "name, EN",
+    })
+    public void getDataFromRequest(String name, String language) throws IOException {
+        /*request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
+        servletContext = mock(ServletContext.class);
+        currentSession = request.getSession(true);*/
+        HttpServletRequest request = mock(HttpServletRequest.class);
+       /* HttpServletResponse response = mock(HttpServletResponse.class);
+        HttpSession session = mock(HttpSession.class);
+        session = request.getSession(true);
+        RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);*/
+//        lenient().when(request.getSession(true)).thenReturn(session);
+        when(request.getParameter("username")).thenReturn(name);
+        when(request.getParameter("choiceLanguage")).thenReturn(language);
+        /*Mockito.doAnswer(invocation -> {
+            request.getParameter("choiceLanguage") = invocation.getArgument(0);
+            return String;
+        }).when(questServlet).getRepositoryRequestHandler("RU").(repositoryRequestHandler));*/
+//        request.setAttribute("choiceLanguage", "RU");
+//        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+//        HttpSession currentSession = Mockito.mock(HttpSession.class);
+//        currentSession = request.getSession(true);
+        EntityStatistics entityStatistics = questServlet.getDataFromRequest(request);
+        if (language.equalsIgnoreCase("RU")) {
+            Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
+            Assertions.assertEquals(entityStatistics, new EntityStatistics(name, 1, "RU"));
+        } else {
+            Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryEn.class);
+            Assertions.assertEquals(entityStatistics, new EntityStatistics(name, 2, "EN"));
+        }
+
+//        Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
+
+
+//        lenient().when(request.getSession(true)).thenReturn(currentSession);
+//        when(request.getParameter("formname")).thenReturn("endgame");
+//        System.out.println(req.getQueryString());
+
+        /*String username = req.getParameter("username");
+        String language = req.getParameter("choiceLanguage");
+        int gamesquanity = PlayerRepository.getPlayerCount(username);
+        repositoryRequestHandler = getRepositoryRequestHandler(language);
+        dataTransferPerSession(username, gamesquanity, language, repositoryRequestHandler, currentSession);
+        repositoryRequestHandler.EntityQuestSelection(true);
+        transferringDataToRequest(req);*/
+    }
+
     /* @ParameterizedTest
      @CsvSource({
              "name, 5, RU" ,
              "user, 2, EN",
      })*/
-    @Test
-    void dataTransferPerSessionTest(/*String username, int gamesquanity, String language*/) throws UnknownHostException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+   /* @Test
+    void dataTransferPerSessionTest(*//*String username, int gamesquanity, String language*//*) throws UnknownHostException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 //        HttpSession currentSession = mock(HttpSession.class);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -111,6 +153,6 @@ public class QuestServletTest {
         Assertions.assertEquals((String) currentSession.getAttribute("username"), "username");
         Assertions.assertEquals((int) currentSession.getAttribute("gamesquanity"),5);
         Assertions.assertEquals((String) currentSession.getAttribute("language"), "language");
-    }
+    }*/
 
 }

@@ -1,6 +1,7 @@
 package ru.javarush.quest;
 
 
+import ru.javarush.quest.entity.EntityStatistics;
 import ru.javarush.quest.logics.RepositoryRequestHandler;
 
 import javax.servlet.ServletException;
@@ -82,21 +83,27 @@ public class QuestServlet extends HttpServlet {
         String username = req.getParameter("username");
         String language = req.getParameter("choiceLanguage");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
+        EntityStatistics entityStatistics = new EntityStatistics(username, gamesquanity, language);
         repositoryRequestHandler = getRepositoryRequestHandler(language);
-        dataTransferPerSession(username, gamesquanity, language, repositoryRequestHandler, currentSession);
+        dataTransferPerSession(getDataFromRequest(req), username, gamesquanity, language);
         repositoryRequestHandler.EntityQuestSelection(true);
         transferringDataToRequest(req);
     }
 
-    private RepositoryRequestHandler getRepositoryRequestHandler(String language) {
+    public EntityStatistics getDataFromRequest(HttpServletRequest req) {
+        String username = req.getParameter("username");
+        String language = req.getParameter("choiceLanguage");
+        int gamesquanity = PlayerRepository.getPlayerCount(username);
+        EntityStatistics entityStatistics = new EntityStatistics(username, gamesquanity, language);
+        repositoryRequestHandler = getRepositoryRequestHandler(language);
+        return entityStatistics;
+    }
+
+    RepositoryRequestHandler getRepositoryRequestHandler(String language) {
         return new RepositoryRequestHandler(language);
     }
 
-    private void dataTransferPerSession(String username, int gamesquanity, String language,
-                                        RepositoryRequestHandler repositoryRequestHandler,
-                                        HttpSession currentSession) throws UnknownHostException {
-        System.out.println(username);
-        System.out.println(currentSession.getId());
+    private void dataTransferPerSession(EntityStatistics entityStatistics,String username, int gamesquanity, String language) throws UnknownHostException {
         currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
         currentSession.setAttribute("language", language);
