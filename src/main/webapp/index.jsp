@@ -14,6 +14,7 @@
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+    EntityStatistics entityStatistics = (EntityStatistics) session.getAttribute("entityStatistics");
 %>
 <div id="container">
     <h1>Start GAME!!!</h1>
@@ -24,14 +25,14 @@
     </c:if>
     <hr>
     <c:if test="${blank}">
-    <h4 class="one">Введите имя!/Enter name!</h4>
+        <h4 class="one">Введите имя!/Enter name!</h4>
         <%-- bootstrap alert--%>
-    <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong> Enter Name !!!</strong> The name cannot contain characters * / \
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+        <div id="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong> Enter Name !!!</strong> The name cannot contain characters * / \
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </c:if>
 
     <%--    bootstrap form--%>
@@ -39,14 +40,14 @@
         <div class="form-group row">
             <input type="hidden" name="formname" value="prologue"/>
             <label class="col-sm-2 col-form-label">Enter name</label>
-            <c:if test="${username == null}">
+            <c:if test="${entityStatistics.getName() == null}">
                 <div class="col-sm-10">
                     <input name="username" type="text" class="form-control" value="">
                 </div>
             </c:if>
-            <c:if test="${username != null}">
+            <c:if test="${entityStatistics.getName() != null}">
                 <div class="col-sm-10">
-                    <input name="username" type="text" class="form-control" value="${username}">
+                    <input name="username" type="text" class="form-control" value="${entityStatistics.getName()}">
                 </div>
             </c:if>
         </div>
@@ -77,19 +78,19 @@
         </div>
     </form>
     <hr>
-    <c:if test="${username != null}">
-    <div class="statistic">
+    <c:if test="${entityStatistics.getName()!= null}">
         <div class="statistic">
-            <div><b><%=entityInterfaceSession.getStatistic()[0]%>
-            </b></div>
-            <div><%=entityInterfaceSession.getStatistic()[1]%><i><%= session.getAttribute("ip")%>
-            </i></div>
-            <div><%=entityInterfaceSession.getStatistic()[2]%><i><%= session.getAttribute("username") %>
-            </i></div>
-            <div><%=entityInterfaceSession.getStatistic()[3]%><i><%= session.getAttribute("gamesquanity")%>
-            </i></div>
+            <div class="statistic">
+                <div><b><%=entityInterfaceSession.getStatistic()[0]%>
+                </b></div>
+                <div><%=entityInterfaceSession.getStatistic()[1]%><i><%= session.getAttribute("ip")%>
+                </i></div>
+                <div><%=entityInterfaceSession.getStatistic()[2]%><i><%=entityStatistics.getName() %>
+                </i></div>
+                <div><%=entityInterfaceSession.getStatistic()[3]%><i><%=entityStatistics.getGamesQuanity()%>
+                </i></div>
+            </div>
         </div>
-    </div>
     </c:if>
 </div>
 </body>

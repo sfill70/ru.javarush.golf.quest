@@ -78,16 +78,14 @@ public class QuestServletTest {
             "name, RU",
             "name, EN",
     })
-    public void getDataFromRequest(String name, String language) throws IOException {
+    public void getDataFromRequestTest(String name, String language) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         /*request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         servletContext = mock(ServletContext.class);
-        currentSession = request.getSession(true);*/
-        HttpServletRequest request = mock(HttpServletRequest.class);
-       /* HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-        session = request.getSession(true);
+        currentSession = request.getSession(true);
         RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);*/
+        HttpServletRequest request = mock(HttpServletRequest.class);
+
 //        lenient().when(request.getSession(true)).thenReturn(session);
         when(request.getParameter("username")).thenReturn(name);
         when(request.getParameter("choiceLanguage")).thenReturn(language);
@@ -96,10 +94,13 @@ public class QuestServletTest {
             return String;
         }).when(questServlet).getRepositoryRequestHandler("RU").(repositoryRequestHandler));*/
 //        request.setAttribute("choiceLanguage", "RU");
-//        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-//        HttpSession currentSession = Mockito.mock(HttpSession.class);
 //        currentSession = request.getSession(true);
-        EntityStatistics entityStatistics = questServlet.getDataFromRequest(request);
+//        EntityStatistics entityStatistics = questServlet.getDataFromRequest(request);
+        Class clazz = questServlet.getClass();
+        Method downloadData = clazz.getDeclaredMethod("getDataFromRequest", HttpServletRequest.class);
+        downloadData.setAccessible(true);
+        EntityStatistics entityStatistics = (EntityStatistics) downloadData
+                .invoke(questServlet, request);
         if (language.equalsIgnoreCase("RU")) {
             Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
             Assertions.assertEquals(entityStatistics, new EntityStatistics(name, 1, "RU"));
@@ -112,16 +113,8 @@ public class QuestServletTest {
 
 
 //        lenient().when(request.getSession(true)).thenReturn(currentSession);
-//        when(request.getParameter("formname")).thenReturn("endgame");
-//        System.out.println(req.getQueryString());
 
-        /*String username = req.getParameter("username");
-        String language = req.getParameter("choiceLanguage");
-        int gamesquanity = PlayerRepository.getPlayerCount(username);
-        repositoryRequestHandler = getRepositoryRequestHandler(language);
-        dataTransferPerSession(username, gamesquanity, language, repositoryRequestHandler, currentSession);
-        repositoryRequestHandler.EntityQuestSelection(true);
-        transferringDataToRequest(req);*/
+
     }
 
     /* @ParameterizedTest

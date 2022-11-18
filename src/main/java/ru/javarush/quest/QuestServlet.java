@@ -79,18 +79,18 @@ public class QuestServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/quest.jsp").forward(req, resp);
     }
 
-    public void startQuest(HttpServletRequest req) throws IOException {
-        String username = req.getParameter("username");
+    private void startQuest(HttpServletRequest req) throws IOException {
+        /*String username = req.getParameter("username");
         String language = req.getParameter("choiceLanguage");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
         EntityStatistics entityStatistics = new EntityStatistics(username, gamesquanity, language);
-        repositoryRequestHandler = getRepositoryRequestHandler(language);
-        dataTransferPerSession(getDataFromRequest(req), username, gamesquanity, language);
+        repositoryRequestHandler = getRepositoryRequestHandler(language);*/
+        dataTransferPerSession(getDataFromRequest(req)/*, username, gamesquanity, language*/);
         repositoryRequestHandler.EntityQuestSelection(true);
         transferringDataToRequest(req);
     }
 
-    public EntityStatistics getDataFromRequest(HttpServletRequest req) {
+    private EntityStatistics getDataFromRequest(HttpServletRequest req) {
         String username = req.getParameter("username");
         String language = req.getParameter("choiceLanguage");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
@@ -103,11 +103,12 @@ public class QuestServlet extends HttpServlet {
         return new RepositoryRequestHandler(language);
     }
 
-    private void dataTransferPerSession(EntityStatistics entityStatistics,String username, int gamesquanity, String language) throws UnknownHostException {
-        currentSession.setAttribute("username", username);
+    private void dataTransferPerSession(EntityStatistics entityStatistics/*,String username, int gamesquanity, String language*/) throws UnknownHostException {
+        /*currentSession.setAttribute("username", username);
         currentSession.setAttribute("gamesquanity", gamesquanity);
-        currentSession.setAttribute("language", language);
+        currentSession.setAttribute("language", language);*/
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
+        currentSession.setAttribute("entityStatistics", entityStatistics);
         currentSession.setAttribute("entityInterface", repositoryRequestHandler.getEntityInterface());
     }
 

@@ -1,6 +1,7 @@
 
 <%@ page import="ru.javarush.quest.entity.EntityQuest" %>
 <%@ page import="ru.javarush.quest.entity.EntityInterface" %>
+<%@ page import="ru.javarush.quest.entity.EntityStatistics" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,9 +14,10 @@
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+    EntityStatistics entityStatistics = (EntityStatistics) session.getAttribute("entityStatistics");
 %>
 <span><%=entityInterfaceSession.getWinMessage()%></span>
-<h2 class="one"> ${username}</h2>
+<h2 class="one"><%=entityStatistics.getName() %></h2>
 <h4>${message}</h4>
 <br>
 <h2>Restart</h2>

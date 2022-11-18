@@ -1,6 +1,7 @@
 <%@ page import="ru.javarush.quest.entity.EntityQuest" %>
 <%@ page import="ru.javarush.quest.entity.EntityInterface" %>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="ru.javarush.quest.entity.EntityStatistics" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,7 @@
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
+    EntityStatistics entityStatistics = (EntityStatistics) session.getAttribute("entityStatistics");
 %>
 <h1><%= "Level"%> ${countLevel} </h1>
 </h1>
@@ -49,9 +51,9 @@
     </b></div>
     <div><%=entityInterfaceSession.getStatistic()[1]%><i><%= session.getAttribute("ip")%>
     </i></div>
-    <div><%=entityInterfaceSession.getStatistic()[2]%><i><%= session.getAttribute("username") %>
+    <div><%=entityInterfaceSession.getStatistic()[2]%><i><%=entityStatistics.getName() %>
     </i></div>
-    <div><%=entityInterfaceSession.getStatistic()[3]%><i><%= session.getAttribute("gamesquanity")%>
+    <div><%=entityInterfaceSession.getStatistic()[3]%><i><%=entityStatistics.getGamesQuanity()%>
     </i></div>
 </div>
 </body>
