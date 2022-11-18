@@ -1,5 +1,7 @@
 package ru.javarush.quest.entity;
 
+import java.util.Objects;
+
 public class EntityQuest {
     public String message;
 
@@ -23,11 +25,43 @@ public class EntityQuest {
         return message;
     }
 
-    public String getMessageEndGame() {
-        return messageEndGame;
-    }
-
     public boolean isGameOver() {
         return isGameOver;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EntityQuest that = (EntityQuest) o;
+
+        if (isGameOver != that.isGameOver) return false;
+        return Objects.equals(message, that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = message != null ? message.hashCode() : 0;
+        result = 31 * result + (isGameOver ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "EntityQuest{" +
+                "message='" + message + '\'' +
+                ", isGameOver=" + isGameOver +
+                '}';
+    }
+
+    /* @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }*/
 }

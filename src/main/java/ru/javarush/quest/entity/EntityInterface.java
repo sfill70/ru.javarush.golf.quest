@@ -1,5 +1,8 @@
 package ru.javarush.quest.entity;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class EntityInterface {
     String startMessage;
     String positiveNameButton;
@@ -47,5 +50,36 @@ public class EntityInterface {
 
     public String[] getStatistic() {
         return statistic;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EntityInterface that = (EntityInterface) o;
+
+        if (!Objects.equals(startMessage, that.startMessage)) return false;
+        if (!Objects.equals(positiveNameButton, that.positiveNameButton))
+            return false;
+        if (!Objects.equals(negativeNameButton, that.negativeNameButton))
+            return false;
+        if (!Objects.equals(answerButton, that.answerButton)) return false;
+        if (!Objects.equals(winMessage, that.winMessage)) return false;
+        if (!Objects.equals(lossMessage, that.lossMessage)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(statistic, that.statistic);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startMessage != null ? startMessage.hashCode() : 0;
+        result = 31 * result + (positiveNameButton != null ? positiveNameButton.hashCode() : 0);
+        result = 31 * result + (negativeNameButton != null ? negativeNameButton.hashCode() : 0);
+        result = 31 * result + (answerButton != null ? answerButton.hashCode() : 0);
+        result = 31 * result + (winMessage != null ? winMessage.hashCode() : 0);
+        result = 31 * result + (lossMessage != null ? lossMessage.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(statistic);
+        return result;
     }
 }
