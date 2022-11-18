@@ -10,8 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.entity.EntityQuest;
 import ru.javarush.quest.logics.RepositoryRequestHandler;
-import ru.javarush.quest.logics.RepositorySelection;
-import ru.javarush.quest.repository.AnswerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
 
@@ -30,7 +28,7 @@ public class RepositoryRequestHandlerTest {
     @Test
     public void lastLevelTest() {
         RepositoryRequestHandler repositoryRequestHandler = new RepositoryRequestHandler("EN");
-        repositoryRequestHandler.lastLevel();
+        repositoryRequestHandler.nextLevel();
         Assertions.assertEquals(repositoryRequestHandler.getCountLevel(), 1);
     }
 
@@ -75,20 +73,20 @@ public class RepositoryRequestHandlerTest {
     public void EntityQuestSelectionTest(boolean positiveAnswer) {
 
         if (positiveAnswer) {
-            repositoryRequestHandlerRu.lastLevel();
+            repositoryRequestHandlerRu.nextLevel();
             EntityQuest entityQuest = repositoryRequestHandlerRu.getPositiveEntityQuest();
             Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().
                     getEntityPositiveAnswer(repositoryRequestHandlerRu.getCountLevel()).getMessage());
-            repositoryRequestHandlerEn.lastLevel();
+            repositoryRequestHandlerEn.nextLevel();
             entityQuest = repositoryRequestHandlerEn.getPositiveEntityQuest();
             Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
                     getEntityPositiveAnswer(repositoryRequestHandlerEn.getCountLevel()).getMessage());
         }
-        repositoryRequestHandlerRu.lastLevel();
+        repositoryRequestHandlerRu.nextLevel();
         EntityQuest entityQuest = repositoryRequestHandlerRu.getNegativeEntityQuest();
         Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().
                 getEntityNegativeAnswer(repositoryRequestHandlerRu.getCountLevel()).getMessage());
-        repositoryRequestHandlerEn.lastLevel();
+        repositoryRequestHandlerEn.nextLevel();
         entityQuest = repositoryRequestHandlerEn.getNegativeEntityQuest();
         Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
                 getEntityNegativeAnswer(repositoryRequestHandlerEn.getCountLevel()).getMessage());

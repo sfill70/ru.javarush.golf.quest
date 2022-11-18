@@ -105,7 +105,7 @@ public class QuestServlet extends HttpServlet {
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        repositoryRequestHandler.lastLevel();
+        repositoryRequestHandler.nextLevel();
         logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {

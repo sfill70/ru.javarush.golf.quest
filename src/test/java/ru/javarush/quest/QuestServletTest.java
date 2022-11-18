@@ -87,7 +87,6 @@ public class QuestServletTest {
              "name, 5, RU" ,
              "user, 2, EN",
      })*/
-    /*Как добавить сессию в тест????*/
     @Test
     void dataTransferPerSessionTest(/*String username, int gamesquanity, String language*/) throws UnknownHostException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 //        HttpSession currentSession = mock(HttpSession.class);

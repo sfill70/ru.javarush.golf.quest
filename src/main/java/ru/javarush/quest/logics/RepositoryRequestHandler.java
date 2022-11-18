@@ -17,7 +17,7 @@ public class RepositoryRequestHandler {
         this.countLevel = 0;
     }
 
-    public void lastLevel() {
+    public void nextLevel() {
         countLevel++;
     }
 
