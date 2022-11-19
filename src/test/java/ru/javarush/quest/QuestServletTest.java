@@ -23,17 +23,13 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class QuestServletTest {
-
     public QuestServlet questServlet;
-    RepositoryRequestHandler repositoryRequestHandler;
 
     @BeforeEach
     public void init() throws ServletException {
         this.questServlet = new QuestServlet();
-        questServlet.repositoryRequestHandler = new RepositoryRequestHandler("RU");
         questServlet.init();
     }
-
 
     @ParameterizedTest
     @CsvSource({
@@ -63,7 +59,6 @@ public class QuestServletTest {
         servletContext = mock(ServletContext.class);
         RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);*/
         HttpServletRequest request = mock(HttpServletRequest.class);
-//        lenient().when(request.getSession(true)).thenReturn(session);
         when(request.getParameter("username")).thenReturn(name);
         when(request.getParameter("choiceLanguage")).thenReturn(language);
         Class clazz = questServlet.getClass();
@@ -78,8 +73,6 @@ public class QuestServletTest {
             Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryEn.class);
             Assertions.assertEquals(entityStatistics, new EntityStatistics(name, 2, "EN"));
         }
-//        Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
-//        lenient().when(request.getSession(true)).thenReturn(currentSession);
     }
 
 
@@ -90,7 +83,6 @@ public class QuestServletTest {
     })
     public void choiceEntityQuestTest(String answer) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         HttpServletRequest request = mock(HttpServletRequest.class);
-        QuestServlet questServlet = new QuestServlet();
         questServlet.repositoryRequestHandler = new RepositoryRequestHandler("RU");
         Class clazz = questServlet.getClass();
         Method downloadData = clazz.getDeclaredMethod("choiceEntityQuest", HttpServletRequest.class);
@@ -105,36 +97,4 @@ public class QuestServletTest {
             Assertions.assertEquals(questServlet.repositoryRequestHandler.getEntityQuest(), new RepositoryRu().getEntityNegativeAnswer(1));
         }
     }
-
-    /* @ParameterizedTest
-     @CsvSource({
-             "name, 5, RU" ,
-             "user, 2, EN",
-     })*/
-   /* @Test
-    void dataTransferPerSessionTest(*//*String username, int gamesquanity, String language*//*) throws UnknownHostException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        HttpSession currentSession = mock(HttpSession.class);
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        servletContext = mock(ServletContext.class);
-//        currentSession = request.getSession(true);
-        lenient().when(request.getSession(true)).thenReturn(currentSession);
-
-        currentSession.setAttribute("name", "username");
-        System.out.println(servletContext.getAttribute("username"));
-        System.out.println(currentSession.getAttribute("name"));
-        RepositoryRequestHandler repositoryRequestHandler = new RepositoryRequestHandler("RU");
-        Class clazz = QuestServlet.class;
-        Method dataTransfer = clazz.getDeclaredMethod("dataTransferPerSession", String.class, int.class, String.class, RepositoryRequestHandler.class, HttpSession.class);
-        dataTransfer.setAccessible(true);
-//        dataTransfer.invoke(questServlet, username, gamesquanity, language, repositoryRequestHandler, currentSession);
-        dataTransfer.invoke(questServlet, "username", 5, "language", repositoryRequestHandler, currentSession);
-        currentSession.setAttribute("name", "username");
-        System.out.println(servletContext.getAttribute("username"));
-        System.out.println(currentSession.getAttribute("name"));
-        Assertions.assertEquals((String) currentSession.getAttribute("username"), "username");
-        Assertions.assertEquals((int) currentSession.getAttribute("gamesquanity"),5);
-        Assertions.assertEquals((String) currentSession.getAttribute("language"), "language");
-    }*/
-
 }
