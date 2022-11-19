@@ -4,6 +4,10 @@
     margin: 10px;
 }
 
+#tab {
+    width: 70%;
+}
+
 h1 {
     text-align: left;
     color: #fa8e47;

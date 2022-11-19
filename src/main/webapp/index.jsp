@@ -19,6 +19,18 @@
 <div id="container">
     <h1>Start GAME!!!</h1>
     <br/>
+
+<%--    <img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg">--%>
+
+    <table id="tab" class="table table-bordered">
+        <tbody>
+        <tr>
+<%--            <th scope="row">1</th>--%>
+            <td><img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg"></td>
+            <td>По мотивам творчества Девида Боуи</td>
+        </tr>
+        </tbody>
+    </table>
     <%--Это не надо, без него работает--%>
     <c:if test="${blank == null}">
         <c:set var="blank" scope="session" value="false"/>
