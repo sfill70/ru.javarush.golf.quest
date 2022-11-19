@@ -113,14 +113,7 @@ public class QuestServlet extends HttpServlet {
     }
 
     private boolean logicQuest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        repositoryRequestHandler.nextLevel();
-        logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
-        String radioButtonChoice = req.getParameter("choice");
-        if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
-            repositoryRequestHandler.EntityQuestSelection(true);
-        } else {
-            repositoryRequestHandler.EntityQuestSelection(false);
-        }
+        choiceEntityQuest(req);
         transferringDataToRequest(req);
         if (repositoryRequestHandler.IsVictory()) {
             resp.sendRedirect(req.getContextPath() + "/victory.jsp");
@@ -133,9 +126,28 @@ public class QuestServlet extends HttpServlet {
         return false;
     }
 
+    private void choiceEntityQuest(HttpServletRequest req) {
+        repositoryRequestHandler.lastLevel();
+        logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
+        String radioButtonChoice = req.getParameter("choice");
+        if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
+            repositoryRequestHandler.EntityQuestSelection(true);
+        } else {
+            repositoryRequestHandler.EntityQuestSelection(false);
+        }
+    }
+
     private void transferringDataToRequest(HttpServletRequest req) {
         req.setAttribute("countLevel", repositoryRequestHandler.getCountLevel());
         currentSession.setAttribute("message", repositoryRequestHandler.getMessage());
+    }
+
+    public RepositoryRequestHandler getRepositoryRequestHandler() {
+        return repositoryRequestHandler;
+    }
+
+    public void setRepositoryRequestHandler(RepositoryRequestHandler repositoryRequestHandler) {
+        this.repositoryRequestHandler = repositoryRequestHandler;
     }
 
     @Override

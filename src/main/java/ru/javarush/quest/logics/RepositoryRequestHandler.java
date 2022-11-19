@@ -16,7 +16,7 @@ public class RepositoryRequestHandler {
         this.countLevel = 0;
     }
 
-    public void nextLevel() {
+    public void lastLevel() {
         countLevel++;
     }
 
@@ -26,6 +26,10 @@ public class RepositoryRequestHandler {
 
     public EntityInterface getEntityInterface() {
         return answerRepository.getEntityInterface();
+    }
+
+    public EntityQuest getEntityQuest() {
+        return entityQuest;
     }
 
     public EntityQuest getPositiveEntityQuest() {

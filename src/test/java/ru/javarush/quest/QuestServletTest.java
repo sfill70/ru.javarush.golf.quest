@@ -6,27 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.entity.EntityStatistics;
 import ru.javarush.quest.logics.RepositoryRequestHandler;
-import ru.javarush.quest.logics.RepositorySelection;
-import ru.javarush.quest.repository.AnswerRepository;
-import ru.javarush.quest.repository.PlayerRepository;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.UnknownHostException;
 
 import static org.mockito.Mockito.*;
 
@@ -39,19 +30,8 @@ public class QuestServletTest {
     @BeforeEach
     public void init() throws ServletException {
         this.questServlet = new QuestServlet();
-        repositoryRequestHandler = new RepositoryRequestHandler("RU");
+        questServlet.repositoryRequestHandler = new RepositoryRequestHandler("RU");
         questServlet.init();
-//        initServlet.init();
-//        answerRepository = new RepositoryRu();
-//        this.factoryRepository = new FactoryRepository();
-        /*request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        servletContext = mock(ServletContext.class);
-//        lenient().when(request.getServletContext()).thenReturn(servletContext);
-        requestDispatcher = mock(RequestDispatcher.class);*/
-//        currentSession = mock(HttpSession.class);
-//        lenient().when(request.getSession(true)).thenReturn(currentSession);
-//        lenient().when(servletContext.getRequestDispatcher("/init-servlet")).thenReturn(requestDispatcher);
     }
 
 
@@ -78,24 +58,14 @@ public class QuestServletTest {
             "name, RU",
             "name, EN",
     })
-    public void getDataFromRequestTest(String name, String language) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        /*request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
+    public void getDataFromRequestTest(String name, String language) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        /*
         servletContext = mock(ServletContext.class);
-        currentSession = request.getSession(true);
         RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);*/
         HttpServletRequest request = mock(HttpServletRequest.class);
-
 //        lenient().when(request.getSession(true)).thenReturn(session);
         when(request.getParameter("username")).thenReturn(name);
         when(request.getParameter("choiceLanguage")).thenReturn(language);
-        /*Mockito.doAnswer(invocation -> {
-            request.getParameter("choiceLanguage") = invocation.getArgument(0);
-            return String;
-        }).when(questServlet).getRepositoryRequestHandler("RU").(repositoryRequestHandler));*/
-//        request.setAttribute("choiceLanguage", "RU");
-//        currentSession = request.getSession(true);
-//        EntityStatistics entityStatistics = questServlet.getDataFromRequest(request);
         Class clazz = questServlet.getClass();
         Method downloadData = clazz.getDeclaredMethod("getDataFromRequest", HttpServletRequest.class);
         downloadData.setAccessible(true);
@@ -108,13 +78,32 @@ public class QuestServletTest {
             Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryEn.class);
             Assertions.assertEquals(entityStatistics, new EntityStatistics(name, 2, "EN"));
         }
-
 //        Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
-
-
 //        lenient().when(request.getSession(true)).thenReturn(currentSession);
+    }
 
 
+    @ParameterizedTest
+    @CsvSource({
+            "positiveAnswer",
+            "negativeAnswer",
+    })
+    public void choiceEntityQuestTest(String answer) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        QuestServlet questServlet = new QuestServlet();
+        questServlet.repositoryRequestHandler = new RepositoryRequestHandler("RU");
+        Class clazz = questServlet.getClass();
+        Method downloadData = clazz.getDeclaredMethod("choiceEntityQuest", HttpServletRequest.class);
+        downloadData.setAccessible(true);
+        if (answer.equalsIgnoreCase("positiveAnswer")) {
+            when(request.getParameter("choice")).thenReturn("positiveAnswer");
+            downloadData.invoke(questServlet, request);
+            Assertions.assertEquals(questServlet.getRepositoryRequestHandler().getEntityQuest(), new RepositoryRu().getEntityPositiveAnswer(1));
+        } else {
+            when(request.getParameter("choice")).thenReturn("negativeAnswer");
+            downloadData.invoke(questServlet, request);
+            Assertions.assertEquals(questServlet.repositoryRequestHandler.getEntityQuest(), new RepositoryRu().getEntityNegativeAnswer(1));
+        }
     }
 
     /* @ParameterizedTest
