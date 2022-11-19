@@ -80,12 +80,7 @@ public class QuestServlet extends HttpServlet {
     }
 
     private void startQuest(HttpServletRequest req) throws IOException {
-        /*String username = req.getParameter("username");
-        String language = req.getParameter("choiceLanguage");
-        int gamesquanity = PlayerRepository.getPlayerCount(username);
-        EntityStatistics entityStatistics = new EntityStatistics(username, gamesquanity, language);
-        repositoryRequestHandler = getRepositoryRequestHandler(language);*/
-        dataTransferPerSession(getDataFromRequest(req)/*, username, gamesquanity, language*/);
+        dataTransferPerSession(getDataFromRequest(req));
         repositoryRequestHandler.EntityQuestSelection(true);
         transferringDataToRequest(req);
     }
@@ -103,10 +98,7 @@ public class QuestServlet extends HttpServlet {
         return new RepositoryRequestHandler(language);
     }
 
-    private void dataTransferPerSession(EntityStatistics entityStatistics/*,String username, int gamesquanity, String language*/) throws UnknownHostException {
-        /*currentSession.setAttribute("username", username);
-        currentSession.setAttribute("gamesquanity", gamesquanity);
-        currentSession.setAttribute("language", language);*/
+    private void dataTransferPerSession(EntityStatistics entityStatistics) throws UnknownHostException {
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
         currentSession.setAttribute("entityStatistics", entityStatistics);
         currentSession.setAttribute("entityInterface", repositoryRequestHandler.getEntityInterface());
