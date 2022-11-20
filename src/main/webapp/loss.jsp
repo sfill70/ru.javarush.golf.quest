@@ -19,7 +19,7 @@
 <%=entityInterfaceSession.getLossMessage()%>
 <span class="one"> <%=entityStatistics.getName() %></span>
 <br>
-<h4>${message}</h4>
+<div class="message"><h4>${message}</h4></div>
 <h4>${countLevel}</h4>
 <br>
 <h2>Restart</h2>

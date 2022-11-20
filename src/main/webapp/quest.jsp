@@ -27,7 +27,7 @@
 <br/>
 <br/>
 <br/>
-<h4>${message}</h4>
+<div class="message"><h4 class="text">${message}</h4></div>
 
 <form method="POST" action="/quest-servlet">
     <div class="padding-inside">

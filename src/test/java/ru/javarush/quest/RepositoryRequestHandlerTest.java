@@ -44,16 +44,24 @@ public class RepositoryRequestHandlerTest {
         Assertions.assertEquals(entityInterface.getWinMessage(), new RepositoryRu().getEntityInterface().getWinMessage());
     }
 
-    /*@Test*/
     @ParameterizedTest
     @CsvSource({
-            "1", "2", "3", "4",
+            "0", "1", "2", "3",
     })
     public void getPositiveEntityQuestTest(int countLevel) {
-        EntityQuest entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityPositiveAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryRu().getEntityPositiveAnswerToLevel(countLevel)/*.getMessage()*/);
-        entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityPositiveAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryEn().getEntityPositiveAnswerToLevel(countLevel)/*.getMessage()*/);
+        RepositoryRequestHandler repositoryRequestHandlerRu = new RepositoryRequestHandler(RepositoryLanguageType.RU);
+        for (int i = 0; i < countLevel; i++) {
+            repositoryRequestHandlerRu.lastLevel();
+        }
+        EntityQuest entityQuest = repositoryRequestHandlerRu.getPositiveEntityQuest();
+        Assertions.assertEquals(entityQuest, new RepositoryRu().getEntityPositiveAnswerToLevel(countLevel));
+        repositoryRequestHandlerRu.lastLevel();
+        RepositoryRequestHandler repositoryRequestHandlerEn = new RepositoryRequestHandler(RepositoryLanguageType.EN);
+        for (int i = 0; i < countLevel; i++) {
+            repositoryRequestHandlerEn.lastLevel();
+        }
+        entityQuest = repositoryRequestHandlerEn.getPositiveEntityQuest();
+        Assertions.assertEquals(entityQuest, new RepositoryEn().getEntityPositiveAnswerToLevel(countLevel));
     }
 
 
@@ -62,18 +70,26 @@ public class RepositoryRequestHandlerTest {
             "1", "2", "3", "4", "5",
     })
     public void getNegativeEntityQuestTest(int countLevel) {
-        EntityQuest entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityNegativeAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryEn().getEntityNegativeAnswerToLevel(countLevel)/*.getMessage()*/);
-        entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityNegativeAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryRu().getEntityNegativeAnswerToLevel(countLevel)/*.getMessage()*/);
+        RepositoryRequestHandler repositoryRequestHandlerRu = new RepositoryRequestHandler(RepositoryLanguageType.RU);
+        for (int i = 0; i < countLevel; i++) {
+            repositoryRequestHandlerRu.lastLevel();
+        }
+        EntityQuest entityQuest = repositoryRequestHandlerRu.getNegativeEntityQuest();
+        Assertions.assertEquals(entityQuest, new RepositoryRu().getEntityNegativeAnswerToLevel(countLevel));
+        repositoryRequestHandlerRu.lastLevel();
+        RepositoryRequestHandler repositoryRequestHandlerEn = new RepositoryRequestHandler(RepositoryLanguageType.EN);
+        for (int i = 0; i < countLevel; i++) {
+            repositoryRequestHandlerEn.lastLevel();
+        }
+        entityQuest = repositoryRequestHandlerEn.getNegativeEntityQuest();
+        Assertions.assertEquals(entityQuest, new RepositoryEn().getEntityNegativeAnswerToLevel(countLevel));
     }
 
     @ParameterizedTest
     @CsvSource({
-            "POSITIVE", "POSITIVE", "POSITIVE", "NEGATIVE", "NEGATIVE", "NEGATIVE",
+            "POSITIVE", "NEGATIVE",
     })
     public void EntityQuestSelectionTest(AnswerType answerType) {
-
         if (answerType == AnswerType.POSITIVE) {
             repositoryRequestHandlerRu.lastLevel();
             EntityQuest entityQuest = repositoryRequestHandlerRu.getPositiveEntityQuest();
@@ -83,15 +99,15 @@ public class RepositoryRequestHandlerTest {
             entityQuest = repositoryRequestHandlerEn.getPositiveEntityQuest();
             Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
                     getEntityPositiveAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()).getMessage());
+        } else {
+            repositoryRequestHandlerRu.lastLevel();
+            EntityQuest entityQuest = repositoryRequestHandlerRu.getNegativeEntityQuest();
+            Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().
+                    getEntityNegativeAnswerToLevel(repositoryRequestHandlerRu.getCountLevel()).getMessage());
+            repositoryRequestHandlerEn.lastLevel();
+            entityQuest = repositoryRequestHandlerEn.getNegativeEntityQuest();
+            Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
+                    getEntityNegativeAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()).getMessage());
         }
-        repositoryRequestHandlerRu.lastLevel();
-        EntityQuest entityQuest = repositoryRequestHandlerRu.getNegativeEntityQuest();
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().
-                getEntityNegativeAnswerToLevel(repositoryRequestHandlerRu.getCountLevel()).getMessage());
-        repositoryRequestHandlerEn.lastLevel();
-        entityQuest = repositoryRequestHandlerEn.getNegativeEntityQuest();
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
-                getEntityNegativeAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()).getMessage());
     }
-
 }

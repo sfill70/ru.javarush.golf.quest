@@ -48,8 +48,17 @@ h2 {
 .statistic {
     background-color: azure;
     width: 70%;
-    margin: 3px;
     text-indent: 10px;
+}
+
+.message {
+    background: #f5f5dc;
+    border: 4mm ridge rgba(211, 220, 50, .6);
+    width: 70%;
+    text-indent: 2%;
+}
+.text{
+    margin-left:1%;
 }
 
 /*
