@@ -10,13 +10,13 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
-<body>
+<body id="container">
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
     EntityStatistics entityStatistics = (EntityStatistics) session.getAttribute("entityStatistics");
 %>
-<div id="container">
+<div>
     <h1>Start GAME!!!</h1>
     <br/>
 

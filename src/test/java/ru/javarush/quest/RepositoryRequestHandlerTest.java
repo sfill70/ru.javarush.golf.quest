@@ -50,9 +50,9 @@ public class RepositoryRequestHandlerTest {
     })
     public void getPositiveEntityQuestTest(int countLevel) {
         EntityQuest entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityPositiveAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().getEntityPositiveAnswerToLevel(countLevel).getMessage());
+        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryRu().getEntityPositiveAnswerToLevel(countLevel)/*.getMessage()*/);
         entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityPositiveAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityPositiveAnswerToLevel(countLevel).getMessage());
+        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryEn().getEntityPositiveAnswerToLevel(countLevel)/*.getMessage()*/);
     }
 
 
@@ -62,9 +62,9 @@ public class RepositoryRequestHandlerTest {
     })
     public void getNegativeEntityQuestTest(int countLevel) {
         EntityQuest entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityNegativeAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityNegativeAnswerToLevel(countLevel).getMessage());
+        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryEn().getEntityNegativeAnswerToLevel(countLevel)/*.getMessage()*/);
         entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityNegativeAnswerToLevel(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().getEntityNegativeAnswerToLevel(countLevel).getMessage());
+        Assertions.assertEquals(entityQuest/*.getMessage()*/, new RepositoryRu().getEntityNegativeAnswerToLevel(countLevel)/*.getMessage()*/);
     }
 
     @ParameterizedTest
