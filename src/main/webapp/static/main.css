@@ -1,9 +1,7 @@
 #container {
     text-align: left;
-    /*padding: 10px;*/
     margin: 10px;
     background-color:paleturquoise;
-   /* width: 70%;*/
 }
 
 #tab {
@@ -51,6 +49,7 @@ h2 {
     background-color: azure;
     width: 70%;
     margin: 3px;
+    text-indent: 10px;
 }
 
 /*

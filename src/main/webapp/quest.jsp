@@ -17,13 +17,16 @@
     EntityStatistics entityStatistics = (EntityStatistics) session.getAttribute("entityStatistics");
 %>
 <h1><%= "Level"%> ${countLevel} </h1>
-</h1>
+<br/>
 <br/>
 <a href="restart">Restart</a>
-
-<hr>
-<span>current language: ${language}</span>
-<hr>
+<br/>
+<br/>
+<br/>
+<span>current language: <%=entityStatistics.getLanguage() %></span>
+<br/>
+<br/>
+<br/>
 <h4>${message}</h4>
 
 <form method="POST" action="/quest-servlet">
@@ -45,7 +48,6 @@
     </div>
 </form>
 <br>
-<hr>
 <div class="statistic">
     <div><b><%=entityInterfaceSession.getStatistic()[0]%>
     </b></div>

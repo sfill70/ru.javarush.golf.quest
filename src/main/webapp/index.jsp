@@ -87,7 +87,6 @@
             </div>
         </div>
     </form>
-    <hr>
     <c:if test="${entityStatistics.getName()!= null}">
         <div class="statistic">
             <div class="statistic">
