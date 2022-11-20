@@ -12,6 +12,7 @@ import ru.javarush.quest.entity.EntityQuest;
 import ru.javarush.quest.handler.AnswerType;
 import ru.javarush.quest.handler.RepositoryRequestHandler;
 import ru.javarush.quest.repository.RepositoryEn;
+import ru.javarush.quest.repository.RepositoryLanguageType;
 import ru.javarush.quest.repository.RepositoryRu;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,14 +22,14 @@ public class RepositoryRequestHandlerTest {
 
     @BeforeEach
     public void init() {
-        repositoryRequestHandlerEn = new RepositoryRequestHandler("EN");
-        repositoryRequestHandlerRu = new RepositoryRequestHandler("RU");
+        repositoryRequestHandlerEn = new RepositoryRequestHandler(RepositoryLanguageType.EN);
+        repositoryRequestHandlerRu = new RepositoryRequestHandler(RepositoryLanguageType.RU);
     }
 
 
     @Test
     public void lastLevelTest() {
-        RepositoryRequestHandler repositoryRequestHandler = new RepositoryRequestHandler("EN");
+        RepositoryRequestHandler repositoryRequestHandler = new RepositoryRequestHandler(RepositoryLanguageType.EN);
         repositoryRequestHandler.lastLevel();
         Assertions.assertEquals(repositoryRequestHandler.getCountLevel(), 1);
     }

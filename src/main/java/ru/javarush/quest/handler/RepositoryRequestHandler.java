@@ -3,6 +3,7 @@ package ru.javarush.quest.handler;
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.entity.EntityQuest;
 import ru.javarush.quest.repository.AnswerRepository;
+import ru.javarush.quest.repository.RepositoryLanguageType;
 
 public class RepositoryRequestHandler {
     AnswerRepository answerRepository;
@@ -10,12 +11,11 @@ public class RepositoryRequestHandler {
     EntityQuest entityQuest;
     int countLevel;
 
-    public RepositoryRequestHandler(String language) {
+    public RepositoryRequestHandler(RepositoryLanguageType type) {
         repositorySelection = new RepositorySelection();
-        this.answerRepository = repositorySelection.creatRepository(language);
+        this.answerRepository = repositorySelection.creatRepository(type);
         this.countLevel = 0;
     }
-
     public void lastLevel() {
         countLevel++;
     }

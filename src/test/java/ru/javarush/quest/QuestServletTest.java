@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.entity.EntityStatistics;
 import ru.javarush.quest.handler.RepositoryRequestHandler;
 import ru.javarush.quest.repository.RepositoryEn;
+import ru.javarush.quest.repository.RepositoryLanguageType;
 import ru.javarush.quest.repository.RepositoryRu;
 
 import javax.servlet.ServletException;
@@ -77,7 +78,7 @@ public class QuestServletTest {
     })
     public void choiceEntityQuestTest(String answer) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         HttpServletRequest request = mock(HttpServletRequest.class);
-        questServlet.repositoryRequestHandler = new RepositoryRequestHandler("RU");
+        questServlet.repositoryRequestHandler = new RepositoryRequestHandler(RepositoryLanguageType.RU);
         Class clazz = questServlet.getClass();
         Method downloadData = clazz.getDeclaredMethod("choiceEntityQuest", HttpServletRequest.class);
         downloadData.setAccessible(true);

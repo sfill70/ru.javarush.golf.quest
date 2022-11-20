@@ -19,6 +19,7 @@ import java.net.Inet4Address;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.javarush.quest.repository.PlayerRepository;
+import ru.javarush.quest.repository.RepositoryLanguageType;
 
 import java.net.UnknownHostException;
 
@@ -96,7 +97,7 @@ public class QuestServlet extends HttpServlet {
     }
 
     RepositoryRequestHandler getRepositoryRequestHandler(String language) {
-        return new RepositoryRequestHandler(language);
+        return new RepositoryRequestHandler(RepositoryLanguageType.valueOf(language));
     }
 
     private void dataTransferPerSession(EntityStatistics entityStatistics) throws UnknownHostException {

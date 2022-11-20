@@ -25,7 +25,6 @@
     <table id="tab" class="table"  <%--"table table-bordered"--%>>
         <tbody>
         <tr>
-            <%--            <th scope="row">1</th>--%>
             <td><img src="static/img/ThomasJeromeNewton1.jpg" alt="ThomasJeromeNewton1.jpg"></td>
             <td>По мотивам творчества Девида Боуи</td>
         </tr>
