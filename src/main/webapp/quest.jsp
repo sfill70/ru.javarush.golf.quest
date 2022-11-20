@@ -22,12 +22,10 @@
 <a href="restart">Restart</a>
 <br/>
 <br/>
-<br/>
 <span>current language: <%=entityStatistics.getLanguage() %></span>
 <br/>
 <br/>
-<br/>
-<div class="message"><h4 class="text">${message}</h4></div>
+<div class="message"><h5 class="text">${message}</h5></div>
 
 <form method="POST" action="/quest-servlet">
     <div class="padding-inside">

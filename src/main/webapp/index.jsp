@@ -19,14 +19,12 @@
 <div>
     <h1>Start GAME!!!</h1>
     <br/>
-
-    <%--    <img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg">--%>
-
     <table id="tab" class="table"  <%--"table table-bordered"--%>>
         <tbody>
         <tr>
             <td><img src="static/img/ThomasJeromeNewton1.jpg" alt="ThomasJeromeNewton1.jpg"></td>
-            <td>По мотивам творчества Девида Боуи</td>
+            <td><p>По мотивам творчества Девида Боуи</p>
+            </td>
         </tr>
         </tbody>
     </table>
