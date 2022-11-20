@@ -24,28 +24,29 @@ public abstract class AnswerRepository {
         this.negativeAnswer = new HashMap<>();
     }
 
-    public EntityQuest getEntityPositiveAnswer(int level) {
+    public EntityQuest getEntityPositiveAnswerToLevel(int level) {
         return positiveAnswer.get(level);
     }
 
-    public EntityQuest getEntityNegativeAnswer(int level) {
+
+    public EntityQuest getEntityNegativeAnswerToLevel(int level) {
         return negativeAnswer.get(level);
     }
 
     public String getLevelPositiveMessage(int level) {
-        return getEntityPositiveAnswer(level).getMessage();
+        return getEntityPositiveAnswerToLevel(level).getMessage();
     }
 
     public String getLevelNegativeMessage(int level) {
-        return getEntityNegativeAnswer(level).getMessage();
+        return getEntityNegativeAnswerToLevel(level).getMessage();
     }
 
     public boolean getLevelPositiveIsGameOver(int level) {
-        return getEntityPositiveAnswer(level).isGameOver();
+        return getEntityPositiveAnswerToLevel(level).isGameOver();
     }
 
     public boolean getLevelNegativeIsGameOver(int level) {
-        return getEntityNegativeAnswer(level).isGameOver();
+        return getEntityNegativeAnswerToLevel(level).isGameOver();
     }
 
     public int getSize() {

@@ -2,7 +2,6 @@ package ru.javarush.quest;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,8 +13,6 @@ import ru.javarush.quest.repository.RepositoryRu;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -89,11 +86,11 @@ public class QuestServletTest {
         if (answer.equalsIgnoreCase("positiveAnswer")) {
             when(request.getParameter("choice")).thenReturn("positiveAnswer");
             downloadData.invoke(questServlet, request);
-            Assertions.assertEquals(questServlet.getRepositoryRequestHandler().getEntityQuest(), new RepositoryRu().getEntityPositiveAnswer(1));
+            Assertions.assertEquals(questServlet.getRepositoryRequestHandler().getPositiveEntityQuest(), new RepositoryRu().getEntityPositiveAnswerToLevel(1));
         } else {
             when(request.getParameter("choice")).thenReturn("negativeAnswer");
             downloadData.invoke(questServlet, request);
-            Assertions.assertEquals(questServlet.repositoryRequestHandler.getEntityQuest(), new RepositoryRu().getEntityNegativeAnswer(1));
+            Assertions.assertEquals(questServlet.repositoryRequestHandler.getNegativeEntityQuest(), new RepositoryRu().getEntityNegativeAnswerToLevel(1));
         }
     }
 }

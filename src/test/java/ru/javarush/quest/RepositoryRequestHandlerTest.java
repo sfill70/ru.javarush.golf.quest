@@ -48,10 +48,10 @@ public class RepositoryRequestHandlerTest {
             "1", "2", "3", "4",
     })
     public void getPositiveEntityQuestTest(int countLevel) {
-        EntityQuest entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityPositiveAnswer(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().getEntityPositiveAnswer(countLevel).getMessage());
-        entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityPositiveAnswer(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityPositiveAnswer(countLevel).getMessage());
+        EntityQuest entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityPositiveAnswerToLevel(countLevel);
+        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().getEntityPositiveAnswerToLevel(countLevel).getMessage());
+        entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityPositiveAnswerToLevel(countLevel);
+        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityPositiveAnswerToLevel(countLevel).getMessage());
     }
 
     /*@Test*/
@@ -60,10 +60,10 @@ public class RepositoryRequestHandlerTest {
             "1", "2", "3", "4", "5",
     })
     public void getNegativeEntityQuestTest(int countLevel) {
-        EntityQuest entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityNegativeAnswer(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityNegativeAnswer(countLevel).getMessage());
-        entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityNegativeAnswer(countLevel);
-        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().getEntityNegativeAnswer(countLevel).getMessage());
+        EntityQuest entityQuest = repositoryRequestHandlerEn.getAnswerRepository().getEntityNegativeAnswerToLevel(countLevel);
+        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityNegativeAnswerToLevel(countLevel).getMessage());
+        entityQuest = repositoryRequestHandlerRu.getAnswerRepository().getEntityNegativeAnswerToLevel(countLevel);
+        Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().getEntityNegativeAnswerToLevel(countLevel).getMessage());
     }
 
     @ParameterizedTest
@@ -76,20 +76,20 @@ public class RepositoryRequestHandlerTest {
             repositoryRequestHandlerRu.lastLevel();
             EntityQuest entityQuest = repositoryRequestHandlerRu.getPositiveEntityQuest();
             Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().
-                    getEntityPositiveAnswer(repositoryRequestHandlerRu.getCountLevel()).getMessage());
+                    getEntityPositiveAnswerToLevel(repositoryRequestHandlerRu.getCountLevel()).getMessage());
             repositoryRequestHandlerEn.lastLevel();
             entityQuest = repositoryRequestHandlerEn.getPositiveEntityQuest();
             Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
-                    getEntityPositiveAnswer(repositoryRequestHandlerEn.getCountLevel()).getMessage());
+                    getEntityPositiveAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()).getMessage());
         }
         repositoryRequestHandlerRu.lastLevel();
         EntityQuest entityQuest = repositoryRequestHandlerRu.getNegativeEntityQuest();
         Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().
-                getEntityNegativeAnswer(repositoryRequestHandlerRu.getCountLevel()).getMessage());
+                getEntityNegativeAnswerToLevel(repositoryRequestHandlerRu.getCountLevel()).getMessage());
         repositoryRequestHandlerEn.lastLevel();
         entityQuest = repositoryRequestHandlerEn.getNegativeEntityQuest();
         Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().
-                getEntityNegativeAnswer(repositoryRequestHandlerEn.getCountLevel()).getMessage());
+                getEntityNegativeAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()).getMessage());
     }
 
 }

@@ -14,7 +14,7 @@ public class AnswerRepositoryTest extends RepositoryEn {
     })
     public void getEntityPositiveAnswerTest(int level) {
 
-        Assertions.assertEquals(getEntityPositiveAnswer(level), this.positiveAnswer.get(level));
+        Assertions.assertEquals(getEntityPositiveAnswerToLevel(level), this.positiveAnswer.get(level));
     }
 
     @ParameterizedTest
@@ -22,7 +22,7 @@ public class AnswerRepositoryTest extends RepositoryEn {
             "0", "1", "2",
     })
     public void getEntityNegativeAnswerTest(int level) {
-        Assertions.assertEquals(new AnswerRepositoryTest().getEntityNegativeAnswer(level), this.negativeAnswer.get(level));
+        Assertions.assertEquals(new AnswerRepositoryTest().getEntityNegativeAnswerToLevel(level), this.negativeAnswer.get(level));
     }
 
     @Test

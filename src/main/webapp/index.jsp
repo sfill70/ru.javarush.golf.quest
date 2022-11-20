@@ -20,13 +20,13 @@
     <h1>Start GAME!!!</h1>
     <br/>
 
-<%--    <img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg">--%>
+    <%--    <img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg">--%>
 
     <table id="tab" class="table table-bordered">
         <tbody>
         <tr>
-<%--            <th scope="row">1</th>--%>
-            <td><img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg"></td>
+            <%--            <th scope="row">1</th>--%>
+            <td><img src="static/img/ThomasJeromeNewton1.jpg" alt="ThomasJeromeNewton1.jpg"></td>
             <td>По мотивам творчества Девида Боуи</td>
         </tr>
         </tbody>
@@ -35,7 +35,6 @@
     <c:if test="${blank == null}">
         <c:set var="blank" scope="session" value="false"/>
     </c:if>
-    <hr>
     <c:if test="${blank}">
         <h4 class="one">Введите имя!/Enter name!</h4>
         <%-- bootstrap alert--%>

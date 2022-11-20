@@ -33,11 +33,11 @@ public class RepositoryRequestHandler {
     }
 
     public EntityQuest getPositiveEntityQuest() {
-        return answerRepository.getEntityPositiveAnswer(countLevel);
+        return answerRepository.getEntityPositiveAnswerToLevel(countLevel);
     }
 
     public EntityQuest getNegativeEntityQuest() {
-        return answerRepository.getEntityNegativeAnswer(countLevel);
+        return answerRepository.getEntityNegativeAnswerToLevel(countLevel);
     }
 
     public void EntityQuestSelection(boolean positiveAnswer) {
