@@ -9,7 +9,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.entity.EntityQuest;
-import ru.javarush.quest.logics.RepositoryRequestHandler;
+import ru.javarush.quest.handler.AnswerType;
+import ru.javarush.quest.handler.RepositoryRequestHandler;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
 
@@ -54,7 +55,7 @@ public class RepositoryRequestHandlerTest {
         Assertions.assertEquals(entityQuest.getMessage(), new RepositoryEn().getEntityPositiveAnswerToLevel(countLevel).getMessage());
     }
 
-    /*@Test*/
+
     @ParameterizedTest
     @CsvSource({
             "1", "2", "3", "4", "5",
@@ -68,11 +69,11 @@ public class RepositoryRequestHandlerTest {
 
     @ParameterizedTest
     @CsvSource({
-            "true", "true", "true", "false", "false", "false",
+            "POSITIVE", "POSITIVE", "POSITIVE", "NEGATIVE", "NEGATIVE", "NEGATIVE",
     })
-    public void EntityQuestSelectionTest(boolean positiveAnswer) {
+    public void EntityQuestSelectionTest(AnswerType answerType) {
 
-        if (positiveAnswer) {
+        if (answerType == AnswerType.POSITIVE) {
             repositoryRequestHandlerRu.lastLevel();
             EntityQuest entityQuest = repositoryRequestHandlerRu.getPositiveEntityQuest();
             Assertions.assertEquals(entityQuest.getMessage(), new RepositoryRu().

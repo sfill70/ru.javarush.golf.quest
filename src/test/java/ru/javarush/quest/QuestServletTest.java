@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.javarush.quest.entity.EntityStatistics;
-import ru.javarush.quest.logics.RepositoryRequestHandler;
+import ru.javarush.quest.handler.RepositoryRequestHandler;
 import ru.javarush.quest.repository.RepositoryEn;
 import ru.javarush.quest.repository.RepositoryRu;
 

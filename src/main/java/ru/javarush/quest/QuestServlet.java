@@ -2,7 +2,8 @@ package ru.javarush.quest;
 
 
 import ru.javarush.quest.entity.EntityStatistics;
-import ru.javarush.quest.logics.RepositoryRequestHandler;
+import ru.javarush.quest.handler.AnswerType;
+import ru.javarush.quest.handler.RepositoryRequestHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -81,7 +82,7 @@ public class QuestServlet extends HttpServlet {
 
     private void startQuest(HttpServletRequest req) throws IOException {
         dataTransferPerSession(getDataFromRequest(req));
-        repositoryRequestHandler.EntityQuestSelection(true);
+        repositoryRequestHandler.EntityQuestSelection(AnswerType.POSITIVE);
         transferringDataToRequest(req);
     }
 
@@ -123,9 +124,9 @@ public class QuestServlet extends HttpServlet {
         logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
-            repositoryRequestHandler.EntityQuestSelection(true);
+            repositoryRequestHandler.EntityQuestSelection(AnswerType.POSITIVE);
         } else {
-            repositoryRequestHandler.EntityQuestSelection(false);
+            repositoryRequestHandler.EntityQuestSelection(AnswerType.NEGATIVE);
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.javarush.quest.logics;
+package ru.javarush.quest.handler;
 
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.entity.EntityQuest;
@@ -40,8 +40,8 @@ public class RepositoryRequestHandler {
         return answerRepository.getEntityNegativeAnswerToLevel(countLevel);
     }
 
-    public void EntityQuestSelection(boolean positiveAnswer) {
-        if (positiveAnswer) {
+    public void EntityQuestSelection(AnswerType answerType) {
+        if (answerType == AnswerType.POSITIVE) {
             this.entityQuest = getPositiveEntityQuest();
             return;
         }
