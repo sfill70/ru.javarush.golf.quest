@@ -1,4 +1,4 @@
-package ru.javarush.quest.logics;
+package ru.javarush.quest.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

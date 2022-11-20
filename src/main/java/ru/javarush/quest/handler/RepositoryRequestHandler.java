@@ -1,4 +1,4 @@
-package ru.javarush.quest.logics;
+package ru.javarush.quest.handler;
 
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.entity.EntityQuest;
@@ -33,15 +33,15 @@ public class RepositoryRequestHandler {
     }
 
     public EntityQuest getPositiveEntityQuest() {
-        return answerRepository.getEntityPositiveAnswer(countLevel);
+        return answerRepository.getEntityPositiveAnswerToLevel(countLevel);
     }
 
     public EntityQuest getNegativeEntityQuest() {
-        return answerRepository.getEntityNegativeAnswer(countLevel);
+        return answerRepository.getEntityNegativeAnswerToLevel(countLevel);
     }
 
-    public void EntityQuestSelection(boolean positiveAnswer) {
-        if (positiveAnswer) {
+    public void EntityQuestSelection(AnswerType answerType) {
+        if (answerType == AnswerType.POSITIVE) {
             this.entityQuest = getPositiveEntityQuest();
             return;
         }

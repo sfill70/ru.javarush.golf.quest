@@ -10,20 +10,31 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
-<body>
+<body id="container">
 <%
     EntityInterface entityInterfaceSession = (EntityInterface) session.getAttribute("entityInterface");
     EntityInterface entityInterfaceRequest = (EntityInterface) request.getAttribute("entityInterface");
     EntityStatistics entityStatistics = (EntityStatistics) session.getAttribute("entityStatistics");
 %>
-<div id="container">
+<div>
     <h1>Start GAME!!!</h1>
     <br/>
+
+    <%--    <img src="static/img/ThomasJeromeNewton.jpeg" alt="ThomasJeromeNewton.jpeg">--%>
+
+    <table id="tab" class="table"  <%--"table table-bordered"--%>>
+        <tbody>
+        <tr>
+            <%--            <th scope="row">1</th>--%>
+            <td><img src="static/img/ThomasJeromeNewton1.jpg" alt="ThomasJeromeNewton1.jpg"></td>
+            <td>По мотивам творчества Девида Боуи</td>
+        </tr>
+        </tbody>
+    </table>
     <%--Это не надо, без него работает--%>
     <c:if test="${blank == null}">
         <c:set var="blank" scope="session" value="false"/>
     </c:if>
-    <hr>
     <c:if test="${blank}">
         <h4 class="one">Введите имя!/Enter name!</h4>
         <%-- bootstrap alert--%>

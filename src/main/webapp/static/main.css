@@ -2,6 +2,14 @@
     text-align: left;
     /*padding: 10px;*/
     margin: 10px;
+    background-color:paleturquoise;
+   /* width: 70%;*/
+}
+
+#tab {
+    width: 70%;
+    text-align: left;
+    background: #f5f5dc;
 }
 
 h1 {
@@ -42,6 +50,7 @@ h2 {
 .statistic {
     background-color: azure;
     width: 70%;
+    margin: 3px;
 }
 
 /*

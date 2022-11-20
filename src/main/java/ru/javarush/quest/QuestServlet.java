@@ -2,7 +2,8 @@ package ru.javarush.quest;
 
 
 import ru.javarush.quest.entity.EntityStatistics;
-import ru.javarush.quest.logics.RepositoryRequestHandler;
+import ru.javarush.quest.handler.AnswerType;
+import ru.javarush.quest.handler.RepositoryRequestHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -80,13 +81,8 @@ public class QuestServlet extends HttpServlet {
     }
 
     private void startQuest(HttpServletRequest req) throws IOException {
-        /*String username = req.getParameter("username");
-        String language = req.getParameter("choiceLanguage");
-        int gamesquanity = PlayerRepository.getPlayerCount(username);
-        EntityStatistics entityStatistics = new EntityStatistics(username, gamesquanity, language);
-        repositoryRequestHandler = getRepositoryRequestHandler(language);*/
-        dataTransferPerSession(getDataFromRequest(req)/*, username, gamesquanity, language*/);
-        repositoryRequestHandler.EntityQuestSelection(true);
+        dataTransferPerSession(getDataFromRequest(req));
+        repositoryRequestHandler.EntityQuestSelection(AnswerType.POSITIVE);
         transferringDataToRequest(req);
     }
 
@@ -103,10 +99,7 @@ public class QuestServlet extends HttpServlet {
         return new RepositoryRequestHandler(language);
     }
 
-    private void dataTransferPerSession(EntityStatistics entityStatistics/*,String username, int gamesquanity, String language*/) throws UnknownHostException {
-        /*currentSession.setAttribute("username", username);
-        currentSession.setAttribute("gamesquanity", gamesquanity);
-        currentSession.setAttribute("language", language);*/
+    private void dataTransferPerSession(EntityStatistics entityStatistics) throws UnknownHostException {
         currentSession.setAttribute("ip", Inet4Address.getLocalHost().getHostAddress());
         currentSession.setAttribute("entityStatistics", entityStatistics);
         currentSession.setAttribute("entityInterface", repositoryRequestHandler.getEntityInterface());
@@ -131,9 +124,9 @@ public class QuestServlet extends HttpServlet {
         logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
-            repositoryRequestHandler.EntityQuestSelection(true);
+            repositoryRequestHandler.EntityQuestSelection(AnswerType.POSITIVE);
         } else {
-            repositoryRequestHandler.EntityQuestSelection(false);
+            repositoryRequestHandler.EntityQuestSelection(AnswerType.NEGATIVE);
         }
     }
 
