@@ -33,21 +33,6 @@ public abstract class AnswerRepository {
         return negativeAnswer.get(level);
     }
 
-    public String getLevelPositiveMessage(int level) {
-        return getEntityPositiveAnswerToLevel(level).getMessage();
-    }
-
-    public String getLevelNegativeMessage(int level) {
-        return getEntityNegativeAnswerToLevel(level).getMessage();
-    }
-
-    public boolean getLevelPositiveIsGameOver(int level) {
-        return getEntityPositiveAnswerToLevel(level).isGameOver();
-    }
-
-    public boolean getLevelNegativeIsGameOver(int level) {
-        return getEntityNegativeAnswerToLevel(level).isGameOver();
-    }
 
     public int getSize() {
         return positiveAnswer.size();
