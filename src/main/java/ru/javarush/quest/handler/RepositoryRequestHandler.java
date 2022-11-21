@@ -28,10 +28,6 @@ public class RepositoryRequestHandler {
         return answerRepository.getEntityInterface();
     }
 
-    public EntityQuest getEntityQuest() {
-        return entityQuest;
-    }
-
     public EntityQuest getPositiveEntityQuest() {
         return answerRepository.getEntityPositiveAnswerToLevel(countLevel);
     }
