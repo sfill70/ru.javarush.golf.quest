@@ -14,7 +14,7 @@
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/start_page.png)
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/quest_page.png)
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/victory_page.png)
-![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/loss_page.png)
+![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/loss.png)
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/after_restart_page.png)
 
 
