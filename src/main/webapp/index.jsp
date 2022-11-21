@@ -24,6 +24,7 @@
         <tr>
             <td><img src="static/img/ThomasJeromeNewton1.jpg" alt="ThomasJeromeNewton1.jpg"></td>
             <td><p>По мотивам творчества Девида Боуи</p>
+            <td><p>Отрыва песно очень вольный</p>
             </td>
         </tr>
         </tbody>

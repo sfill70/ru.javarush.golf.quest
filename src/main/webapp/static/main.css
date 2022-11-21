@@ -2,6 +2,8 @@
     text-align: left;
     margin: 10px;
     background-color:paleturquoise;
+    /*position: absolute;*/
+    left: 15%;
 }
 
 #tab {
@@ -53,7 +55,7 @@ h2 {
 
 .message {
     background: #f5f5dc;
-    border: 4mm ridge rgba(211, 220, 50, .6);
+    /*border: 4mm ridge rgba(211, 220, 50, .6);*/
     width: 70%;
     text-indent: 2%;
 }
