@@ -19,12 +19,13 @@
 <div>
     <h1>Start GAME!!!</h1>
     <br/>
-    <table id="tab" class="table"  <%--"table table-bordered"--%>>
+    <table id="tab" class="table">
         <tbody>
         <tr>
             <td><img src="static/img/ThomasJeromeNewton1.jpg" alt="ThomasJeromeNewton1.jpg"></td>
-            <td><p>По мотивам творчества Девида Боуи,</p>
-            <p>перевод отрывков песни очень вольный</p>
+            <td>
+                <p>По мотивам творчества Девида Боуи</p>
+                <p>Перевод отрывка песни очень вольный</p>
             </td>
         </tr>
         </tbody>
