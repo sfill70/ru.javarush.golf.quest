@@ -34,12 +34,8 @@ public class QuestServletTest {
             "RU",
             "EN",
     })
-    public void getRepositoryRequestHandlerTest(String language) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Class clazz = questServlet.getClass();
-        Method downloadData = clazz.getDeclaredMethod("getRepositoryRequestHandler", String.class);
-        downloadData.setAccessible(true);
-        RepositoryRequestHandler repositoryRequestHandler = (RepositoryRequestHandler) downloadData
-                .invoke(questServlet, language);
+    public void getRepositoryRequestHandlerTest(String language) {
+        RepositoryRequestHandler repositoryRequestHandler = questServlet.getRepositoryRequestHandler(language);
         if (language.equalsIgnoreCase("RU")) {
             Assertions.assertEquals(repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
         } else {
@@ -52,16 +48,12 @@ public class QuestServletTest {
             "name, RU",
             "name, EN",
     })
-    public void getDataFromRequestTest(String name, String language) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void getDataFromRequestTest(String name, String languageFromRequest) {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getParameter("username")).thenReturn(name);
-        when(request.getParameter("choiceLanguage")).thenReturn(language);
-        Class clazz = questServlet.getClass();
-        Method downloadData = clazz.getDeclaredMethod("getDataFromRequest", HttpServletRequest.class);
-        downloadData.setAccessible(true);
-        EntityStatistics entityStatistics = (EntityStatistics) downloadData
-                .invoke(questServlet, request);
-        if (language.equalsIgnoreCase("RU")) {
+        when(request.getParameter("choiceLanguage")).thenReturn(languageFromRequest);
+        EntityStatistics entityStatistics = questServlet.getDataFromRequest(request);
+        if (languageFromRequest.equalsIgnoreCase("RU")) {
             Assertions.assertEquals(questServlet.repositoryRequestHandler.getAnswerRepository().getClass(), RepositoryRu.class);
             Assertions.assertEquals(entityStatistics, new EntityStatistics(name, 1, "RU"));
         } else {
@@ -76,20 +68,19 @@ public class QuestServletTest {
             "positiveAnswer",
             "negativeAnswer",
     })
-    public void choiceEntityQuestTest(String answer) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void choiceEntityQuestTest(String answerFromRequest) {
         HttpServletRequest request = mock(HttpServletRequest.class);
         questServlet.repositoryRequestHandler = new RepositoryRequestHandler(RepositoryLanguageType.RU);
-        Class clazz = questServlet.getClass();
-        Method downloadData = clazz.getDeclaredMethod("choiceEntityQuest", HttpServletRequest.class);
-        downloadData.setAccessible(true);
-        if (answer.equalsIgnoreCase("positiveAnswer")) {
+        if (answerFromRequest.equalsIgnoreCase("positiveAnswer")) {
             when(request.getParameter("choice")).thenReturn("positiveAnswer");
-            downloadData.invoke(questServlet, request);
-            Assertions.assertEquals(questServlet.getRepositoryRequestHandler().getPositiveEntityQuest(), new RepositoryRu().getEntityPositiveAnswerToLevel(1));
+            questServlet.choiceEntityQuest(request);
+            Assertions.assertEquals(questServlet.getRepositoryRequestHandler().getPositiveEntityQuest(),
+                    new RepositoryRu().getEntityPositiveAnswerToLevel(1));
         } else {
             when(request.getParameter("choice")).thenReturn("negativeAnswer");
-            downloadData.invoke(questServlet, request);
-            Assertions.assertEquals(questServlet.repositoryRequestHandler.getNegativeEntityQuest(), new RepositoryRu().getEntityNegativeAnswerToLevel(1));
+            questServlet.choiceEntityQuest(request);
+            Assertions.assertEquals(questServlet.repositoryRequestHandler.getNegativeEntityQuest(),
+                    new RepositoryRu().getEntityNegativeAnswerToLevel(1));
         }
     }
 }

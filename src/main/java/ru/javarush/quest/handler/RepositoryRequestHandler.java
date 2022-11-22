@@ -7,13 +7,11 @@ import ru.javarush.quest.repository.RepositoryLanguageType;
 
 public class RepositoryRequestHandler {
     AnswerRepository answerRepository;
-    RepositorySelection repositorySelection;
     EntityQuest entityQuest;
     int countLevel;
 
     public RepositoryRequestHandler(RepositoryLanguageType type) {
-        repositorySelection = new RepositorySelection();
-        this.answerRepository = repositorySelection.creatRepository(type);
+        this.answerRepository = new RepositorySelection().creatRepository(type);
         this.countLevel = 0;
     }
     public void lastLevel() {
@@ -36,7 +34,7 @@ public class RepositoryRequestHandler {
         return answerRepository.getEntityNegativeAnswerToLevel(countLevel);
     }
 
-    public void EntityQuestSelection(AnswerType answerType) {
+    public void entityQuestSelection(AnswerType answerType) {
         if (answerType == AnswerType.POSITIVE) {
             this.entityQuest = getPositiveEntityQuest();
             return;
@@ -54,6 +52,10 @@ public class RepositoryRequestHandler {
 
     public boolean IsVictory() {
         return !IsGameOver() && countLevel == answerRepository.getSize()-1;
+    }
+
+    public EntityQuest getEntityQuest() {
+        return entityQuest;
     }
 
     public int getCountLevel(){

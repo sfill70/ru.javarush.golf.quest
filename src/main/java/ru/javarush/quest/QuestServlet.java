@@ -60,7 +60,6 @@ public class QuestServlet extends HttpServlet {
         doPost(req, resp);
     }
 
-    /*не используется*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -83,11 +82,11 @@ public class QuestServlet extends HttpServlet {
 
     private void startQuest(HttpServletRequest req) throws IOException {
         dataTransferPerSession(getDataFromRequest(req));
-        repositoryRequestHandler.EntityQuestSelection(AnswerType.POSITIVE);
+        repositoryRequestHandler.entityQuestSelection(AnswerType.POSITIVE);
         transferringDataToRequest(req);
     }
 
-    private EntityStatistics getDataFromRequest(HttpServletRequest req) {
+    public EntityStatistics getDataFromRequest(HttpServletRequest req) {
         String username = req.getParameter("username");
         String language = req.getParameter("choiceLanguage");
         int gamesquanity = PlayerRepository.getPlayerCount(username);
@@ -96,7 +95,7 @@ public class QuestServlet extends HttpServlet {
         return entityStatistics;
     }
 
-    RepositoryRequestHandler getRepositoryRequestHandler(String language) {
+    public RepositoryRequestHandler getRepositoryRequestHandler(String language) {
         return new RepositoryRequestHandler(RepositoryLanguageType.valueOf(language));
     }
 
@@ -120,14 +119,14 @@ public class QuestServlet extends HttpServlet {
         return false;
     }
 
-    private void choiceEntityQuest(HttpServletRequest req) {
+    public void choiceEntityQuest(HttpServletRequest req) {
         repositoryRequestHandler.lastLevel();
         logger.debug(repositoryRequestHandler.getCountLevel() + " logicQuest");
         String radioButtonChoice = req.getParameter("choice");
         if (radioButtonChoice.equalsIgnoreCase("positiveAnswer")) {
-            repositoryRequestHandler.EntityQuestSelection(AnswerType.POSITIVE);
+            repositoryRequestHandler.entityQuestSelection(AnswerType.POSITIVE);
         } else {
-            repositoryRequestHandler.EntityQuestSelection(AnswerType.NEGATIVE);
+            repositoryRequestHandler.entityQuestSelection(AnswerType.NEGATIVE);
         }
     }
 
