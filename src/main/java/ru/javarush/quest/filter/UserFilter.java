@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-@WebFilter/*(urlPatterns = "/start")*/
+@WebFilter(urlPatterns = "/start")
 public class UserFilter implements Filter {
 
     public UserFilter() {

@@ -7,26 +7,14 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
-    <!--<servlet>
-        <servlet-name>QuestServlet</servlet-name>
-        <servlet-class>ru.javarush.quest.QuestServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>QuestServlet</servlet-name>
-        <url-pattern>/quest-servlet</url-pattern>
-        <url-pattern>/start</url-pattern>
-    </servlet-mapping>-->
-    <filter>
+  <!--  <filter>
         <filter-name>UserFilter</filter-name>
         <filter-class>ru.javarush.quest.filter.UserFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>UserFilter</filter-name>
         <url-pattern>/start</url-pattern>
-    </filter-mapping>
-
+    </filter-mapping>-->
     <!-- error-code related error pages -->
     <error-page>
         <error-code>404</error-code>
