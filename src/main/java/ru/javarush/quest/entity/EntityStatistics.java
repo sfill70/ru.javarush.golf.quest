@@ -2,7 +2,7 @@ package ru.javarush.quest.entity;
 
 import java.util.Objects;
 
-/* Not used */
+
 public class EntityStatistics {
     String name;
     int gamesQuanity;
