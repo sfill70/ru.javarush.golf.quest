@@ -2,48 +2,64 @@ package ru.javarush.quest;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.javarush.quest.entity.EntityInterface;
 import ru.javarush.quest.repository.RepositoryEn;
+import ru.javarush.quest.repository.RepositoryRu;
 
 public class EntityInterfaceTest {
 
-    String start = "Start message";
     String win = "<h2> Victory !!! </h2>";
     String loss = "<h2>" + "Houston, we have a problem !!!" + "</h2>"
             + "<span class=" + "second" + "> failed mission player named: </span>";
     String[] stat = {"Statistic:", "Your current IP address:", "Name in the game: ", "Count game:"};
-    EntityInterface entityInterface = new RepositoryEn().getEntityInterface();
+    EntityInterface entityInterfaceEn = new RepositoryEn().getEntityInterface();
+    EntityInterface entityInterface = new RepositoryRu().getEntityInterface();
 
-    @Test
-    public void getPositiveNameButton() {
-        Assertions.assertEquals(entityInterface.getPositiveNameButton(), "I agree");
+
+    @ParameterizedTest
+    @CsvSource({
+            "EN", "RU",
+    })
+    public void getPositiveNameButton(String language) {
+        if (language.equalsIgnoreCase("EN")) {
+            Assertions.assertEquals(entityInterfaceEn.getPositiveNameButton(), "I agree");
+            return;
+        }
+        Assertions.assertEquals(entityInterface.getPositiveNameButton(), "Согласиться");
+
     }
 
-    @Test
-    public void getNegativeNameButton() {
-        Assertions.assertEquals(entityInterface.getNegativeNameButton(), "Disagree");
+    @ParameterizedTest
+    @CsvSource({
+            "EN", "RU",
+    })
+    public void getNegativeNameButton(String language) {
+        if (language.equalsIgnoreCase("EN")) {
+            Assertions.assertEquals(entityInterfaceEn.getNegativeNameButton(), "Disagree");
+        }
+        Assertions.assertEquals(entityInterface.getNegativeNameButton(), "Отказаться");
     }
 
     @Test
     public void getAnswerButton() {
-        Assertions.assertEquals(entityInterface.getAnswerButton(), "Reply");
+        Assertions.assertEquals(entityInterfaceEn.getAnswerButton(), "Reply");
 
     }
 
     @Test
     public void getWinMessage() {
-        Assertions.assertEquals(entityInterface.getWinMessage(), win);
+        Assertions.assertEquals(entityInterfaceEn.getWinMessage(), win);
     }
 
     @Test
     public void getLossMessage() {
-        Assertions.assertEquals(entityInterface.getLossMessage(), loss);
+        Assertions.assertEquals(entityInterfaceEn.getLossMessage(), loss);
     }
 
-   /* @Test
+    @Test
     public void getStatistic() {
-        Assertions.assertEquals(entityInterface.getStatistic(), stat);
-    }*/
-
-
+        Assertions.assertArrayEquals(entityInterfaceEn.getStatistic(), stat);
+    }
 }
