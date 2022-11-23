@@ -35,6 +35,7 @@ public class QuestServlet extends HttpServlet {
         /*Нахождение директории проекта если понадобитьс*/
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         String projectPathOut = loader.getResource("").getPath();
+        logger.debug(projectPathOut);
         String[] arrayProjectPath = projectPathOut.split("/");
         String projectPath = "";
         for (String st : arrayProjectPath) {
@@ -46,6 +47,7 @@ public class QuestServlet extends HttpServlet {
             }
         }
         logger.debug(projectPath);
+        logger.debug(System.getProperty("user.dir"));
     }
 
     @Override
