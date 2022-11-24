@@ -137,9 +137,9 @@
                         </rule>
                     </rules>
                     <excludes>
-                       <!-- <exclude>**/*QuestServlet*</exclude>
-                        <exclude>**/*RestartServlet*</exclude>
-                        <exclude>**/*UserFilter*</exclude>-->
+                        <!--<exclude>**/*QuestServlet*</exclude>
+                        <exclude>**/*RestartServlet*</exclude>-->
+                        <exclude>**/*UserFilter*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
