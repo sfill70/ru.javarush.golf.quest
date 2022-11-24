@@ -1,4 +1,7 @@
 Запуск квеста производился на Tomcat 9.0.65
+Настройки TomCat:
+Вкладка Server: URL - http://localhost:8080/, HTTP port - 8080, JMX port - 1099
+Вкладка Deployment: Окно-"Deploy at the server startup" - war:exploded, Application context - /
 Дополнительно реализован выбор языка игры при старте русский/английский.
 картинки подтверждения работоспособности пока в webapp/static/img
 папка для логирования "C:/quest/logs/" или "D:/quest/logs/".
