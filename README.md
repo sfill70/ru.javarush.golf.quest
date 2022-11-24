@@ -15,6 +15,9 @@
 lev5(согласиться)-> victory
 
 Картинки работоспособности.
+Jacoco:
+1 - тестирование без сервлетов
+2 - тестирование с сервлетами
 
 
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/start_page.png)
@@ -23,5 +26,6 @@ lev5(согласиться)-> victory
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/loss.png)
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/after_restart_page.png)
 ![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/jacoco.png)
+![Image alt](https://github.com/sfill70/ru.javarush.golf.quest/raw/master/src/main/webapp/static/img/jacoco_2.png)
 
 
