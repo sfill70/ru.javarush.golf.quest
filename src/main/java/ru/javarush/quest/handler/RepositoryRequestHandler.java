@@ -62,5 +62,7 @@ public class RepositoryRequestHandler {
         return countLevel;
     }
 
-
+    public void setEntityQuest(EntityQuest entityQuest) {
+        this.entityQuest = entityQuest;
+    }
 }

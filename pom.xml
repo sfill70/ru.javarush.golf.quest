@@ -146,9 +146,6 @@
                         <exclude>**/*QuestServlet*</exclude>
                         <exclude>**/*RestartServlet*</exclude>
                         <exclude>**/*UserFilter*</exclude>
-                        <exclude>**/*EntityInterface*</exclude>
-                        <exclude>**/*EntityStatistics*</exclude>
-                        <exclude>**/*EntityQuest*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
