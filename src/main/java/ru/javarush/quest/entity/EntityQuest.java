@@ -6,7 +6,8 @@ public class EntityQuest {
     public String message;
     public boolean isGameOver;
 
-    public EntityQuest(){}
+    public EntityQuest() {
+    }
 
     public EntityQuest(String message, boolean isGameOver) {
         this.message = message;
@@ -37,13 +38,5 @@ public class EntityQuest {
         int result = message != null ? message.hashCode() : 0;
         result = 31 * result + (isGameOver ? 1 : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "EntityQuest{" +
-                "message='" + message + '\'' +
-                ", isGameOver=" + isGameOver +
-                '}';
     }
 }

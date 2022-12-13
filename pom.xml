@@ -146,6 +146,7 @@
                         <exclude>**/*QuestServlet*</exclude>
                         <exclude>**/*RestartServlet*</exclude>
                         <exclude>**/*UserFilter*</exclude>
+                        <exclude>**/*Entity*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

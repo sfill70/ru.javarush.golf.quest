@@ -127,21 +127,17 @@ public class RepositoryRequestHandlerTest {
     @Test
     public void IsVictoryTest() {
         RepositoryRequestHandler repositoryRequestHandler = new RepositoryRequestHandler(RepositoryLanguageType.EN);
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.setEntityQuest(repositoryRequestHandler.getPositiveEntityQuest());
-        Assertions.assertTrue(repositoryRequestHandler.IsVictory());
-        repositoryRequestHandler = new RepositoryRequestHandler(RepositoryLanguageType.RU);
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
-        repositoryRequestHandler.lastLevel();
+        for (int i = 0; i < answerRepositoryEn.getSize()-2; i++) {
+            repositoryRequestHandler.lastLevel();
+            repositoryRequestHandler.setEntityQuest(repositoryRequestHandler.getPositiveEntityQuest());
+            Assertions.assertFalse(repositoryRequestHandler.IsVictory());
+            repositoryRequestHandler.setEntityQuest(repositoryRequestHandler.getNegativeEntityQuest());
+            Assertions.assertFalse(repositoryRequestHandler.IsVictory());
+        }
         repositoryRequestHandler.lastLevel();
         repositoryRequestHandler.setEntityQuest(repositoryRequestHandler.getPositiveEntityQuest());
         Assertions.assertTrue(repositoryRequestHandler.IsVictory());
+        repositoryRequestHandler.setEntityQuest(repositoryRequestHandler.getNegativeEntityQuest());
+        Assertions.assertFalse(repositoryRequestHandler.IsVictory());
     }
 }
