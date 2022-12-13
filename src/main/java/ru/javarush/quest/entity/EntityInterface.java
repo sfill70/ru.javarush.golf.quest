@@ -24,10 +24,6 @@ public class EntityInterface {
         this.statistic = statistic;
     }
 
-    public String getStartMessage() {
-        return startMessage;
-    }
-
     public String getPositiveNameButton() {
         return positiveNameButton;
     }

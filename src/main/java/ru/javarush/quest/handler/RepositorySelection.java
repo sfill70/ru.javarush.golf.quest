@@ -15,13 +15,10 @@ public class RepositorySelection {
 
     public AnswerRepository creatRepository(RepositoryLanguageType type) {
         logger.debug("Selection");
-        switch (type) {
-            case RU:
-                return new RepositoryRu();
-            case EN:
-                return new RepositoryEn();
-            default:
-                return new RepositoryRu();
+
+        if (type == RepositoryLanguageType.EN) {
+            return new RepositoryEn();
         }
+        return new RepositoryRu();
     }
 }
