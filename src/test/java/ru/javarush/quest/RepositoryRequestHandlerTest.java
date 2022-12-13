@@ -20,10 +20,14 @@ import ru.javarush.quest.repository.RepositoryRu;
 public class RepositoryRequestHandlerTest {
     AnswerRepository answerRepositoryRu;
     AnswerRepository answerRepositoryEn;
+
+    EntityQuest entityQuest;
+
     @BeforeEach
     public void init() {
         answerRepositoryRu = new RepositoryRu();
         answerRepositoryEn = new RepositoryEn();
+        entityQuest = new EntityQuest("answer", true);
     }
 
 
@@ -91,17 +95,34 @@ public class RepositoryRequestHandlerTest {
         RepositoryRequestHandler repositoryRequestHandlerRu = new RepositoryRequestHandler(RepositoryLanguageType.RU);
         RepositoryRequestHandler repositoryRequestHandlerEn = new RepositoryRequestHandler(RepositoryLanguageType.EN);
 
-        for (int i = 0; i < 5 ; i++) {
-        repositoryRequestHandlerRu.entityQuestSelection(AnswerType.POSITIVE);
-        Assertions.assertEquals(repositoryRequestHandlerRu.getEntityQuest(), answerRepositoryRu.
-                getEntityPositiveAnswerToLevel(repositoryRequestHandlerRu.getCountLevel()));
-        repositoryRequestHandlerRu.lastLevel();
+        for (int i = 0; i < 5; i++) {
+            repositoryRequestHandlerRu.entityQuestSelection(AnswerType.POSITIVE);
+            Assertions.assertEquals(repositoryRequestHandlerRu.getEntityQuest(), answerRepositoryRu.
+                    getEntityPositiveAnswerToLevel(repositoryRequestHandlerRu.getCountLevel()));
+            repositoryRequestHandlerRu.lastLevel();
 
-        repositoryRequestHandlerEn.entityQuestSelection(AnswerType.NEGATIVE);
-        Assertions.assertEquals(repositoryRequestHandlerEn.getEntityQuest(), answerRepositoryEn.
-                getEntityNegativeAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()));
-        repositoryRequestHandlerEn.lastLevel();
+            repositoryRequestHandlerEn.entityQuestSelection(AnswerType.NEGATIVE);
+            Assertions.assertEquals(repositoryRequestHandlerEn.getEntityQuest(), answerRepositoryEn.
+                    getEntityNegativeAnswerToLevel(repositoryRequestHandlerEn.getCountLevel()));
+            repositoryRequestHandlerEn.lastLevel();
         }
+    }
 
+    @Test
+    public void getMessageTest() {
+        Assertions.assertEquals(answerRepositoryEn.getEntityNegativeAnswerToLevel(1).getMessage(), "Answer1");
+        Assertions.assertEquals(answerRepositoryEn.getEntityPositiveAnswerToLevel(1).getMessage(), "Question1");
+    }
+
+    @Test
+    public void IsGameOverTest() {
+        Assertions.assertFalse(answerRepositoryEn.getEntityPositiveAnswerToLevel(1).isGameOver());
+        Assertions.assertTrue(answerRepositoryEn.getEntityNegativeAnswerToLevel(1).isGameOver());
+    }
+
+    @Test
+    public void IsVictory() {
+        Assertions.assertTrue(!answerRepositoryEn.getEntityPositiveAnswerToLevel(5).isGameOver()
+                && answerRepositoryEn.getSize() - 1 == 5);
     }
 }

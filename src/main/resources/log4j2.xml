@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
-
 <!--<!DOCTYPE project [<!ENTITY directory "D:/IdeaProjects/ru.javarush.golf.quest">]/>-->
 <Configuration status="ERROR">
-    <!--    по умолчанию домашней директорией для записи файлов считается TomCat/bin-->
-<!--    Как вынести Path в переменную???-->
     <Appenders>
-        <!--<properties>
-            <homedir>
-                D:/IdeaProjects/ru.javarush.golf.quest
-            </homedir>
-        </properties>
-        <property name="project_directory" value="D:/IdeaProjects/ru.javarush.golf.quest"/>-->
-        <!--"D:/Quest"-->
         <RollingFile name="DebugLog" fileName="D:/Quest/logs/debug.log"
                      filePattern="D:/Quest/logs/debug.%d{yyyy-MM-dd}.log"
                      ignoreExceptions="false">

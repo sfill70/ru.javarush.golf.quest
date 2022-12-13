@@ -23,5 +23,10 @@ public class EntityStatisticsTest {
         Assertions.assertEquals(entityStatistics.getLanguage(), "RU");
     }
 
+    /*@Test
+    public void equals(){
+        Assertions.assertEquals(entityStatistics, new EntityStatistics("name", 2, "RU"));
+    }*/
+
 
 }

@@ -15,20 +15,27 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <junit.version>5.8.2</junit.version>
-        <!--        <mockito.version>4.6.1</mockito.version>-->
+        <mockito.version>4.6.1</mockito.version>
+        <log4j.version>2.18.0</log4j.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
+        <jstl.version>1.2</jstl.version>
+        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+        <jacoco.version>0.8.8</jacoco.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+<!--            <version>4.0.1</version>-->
+            <version>${servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+<!--            <version>1.2</version>-->
+            <version>${jstl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -51,30 +58,30 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>4.6.1</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.6.1</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.18.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.18.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.18.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -88,7 +95,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
+<!--                <version>3.3.2</version>-->
+                <version>${maven-war-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -102,7 +110,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
@@ -137,9 +145,12 @@
                         </rule>
                     </rules>
                     <excludes>
-                        <!--<exclude>**/*QuestServlet*</exclude>
-                        <exclude>**/*RestartServlet*</exclude>-->
+                        <exclude>**/*QuestServlet*</exclude>
+                        <exclude>**/*RestartServlet*</exclude>
                         <exclude>**/*UserFilter*</exclude>
+                        <exclude>**/*EntityInterface*</exclude>
+                        <exclude>**/*EntityStatistics*</exclude>
+                        <exclude>**/*EntityQuest*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
